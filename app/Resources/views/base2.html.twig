@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8"/>
+    <title>{% block title %}SHIKOBA{% endblock %}</title>
+    {% block stylesheets %}
+        <!--Import Google Icon Font-->
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
+        {# Chosen css #}
+        <link rel="stylesheet" href="{{ asset('css/chosenmaterial.css') }}">
+        <link rel="stylesheet" href="{{ asset('css/jquery-ui.min.css') }}">
+        <link rel="stylesheet" href="{{ asset('css/jquery-ui.structure.min.css') }}">
+        <link rel="stylesheet" href="{{ asset('css/jquery-ui.theme.min.css') }}">
+        <link rel="stylesheet" href="{{ asset('css/iCheck/blue.css') }}">
+        <link rel="stylesheet" href="{{ asset('css/tooltip/tooltipster.bundle.min.css') }}">
+        <link rel="stylesheet" href="{{ asset('css/tooltip/tooltipster-sideTip-light.min.css') }}">
+        <link rel="stylesheet" href="{{ asset('css/jquery-confirm.min.css') }}">
+        <link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.15/css/jquery.dataTables.css">
+        <link rel="stylesheet" href="{{ asset('css/fileInput/component.css') }}">
+        <link rel="stylesheet"
+              href="https://cdnjs.cloudflare.com/ajax/libs/jquery-date-range-picker/0.14.4/daterangepicker.min.css">
+
+        <!--Import materialize.css-->
+
+        <link type="text/css" rel="stylesheet" href="{{ asset('css/materialize.min.css') }}" media="screen,projection"/>
+        <link type="text/css" rel="stylesheet" href="{{ asset('css/style.css') }}" media="screen,projection"/>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+
+        <!--Let browser know website is optimized for mobile-->
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+    {% endblock %}
+    <link rel="icon" type="image/x-icon" href="{{ asset('/favicon.ico') }}"/>
+    {% block javascripts %}
+        <!--Import jQuery before materialize.js-->
+        <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+        <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <script type="text/javascript" src="{{ asset('js/jquery-3.2.1.min.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('js/materialize.min.js') }}"></script>
+
+        <!-- script antiguos -->
+        <script type="text/javascript" src="{{ asset('js/chosen/chosen.jquery.min.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('js/datepicker/jquery-ui.min.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('js/iCheck/icheck.min.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('js/tooltip/tooltipster.bundle.min.js') }}"></script>
+        <script type="text/javascript"
+                src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
+        <script src="{{ asset('js/jquery-confirm.min.js') }}"></script>
+        <script type="text/javascript" charset="utf8"
+                src="cdn.datatables.net/1.10.15/js/jquery.dataTables.js"></script>
+        <script type="text/javascript" src="{{ asset('js/fileInput/custom-file-input.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('js/moment.min.js') }}"></script>
+        <script type="text/javascript"
+                src="https://cdnjs.cloudflare.com/ajax/libs/jquery-date-range-picker/0.14.4/jquery.daterangepicker.min.js"></script>
+        <script type="text/javascript" src="{{ asset('js/datepickerrang.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('js/script.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('js/convivencia.js') }}"></script>
+        <link rel="stylesheet" type="text/css"
+              href="https://cdn.datatables.net/v/dt/jszip-2.5.0/dt-1.10.16/af-2.2.2/b-1.4.2/b-colvis-1.4.2/b-flash-1.4.2/b-html5-1.4.2/b-print-1.4.2/cr-1.4.1/fc-3.2.3/fh-3.1.3/kt-2.3.2/r-2.2.0/rg-1.0.2/rr-1.2.3/sc-1.4.3/sl-1.2.3/datatables.min.css"/>
+
+        <script type="text/javascript"
+                src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.32/pdfmake.min.js"></script>
+        <script type="text/javascript"
+                src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.32/vfs_fonts.js"></script>
+        <script type="text/javascript"
+                src="https://cdn.datatables.net/v/dt/jszip-2.5.0/dt-1.10.16/af-2.2.2/b-1.4.2/b-colvis-1.4.2/b-flash-1.4.2/b-html5-1.4.2/b-print-1.4.2/cr-1.4.1/fc-3.2.3/fh-3.1.3/kt-2.3.2/r-2.2.0/rg-1.0.2/rr-1.2.3/sc-1.4.3/sl-1.2.3/datatables.min.js"></script>
+
+
+
+    {% endblock %}
+</head>
+<body>
+<main>
+    <div class="loaderIntro">
+        <div class="preloader-wrapper big active">
+            <div class="spinner-layer spinner-blue">
+                <div class="circle-clipper left">
+                    <div class="circle"></div>
+                </div>
+                <div class="gap-patch">
+                    <div class="circle"></div>
+                </div>
+                <div class="circle-clipper right">
+                    <div class="circle"></div>
+                </div>
+            </div>
+
+            <div class="spinner-layer spinner-red">
+                <div class="circle-clipper left">
+                    <div class="circle"></div>
+                </div>
+                <div class="gap-patch">
+                    <div class="circle"></div>
+                </div>
+                <div class="circle-clipper right">
+                    <div class="circle"></div>
+                </div>
+            </div>
+
+            <div class="spinner-layer spinner-yellow">
+                <div class="circle-clipper left">
+                    <div class="circle"></div>
+                </div>
+                <div class="gap-patch">
+                    <div class="circle"></div>
+                </div>
+                <div class="circle-clipper right">
+                    <div class="circle"></div>
+                </div>
+            </div>
+
+            <div class="spinner-layer spinner-green">
+                <div class="circle-clipper left">
+                    <div class="circle"></div>
+                </div>
+                <div class="gap-patch">
+                    <div class="circle"></div>
+                </div>
+                <div class="circle-clipper right">
+                    <div class="circle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+     <div class="containerLoader">
+         {#<div class="">#}
+             <div class="row" style="margin-bottom: -10px;display: none;">
+                 {# <div class="row" style="margin-bottom: -10px;">#}
+                {% block body %}{% endblock %}
+            </div>
+        </div>
+</main>
+<footer class="page-footer blue darken-3">
+    <div class="footer-copyright">
+        <div class="container center">
+            © 2017 - Shikoba - Sawabona
+        </div>
+    </div>
+</footer>
+</body>
+</html>

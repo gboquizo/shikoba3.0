@@ -1,0 +1,53 @@
+{% extends 'base2.html.twig' %}
+
+{% block body %}
+    {% include 'convivencia/navegacion.html.twig' %}
+    <div class="">
+        <h3 class="center azul-prof fuente">Gestión Noticias</h3>
+
+        <div class="row center">
+            <a href="{{ path('nuevaNoticia') }}"
+               class="btn z-depth-3 blue darken-3 waves-effect waves-light"
+               title="Nueva Noticia">Nueva<i
+                        class="material-icons right" style="margin-top: -2%;">add</i></a>
+        </div>
+
+        <div class="row" style="margin-top: 2%">
+            <table id="tablaNoticias" class="responsive-table highlight z-depth-3" data-order='[[ 1, "desc" ]]'
+                   style="margin-bottom: 1%">
+                <thead>
+                <tr class="blue darken-3 white-text">
+                    <th>id</th>
+                    <th id="noticiath">Noticia</th>
+                    <th>Fecha</th>
+                    <th>Fecha Inicio</th>
+                    <th>Fecha Finalización</th>
+                    <th>Grupo</th>
+                    <th>Puntos</th>
+                    <th>Acciones</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for noticia in noticias %}
+                    <tr>
+                        <td>{{ noticia.id }}</td>
+                        <td id="noticiatd">{{ noticia.noticia_texto|raw }}</td>
+                        <td>{{ noticia.fecha|date("d/m/Y") }}</td>
+                        <td>{{ noticia.fechaInicio|date("d/m/Y") }}</td>
+                        <td>{{ noticia.fechaFinal|date("d/m/Y") }}</td>
+                        <td>{{ noticia.idCurso.grupo }}</td>
+                        <td>{{ noticia.puntos }}</td>
+                        {% if is_granted('ROLE_CONVIVENCIA') %}
+                            <td>
+                                <a class="confirm paddingRightLeft "
+                                   href="{{ path('borrar_noticia', {'id': noticia.id}) }}"
+                                   data-title="Eliminar Noticia"><i class="material-icons ">delete</i></a>
+                            </td>
+                        {% endif %}
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,108 @@
+{% extends 'base2.html.twig' %}
+
+{% block body %}
+    {% include 'convivencia/navegacion.html.twig' %}
+
+    <div class="">
+        <h3 class="center azul-prof fuente">Gestión Sanciones</h3>
+
+        <div class="col s12 l4 offset-l4 center">
+            {% for flash_message in app.session.flashBag.get('sancion') %}
+                <div class="card-panel green white-text" style="position: relative;">
+                    <span class="spancaja">{{ flash_message }} </span><i class="material-icons spanico">done</i>
+                </div>
+            {% endfor %}
+
+            {% for flash_message in app.session.flashBag.get('sancionError') %}
+                <div class="card-panel red white-text" style="position: relative;">
+                    <span class="spancaja">{{ flash_message }}</span> <i class="material-icons spanico">clear</i>
+                </div>
+            {% endfor %}
+        </div>
+
+        <form action="">
+            <div class="row" id="busq">
+
+                <div class="col s12 l6">
+                    <div class="row">
+                        {#<div class="i-checks col s6 center l3 right-align" style="margin-top: 2%;padding-left: 0;">#}
+                        <div class="i-checks col s12 right-align" style="margin-top: 8%;padding-left: 0;" id="aqui">
+                            {% if app.request.get('historico') == 'on' %}
+                                <input type="checkbox" name="historico" checked>
+                            {% else %}
+                                <input type="checkbox" name="historico">
+                            {% endif %}
+                            <span style="float:left;margin-top: 4%;"> Histórico</span>
+                            <div class="" id="botonbus" style="margin-left: -5%;">
+                                <button class="z-depth-3 btn btn-floating blue darken-3 waves-effect waves-light"
+                                        type="submit"
+                                        value="Buscar" title="Buscar"><i
+                                            class="material-icons right">search</i></button>
+                                <a id="parte" href="{{ path('nueva_sancion') }}"
+                                   class="btn z-depth-3 blue darken-3 waves-effect waves-light"
+                                   title="Nueva Sanción">Nueva<i
+                                            class="material-icons right">add</i></a>
+                            </div>
+                        </div>
+
+                        {#<div class="col s2 l1">#}
+                        {#</div>#}
+                        <div class="col s2 l1">
+                            {#<a href="{{ path('export_form_sanciones') }}"#}
+                            {#class="btn z-depth-3  btn-floating blue darken-3 waves-effect waves-light"#}
+                            {#title="Exportar"><i#}
+                            {#class="material-icons">get_app</i></a>#}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <table class="responsive-table highlight tableData z-depth-3" data-order='[[ 1, "desc" ]]'
+                       style="margin-bottom: 1%">
+                    <thead>
+                    <tr class="blue darken-3 white-text">
+                        <th>NumSanción</th>
+                        <th>Fecha</th>
+                        <th>Alumnado</th>
+                        <th>Fecha Inicio</th>
+                        <th>Fecha Final</th>
+                        <th>Tipo</th>
+                        {#<th>Puntos</th>#}
+                        <th>Estado</th>
+                        <th>Acciones</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for sancion in sanciones %}
+                        <tr>
+                            <td>{{ sancion.id }}</td>
+                            <td>{{ sancion.fecha|date("d/m/Y") }}</td>
+                            <td>
+                                <a href="{{ path('verAlumno', {'id': sancion.idAlumno.id}) }}">{{ sancion.idAlumno.getNombreCompleto() }}</a>
+                            </td>
+                            <td>{{ sancion.fechaInicio|date("d/m/Y") }}</td>
+                            <td>{{ sancion.fechaFinal|date("d/m/Y") }}</td>
+                            <td>{{ sancion.idTipo.tipo }}</td>
+                            {#<td>{{ sancion.puntosRecuperados }}</td>#}
+                            <td>{{ sancion.idEstado.estado }}</td>
+                            {% if is_granted('ROLE_ADMIN') %}
+                                <td><a href="{{ path('nueva_sancion') }}?idSancion={{ sancion.id }}">
+                                        <i class="material-icons">edit</i></a>
+                                    <a class="confirm paddingRightLeft "
+                                       href="{{ path('borrar_sancion', {'id': sancion.id}) }}"
+                                       data-title="Eliminar Sanción"><i class="material-icons ">delete</i></a>
+                                </td>
+                            {% else %}
+                                <td></td>
+                            {% endif %}
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            {#<div class="paginator w3-col m12">#}
+            {#{{ knp_pagination_render(sanciones) }}#}
+            {#</div>#}
+        </form>
+    </div>
+{% endblock %}

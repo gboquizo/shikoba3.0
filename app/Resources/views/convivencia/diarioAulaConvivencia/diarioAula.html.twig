@@ -1,0 +1,85 @@
+{% extends 'base2.html.twig' %}
+
+{% block body %}
+    {% include 'convivencia/navegacion.html.twig' %}
+
+    <div class="">
+        <h3 class="center azul-prof fuente">Diario Aula Convivencia</h3>
+
+        <form method="post">
+            <div class="row" id="busq">
+                <div class="col s6 m4 l1">
+                    <div class="row">
+                        <span for="diarioFechaSearchBar">Fecha</span>
+                    </div>
+                    <div class="row">
+                        <input type="text" class="datepicker" name="likeFecha" id="diarioFechaSearchBar"
+                               value="{{ diarioData.fecha|date('d/m/Y') }}">
+                    </div>
+                </div>
+
+                <div class="col s6 m4 l2" id="divhora">
+                    <div class="row">
+                        <span>Horas</span>
+                    </div>
+                    <div class="row">
+
+                        <select id="horasSelect" class="chosen-select col s12" name="likeHora[]"
+                                id="diarioHorasSearchBar" multiple>
+                            {% for key, hora in diarioData.horas %}
+                                {% if key in diarioData.horasElegidas %}
+                                    <option value="{{ key }}" selected>{{ hora }}</option>
+                                {% else %}
+                                    <option value="{{ key }}">{{ hora }}</option>
+                                {% endif %}
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+                <div class="col s12 center l1" id="botonbus">
+                    <button class="z-depth-3 btn btn-floating blue darken-3 waves-effect waves-light"
+                            style="margin-top: 21%; margin-left: -5%" type="submit"
+                            value="Buscar" title="Buscar"><i class="material-icons right">search</i></button>
+                </div>
+
+            </div>
+            <div class="row">
+                <table class="responsive-table highlight card-panel">
+                    <tr class="blue darken-3 white-text">
+                        <th>Fecha</th>
+                        <th>Hora</th>
+                        <th>Alumnado</th>
+                        <th>Profesorado</th>
+                        <th>Observaciones</th>
+                        <th>Actitud</th>
+                        <th>Asiste</th>
+                        <th></th>
+                    </tr>
+                    {% for diario in diarioData.diariosAula %}
+                        <tr>
+                            <td>{{ diario.fecha|date('d/m/Y') }}</td>
+                            <td>{{ diario.hora }}</td>
+                            <td>
+                                <a href="{{ path('verAlumno', {'id': diario.idSancion.idAlumno.id}) }}">{{ diario.idSancion.idAlumno.getNombreCompleto() }}</a>
+                            </td>
+                            {% if diario.idProfesor == null %}
+                                <td>Ninguno</td>
+                            {% else %}
+                                <td>{{ diario.idProfesor.getNombreCompleto() }}</td>
+                            {% endif %}
+                            <td>{{ diario.observaciones }}</td>
+                            <td>{{ diario.actitud }}</td>
+                            {% if diario.asiste == 0 %}
+                                <td>Pendiente</td>
+                            {% else %}
+                                <td>Ha asistido</td>
+                            {% endif %}
+                            <td><a href="{{ path('edit_diario', {'id': diario.id}) }}"><i
+                                            class="material-icons">edit</i></a></td>
+                        </tr>
+                    {% endfor %}
+                </table>
+            </div>
+        </form>
+    </div>
+{% endblock %}

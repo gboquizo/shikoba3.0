@@ -1,0 +1,194 @@
+<meta charset="UTF-8"/>
+<style>
+    table {
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+    * {
+        font-size: 18px;
+    }
+
+    table, th, td {
+        border: 1px solid black;
+    }
+    td{
+        padding: 1%;
+    }
+
+    .faltas {
+        border: 0;
+        border-left: 1px solid black;
+        width: 43%;
+    }
+    .curso{
+        width: 14%;
+
+    }
+
+    .faltas2 {
+        width: 6%;
+
+        border: 0;
+        border-right: 1px solid black;
+    }
+
+    .alig {
+        text-align: right;
+    }
+
+    .back {
+        background-color: darkgrey;
+    }
+
+    .borde {
+        width: 80%;
+        margin: 0 auto;
+        margin-top: 2%;
+        padding: 20px;
+        border: 3px solid black;
+    }
+</style>
+<div>
+    <br>
+    <div style="width: 10%;display: inline-block"><img
+                src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/36/Logotipo_de_la_Junta_de_Andaluc%C3%ADa.svg/1200px-Logotipo_de_la_Junta_de_Andaluc%C3%ADa.svg.png"
+                width="110" height="90"></div>
+    <div style="width: 28%;display: inline-block;vertical-align: top;margin-top: 2%;margin-left: 1%">CONSEJERERÍA DE
+        EDUCACIÓN<br>IES GRAN CAPITÁN<br>Córdoba
+    </div>
+    <div style="width: 50%;display: inline-block;vertical-align: middle"><h2 style="font-size: 22px">PARTE DE
+            INCIDENCIAS</h2></div>
+    {#<div>RESULTADOS<br>{{ dump(partes) }}</div>#}
+
+        <table>
+
+            <tr>
+                <td COLSPAN="2" class="faltas">APELLIDOS DEL
+                    ALUMNO<br> {{ partes.idAlumno.apellido1 ~ " " ~ partes.idAlumno.apellido2 }}
+                </td>
+                <td class="faltas">NOMBRE DEL ALUMNO<br>
+                    {{ partes.idAlumno.nombre }}
+                </td>
+                <td class="curso">CURSO<br>
+                    {{ partes.idAlumno.idCurso.grupo }}
+                </td>
+
+            </tr>
+            <tr>
+                <td COLSPAN="2">PROFESOR QUE TRAMITA EL
+                    PARTE<br>{{ partes.idProfesor.nombre ~ " " ~ partes.idProfesor.apellido1 ~ " " ~ partes.idProfesor.apellido2 }}
+                </td>
+                <td colspan="2">TUTOR DEL GRUPO DEL ALUMNO<br>{{ partes.idAlumno.idCurso.idTutor.nombre ~ " " ~ partes.idAlumno.idCurso.idTutor.apellido1 ~ " " ~ partes.idAlumno.idCurso.idTutor.apellido2 }}
+                    <br>
+                </td>
+            </tr>
+            <tr class="back">
+                <td COLSPAN="4">CAUSAS DEL PARTE (marcar todas las que correspondan)</td>
+            </tr>
+            <tr class="back">
+                <td COLSPAN="1">A/ FALTAS LEVES</td>
+                <td COLSPAN="1" class="alig">PUNTOS</td>
+                <td COLSPAN="1" class="back">B/ FALTAS GRAVES</td>
+                <td COLSPAN="1" class="alig">PUNTOS</td>
+            </tr>
+
+            {% for conductas in partes.idConducta %}
+                <TR id="conducta">
+                    {% if(conductas.puntos > -8) %}
+                        <TD COLSPAN="1" class="faltas"><input type="checkbox" checked id="{{ conductas.id }}"><label
+                                    for="{{ conductas.id }}">{{ conductas.conducta }}</label></TD>
+                        <TD COLSPAN="1" class="faltas2 alig">{{ conductas.puntos }}</TD>
+                        <TD COLSPAN="1" class="faltas"></TD>
+                        <TD COLSPAN="1" class="faltas2 alig"></TD>
+                    {% else %}
+                        <TD COLSPAN="1" class="faltas"></TD>
+                        <TD COLSPAN="1" class="faltas2 alig"></TD>
+                        <TD COLSPAN="1" class="faltas"><input type="checkbox" checked id="{{ conductas.id }}"><label
+                                    for="{{ conductas.id }}">{{ conductas.conducta }}</label></TD>
+                        <TD COLSPAN="1" class="faltas2 alig">{{ conductas.puntos }}</TD>
+                    {% endif %}
+                </TR>
+            {% endfor %}
+
+
+
+            <tr class="back">
+                <td COLSPAN="4">DETALLE DE LA CONDUCTA</td>
+            </tr>
+            <TR>
+                <TD COLSPAN="4">
+                    {% if partes.descripcion is null %}
+                        No es necesario
+                    {% else %}
+                        {{ partes.descripcion }}
+                    {% endif %}
+
+                </TD>
+            </TR>
+            <tr class="back">
+                <td COLSPAN="4">TAREA PROPUESTA</td>
+            </tr>
+            <TR>
+                <TD COLSPAN="4">
+                    {% if partes.tareas is null %}
+                        No es necesario
+                    {% else %}
+                        {{ partes.tareas }}
+                    {% endif %}
+
+                </TD>
+            </TR>
+            <tr class="back">
+                <td COLSPAN="4">SI IMPLICA EXULSIÓN DEL AULA</td>
+            </tr>
+            <tr>
+                <td>Hora de salida del aula</td>
+                <td>
+                    {{ partes.horaSalidaAula|date('H:i') }}
+                </td>
+                <td>Hora de llegada a jefatura</td>
+                <td>
+                    {{ partes.horaLlegadaJefatura|date('H:i') }}
+                </td>
+            </tr>
+            <tr>
+                <td>Fecha</td>
+                <td>
+                    {{ partes.fecha|date('d/m/Y') }}
+                </td>
+                <td style="border-right: 0">Firma del profesor</td>
+                <td style="border-left: 0"><br><br></td>
+            </tr>
+            <tr>
+                {% if partes.recupera != 0 %}
+                    <td COLSPAN="4"><input type="checkbox" checked id="checkbo"><label for="checkbo"> Actitud correcta
+                            en el aula de convivencia y/o
+                            realización de tareas (Rebaja 1 punto)</label>
+                    </td>
+                {% endif %}
+                {% if partes.recupera == 0 %}
+                    <td COLSPAN="4"><input type="checkbox" id="checkbo"><label for="checkbo"> Actitud correcta en el
+                            aula de convivencia y/o
+                            realización de tareas (Rebaja 1 punto)</label>
+                    </td>
+                {% endif %}
+
+            </tr>
+
+        </table>
+    <br><br>
+    <br><br>
+        <div class="borde"><p>D./Dña.
+                _____________________________________________________________________________</p>
+            <p>padre/madre/tutor legal
+                de <b>{{ partes.idAlumno.nombre ~ " " ~ partes.idAlumno.apellido1 ~ " " ~ partes.idAlumno.apellido2 }}
+                </b>, ha recibido el Parte de Incidencias relativo a su hijo/a.</p>
+            <p><br><br> En Córdoba a ______ de ___________________ de 20_____</p>
+            <p style="text-align: right">Firma</p>
+        </div>
+        <div style="font-size: 14px;text-align: center"><br>(El presente parte de incidencias se devolverá Firmado al día siguiente de
+            su recepción. En otro caso, el alumno será objeto de un nuevo parte sancionador)
+        </div>
+
+</div>
