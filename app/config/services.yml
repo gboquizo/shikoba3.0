@@ -21,7 +21,6 @@ services:
         arguments: ['@doctrine.orm.entity_manager', '@app.crearSancionHelper']
     app.smsHelper:
         class: AppBundle\Services\SmsHelper
-
     form.parteType:
         class: AppBundle\Form\ParteFormType
         arguments: ["@doctrine.orm.entity_manager"]

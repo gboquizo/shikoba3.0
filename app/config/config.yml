@@ -23,7 +23,7 @@ framework:
         engines: ['twig']
     default_locale:  "%locale%"
     trusted_hosts:   ~
-    trusted_proxies: ~
+    #trusted_proxies: ~
     session:
         # http://symfony.com/doc/current/reference/configuration/framework.html#handler-id
         handler_id:  session.handler.native_file
@@ -70,16 +70,16 @@ doctrine:
 
 # Swiftmailer Configuration
 swiftmailer:
-    transport: %mailer_transport%
-    host:      %mailer_host%
-    username:  %mailer_user%
-    password:  %mailer_password%
-    port:      %mailer_port%
-    encryption: %mailer_encryption%
+    transport: "%mailer_transport%"
+    host:      "%mailer_host%"
+    username:  "%mailer_user%"
+    password:  "%mailer_password%"
+    port:      "%mailer_port%"
+    encryption: "%mailer_encryption%"
     spool:     { type: memory }
 # Windows configuration
 knp_snappy:
-    temporary_folder: %kernel.cache_dir%
+    temporary_folder: "%kernel.cache_dir%"
     pdf:
         enabled:    true
         # If you have wkhtmltopdf as an environment variable you don't need to provide the
