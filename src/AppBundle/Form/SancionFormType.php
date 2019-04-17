@@ -24,6 +24,7 @@ class SancionFormType extends AbstractType
             ->add('idAlumno', EntityType::class, array(
                 'label' => 'Alumno/a',
                 'class' => 'AppBundle:Alumno',
+                'placeholder' => '',
                 'choices' => $this->choices[0],
                 'choice_label' => function ($alumno) {
                     return $alumno->getNombreCompletoYCurso();
@@ -31,7 +32,7 @@ class SancionFormType extends AbstractType
                 'attr' => array(
                     'class' => 'w3-select w3-border w3-light-grey chosen-select',
                     'id' => 'selectAlumno',
-                    'data-placeholder' => 'Selecciona un alumno/a...',
+                    'data-placeholder' => 'Seleccione alumnado...',
                 ),
                 'label_attr' => array('class' => 'w3-text-teal')
             ))
@@ -101,10 +102,13 @@ class SancionFormType extends AbstractType
 //            ));
     }
 
-    public function setDefaultOptions(OptionsResolver $resolver)
+    /**
+     * {@inheritdoc}
+     */
+    public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefault(array(
-            'data_class' => Sanciones::class,
+        $resolver->setDefaults(array(
+            'data_class' => 'AppBundle\Entity\Sanciones'
         ));
     }
 
