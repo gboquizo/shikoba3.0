@@ -30,6 +30,8 @@ security:
                 # checkbox en el formulario de login, descomenta la
                 # siguiente línea para activarlo siempre.
                 #always_remember_me: true
+            logout_on_user_change: true
+            provider: user_provider
             anonymous: ~
             form_login:
                 login_path: login

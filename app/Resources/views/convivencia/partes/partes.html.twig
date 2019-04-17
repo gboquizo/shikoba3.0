@@ -36,10 +36,12 @@
                                         type="submit"
                                         value="Buscar" title="Buscar"><i
                                             class="material-icons right">search</i></button>
+                                {% if (is_granted('ROLE_ADMIN') or is_granted('ROLE_CONVIVENCIA')) %}
                                 <a id="parte" href="{{ path('nuevoParte') }}"
                                    class="btn z-depth-3 blue darken-3 waves-effect waves-light"
                                    title="Nuevo Parte">Nuevo<i
                                             class="material-icons right" style="margin-top: -2%;">add</i></a>
+                                {% endif %}
                             </div>
                         </div>
 
@@ -126,7 +128,8 @@
                                    data-title="Eliminar Parte"><i class="material-icons ">delete</i></a>
                                 <a href="{{ path('printParte') }}?idParte={{ parte.id }}">
                                     <i class="material-icons">print</i></a>
-                                    {% endif %}
+                            </td>
+                            {% endif %}
                         </tr>
                     {% endfor %}
                     </tbody>
