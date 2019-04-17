@@ -7,8 +7,8 @@ parameters:
     database_password:
     mailer_transport: gmail
     mailer_host: smtp.gmail.com
-    mailer_user: proyectoiesgrancapitan@gmail.com
-    mailer_password: Proyectos2017
+    mailer_user: shikobatres@gmail.com
+    mailer_password: proyecto2019
     mailer_encryption: ssl
     mailer_port: 465
     secret: ThisTokenIsNotSoSecretChangeIt
