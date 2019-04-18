@@ -33,7 +33,7 @@ class ParteFormType extends AbstractType
                 },
                 'attr' => array(
                     'class' => 'chosen-select',
-                    'data-placeholder' => 'Seleccione alumnado...',
+                    'data-placeholder' => 'Selecciona un alumno/a',
                 ),
                 'label_attr' => array('class' => ''),
                 'empty_data' => null
@@ -41,18 +41,16 @@ class ParteFormType extends AbstractType
             ));
         $builder->add('idProfesor', EntityType::class, array(
             'label' => 'Profesor/a',
-            'class' => 'AppBundle:Profesores',
             'placeholder' => '',
+            'class' => 'AppBundle:Profesores',
             'choices' => $this->traitChoices[1],
             'choice_label' => function ($profesor) {
                 return $profesor->getNombreCompleto();
             },
-            'attr' => array(
-                'class' => 'chosen-select',
-                'data-placeholder' => 'Seleccione profesorado...',
+            'attr' => array('class' => 'chosen-select',
+                'data-placeholder' => 'Selecciona un profesor...',
             ),
-            'label_attr' => array('class' => ''),
-            'empty_data' => null
+            'label_attr' => array('class' => '')
         ))
 //            ->add('Fecha', DateType::class, array(
 //                'attr' => array('class' => 'w3-select w3-border w3-light-grey'),
@@ -139,13 +137,15 @@ class ParteFormType extends AbstractType
             ));
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function configureOptions(OptionsResolver $resolver)
+    public function setDefaultOptions(OptionsResolver $resolver)
     {
+//        $resolver->setDefault(array(
+//            'data_class' => Partes::class,
+//        ));
+
         $resolver->setDefaults(array(
-            'data_class' => 'AppBundle\Entity\Partes'
+            'compound' => null,
         ));
+
     }
 }
