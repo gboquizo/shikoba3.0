@@ -33,13 +33,10 @@ class UsuarioFormType extends AbstractType
 
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function configureOptions(OptionsResolver $resolver)
+    public function setDefaultOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(array(
-            'data_class' => 'AppBundle\Entity\Usuarios'
+        $resolver->setDefault(array(
+            'data_class' => Usuarios::class,
         ));
     }
 

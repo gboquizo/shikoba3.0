@@ -19,13 +19,11 @@ class ImportFormType extends AbstractType
             ));
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function configureOptions(OptionsResolver $resolver)
-    {
-        $resolver->setDefaults(array(
-            'data_class' => 'AppBundle\Entity\Conductas'
-        ));
-    }
+//    public function setDefaultOptions(OptionsResolver $resolver)
+//    {
+//        $resolver->setDefault(array(
+//            'data_class' => Conductas::class,
+//        ));
+//
+//    }
 }
