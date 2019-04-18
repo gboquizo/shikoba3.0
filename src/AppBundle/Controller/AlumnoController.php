@@ -63,8 +63,8 @@ class AlumnoController extends Controller
     }
 
     /**
-     * @Route("/alumno/{id}", name="verAlumno", requirements={"id": "\d+"})
-     */
+ * @Route("/alumno/{id}", name="verAlumno", requirements={"id": "\d+"})
+ */
     public function showAlumnoAction(Alumno $alumno)
     {
         /** @var AlumnoHelper $alumnoHelper */
@@ -96,6 +96,36 @@ class AlumnoController extends Controller
             )
         );
     }
+
+
+    /**
+     * @Route("/tutoria", name="show_alumnosgrupo")
+     */
+    public function showAlumnosGrupoAction( Request $request ){
+
+        if (
+            !in_array("ROLE_ADMIN",         $this->getUser()->getRoles())  &&
+            !in_array("ROLE_CONVIVENCIA",   $this->getUser()->getRoles())  &&
+            !in_array("ROLE_PROFESOR",      $this->getUser()->getRoles())  &&
+            !in_array("ROLE_TUTOR_DOCENTE", $this->getUser()->getRoles())
+        )
+            return $this->redirectToRoute("index");
+
+        $em = $this->getDoctrine()->getManager();
+        /** @var AlumnoRepository $repositoryAlumnos */
+        $repositoryAlumnos = $em->getRepository("AppBundle:Alumno");
+        if ($request->query->has('like')) {
+            $alumnos = $repositoryAlumnos->getAlumnosLike($request->get('like'));
+        } else {
+            $alumnos = $repositoryAlumnos->findAll();
+        }
+
+        return $this->render('convivencia/alumno/listaAlumnos.html.twig', array(
+            'alumnos' => $alumnos,
+            'user' => $this->getUser(),
+        ));
+    }
+
 
     /**
      * @Route("/registrarAlumno", name="registrarAlumno")

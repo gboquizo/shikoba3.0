@@ -14,31 +14,40 @@
                                     <div class="userView">
                                         <div class="background center">
                                         </div>
-                                        <a href="{{ path('index') }}"><img class=" center centro" src="{{ asset('img/logo3.png') }}"></a>
+                                        <a href="{{ path('index') }}">
+                                            <img class=" center centro" src="{{ asset('img/logo3.png') }}"></a>
                                     </div>
                                 </li>
                                 <li>
                                     <div class="divider"></div>
-
                                     {% if (is_granted('ROLE_ADMIN') or is_granted('ROLE_PROFESOR') or is_granted('ROLE_CONVIVENCIA')) %}
                                 <li><a class="waves-effect waves-blue" href="{{ path('show_carnets') }}">Carnets</a>
                                 </li>
-                                <li><a class="waves-effect waves-blue" href="{{ path('gestion_partes') }}">Partes</a>
-                                </li>
-                                <li><a class="waves-effect waves-blue"
-                                       href="{{ path('gestion_sanciones') }}">Medidas</a></li>
-                                <li><a class="waves-effect waves-blue" href="{{ path('show_diario') }}">Diario</a></li>
-
-                                {% if ( is_granted('ROLE_ADMIN') or is_granted('ROLE_PROFESOR') or is_granted('ROLE_CONVIVENCIA') or is_granted('ROLE_TUTOR_DOCENTE') ) %}
-                                  <li>
-                                    <a class="waves-effect waves-blue" href="{{ path('show_alumnos') }}">Alumnos</a>
-                                  </li>
+                                <!--Filtramos el menú, deshabilitamos opciones para el rol profesor -->
+                                {% if (is_granted('ROLE_ADMIN')  or is_granted('ROLE_CONVIVENCIA')) %}
+                                    <li><a class="waves-effect waves-blue"
+                                           href="{{ path('gestion_partes') }}">Partes</a>
+                                    </li>
+                                    <li><a class="waves-effect waves-blue"
+                                           href="{{ path('gestion_sanciones') }}">Medidas</a></li>
+                                    <li><a class="waves-effect waves-blue" href="{{ path('show_diario') }}">Diario</a>
+                                    </li>
                                 {% endif %}
-
+                                {% if ( is_granted('ROLE_ADMIN') or is_granted('ROLE_PROFESOR') or is_granted('ROLE_CONVIVENCIA')) %}
+                                    <li>
+                                        <a class="waves-effect waves-blue" href="{{ path('show_alumnos') }}">Alumnos</a>
+                                    </li>
+                                {% endif %}
                                 <div class="divider"></div>
                                 {% if is_granted('ROLE_CONVIVENCIA') %}
                                     <li><a class="waves-effect waves-blue" href="{{ path('noticias') }}">Noticias</a>
                                     </li>
+                                {% endif %}
+                                <!--Con este action vamos a definir los alumnos por profesor, esto es, su tutoría-->
+                                <!--Debe ajustarse en la respectiva action en AlumnosController-->
+                                {% if is_granted('ROLE_PROFESOR') %}
+                                    <li><a href="{{ path('show_alumnosgrupo') }}">Tutoría</a></li>
+
                                 {% endif %}
                                 {% if is_granted('ROLE_ADMIN') %}
                                     <li class="no-padding">
@@ -82,7 +91,8 @@
                                     <a class="waves-effect waves-blue" href="{{ path('logout') }}">Logout</a>
                                 </li>
                                 <div class="divider"></div>
-                                <li style="color: rgba(0,0,0,0.87);font-weight: 500;">Perfil: {{ app.user.usuario }}</li>
+                                <li style="color: rgba(0,0,0,0.87);font-weight: 500;">
+                                    Perfil: {{ app.user.usuario }}</li>
 
                             </ul>
                         </div>
@@ -97,18 +107,27 @@
                                 {% if (is_granted('ROLE_ADMIN') or is_granted('ROLE_PROFESOR') or is_granted('ROLE_CONVIVENCIA')) %}
 
                                     <li><a href="{{ path('show_carnets') }}">Carnets</a></li>
-                                    <li><a href="{{ path('gestion_partes') }}">Partes</a></li>
-                                    <li><a href="{{ path('gestion_sanciones') }}">Medidas</a></li>
-                                    <li><a href="{{ path('show_diario') }}">Diario</a></li>
-
-                                    {% if ( is_granted('ROLE_ADMIN') or is_granted('ROLE_PROFESOR') or is_granted('ROLE_CONVIVENCIA') or is_granted('ROLE_TUTOR_DOCENTE') ) %}
-                                      <li>
-                                        <a class="waves-effect waves-blue" href="{{ path('show_alumnos') }}">Alumnos</a>
-                                      </li>
+                                    {% if (is_granted('ROLE_ADMIN')  or is_granted('ROLE_CONVIVENCIA')) %}
+                                        <li><a href="{{ path('gestion_partes') }}">Partes</a></li>
+                                        <li><a href="{{ path('gestion_sanciones') }}">Medidas</a></li>
+                                        <li><a href="{{ path('show_diario') }}">Diario</a></li>
+                                    {% endif %}
+                                    <!--Filtramos el menú, deshabilitamos opciones para el rol profesor -->
+                                    {% if ( is_granted('ROLE_ADMIN') or is_granted('ROLE_PROFESOR') or is_granted('ROLE_CONVIVENCIA')) %}
+                                        <li>
+                                            <a class="waves-effect waves-blue"
+                                               href="{{ path('show_alumnos') }}">Alumnos</a>
+                                        </li>
                                     {% endif %}
 
                                     {% if is_granted('ROLE_CONVIVENCIA') %}
                                         <li><a href="{{ path('noticias') }}">Noticias</a></li>
+
+                                    {% endif %}
+                                    <!--Con este action vamos a definir los alumnos por profesor, esto es, su tutoría-->
+                                    <!--Debe ajustarse en la respectiva action en AlumnosController-->
+                                    {% if is_granted('ROLE_PROFESOR') %}
+                                        <li><a href="{{ path('show_alumnosgrupo') }}">Tutoría</a></li>
 
                                     {% endif %}
                                     {% if is_granted('ROLE_ADMIN') %}
@@ -121,9 +140,9 @@
                                             <li><a href="{{ path('admin_import_profesor') }}"
                                                    class="blue darken-2 white-text">Profesorado</a>
                                             </li>
-                                           {# <li><a href="{{ path('admin_security') }}"
-                                                   class="blue darken-2 white-text">Copia
-                                                    de seguridad</a></li>#}
+                                            {# <li><a href="{{ path('admin_security') }}"
+                                                    class="blue darken-2 white-text">Copia
+                                                     de seguridad</a></li>#}
                                         </ul>
 
                                     {% endif %}
@@ -150,7 +169,7 @@
                                 <li>
                                     <a href="{{ path('logout') }}">Logout</a>
                                 </li>
-                                <li  style="padding: 0 5px;">Perfil: {{ app.user.usuario }}</li>
+                                <li style="padding: 0 5px;">Perfil: {{ app.user.usuario }}</li>
 
                             </ul>
                         </div>
