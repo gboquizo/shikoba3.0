@@ -102,11 +102,13 @@ class SancionFormType extends AbstractType
 //            ));
     }
 
-    public function setDefaultOptions(OptionsResolver $resolver)
+    /**
+     * {@inheritdoc}
+     */
+    public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefault(array(
-            'data_class' => Sanciones::class,
+        $resolver->setDefaults(array(
+            'data_class' => 'AppBundle\Entity\Sanciones'
         ));
     }
-
 }

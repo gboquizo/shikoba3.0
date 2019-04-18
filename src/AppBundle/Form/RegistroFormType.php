@@ -26,6 +26,7 @@ class RegistroFormType extends AbstractType
                 'choices' => array(
                     'Alumno' => "ROLE_USER",
                     'Tutor' => "ROLE_TUTOR",
+                    'TutorD' => "ROLE_TUTORD",
                     'Profesor' => "ROLE_PROFESOR",
                     'Jefatura' => "ROLE_ADMIN",
                     'Convivencia' => "ROLE_CONVIVENCIA",
