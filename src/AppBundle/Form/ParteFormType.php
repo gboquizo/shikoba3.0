@@ -33,7 +33,7 @@ class ParteFormType extends AbstractType
                 },
                 'attr' => array(
                     'class' => 'chosen-select',
-                    'data-placeholder' => 'Selecciona un alumno/a',
+                    'data-placeholder' => 'Seleccione alumnado...',
                 ),
                 'label_attr' => array('class' => ''),
                 'empty_data' => null
@@ -48,9 +48,10 @@ class ParteFormType extends AbstractType
                 return $profesor->getNombreCompleto();
             },
             'attr' => array('class' => 'chosen-select',
-                'data-placeholder' => 'Selecciona un profesor...',
+                'data-placeholder' => 'Seleccione profesorado...',
             ),
-            'label_attr' => array('class' => '')
+            'label_attr' => array('class' => ''),
+            'empty_data' => null
         ))
 //            ->add('Fecha', DateType::class, array(
 //                'attr' => array('class' => 'w3-select w3-border w3-light-grey'),
@@ -137,15 +138,13 @@ class ParteFormType extends AbstractType
             ));
     }
 
-    public function setDefaultOptions(OptionsResolver $resolver)
+    /**
+     * {@inheritdoc}
+     */
+    public function configureOptions(OptionsResolver $resolver)
     {
-//        $resolver->setDefault(array(
-//            'data_class' => Partes::class,
-//        ));
-
         $resolver->setDefaults(array(
-            'compound' => null,
+            'data_class' => 'AppBundle\Entity\Partes'
         ));
-
     }
 }
