@@ -2,3 +2,5 @@
 var/
 
 \.idea/
+
+app/config/parameters.yml
