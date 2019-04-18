@@ -337,8 +337,8 @@ class ConvivenciaController extends Controller
             
             $message = \Swift_Message::newInstance()
                 ->setSubject('Proyecto Convivencia. Recuperación de contraseña')
-                ->setFrom('shikobatres@gmail.com')
                 //->setFrom('proyectoiesgrancapitan@gmail.com')
+                ->setFrom('shikobatres@gmail.com')
                 ->setTo($email)
                 ->setBody("Enlace para recuperar su contraseña:\n" . $this->generateUrl("reset_password", array(), UrlGeneratorInterface::ABSOLUTE_URL )."?hash=".$hash);
             $this->get('mailer')->send($message);

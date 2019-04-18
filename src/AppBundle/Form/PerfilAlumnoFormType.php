@@ -29,13 +29,11 @@ class PerfilAlumnoFormType extends AbstractType
         ;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function configureOptions(OptionsResolver $resolver)
+    public function setDefaultOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(array(
-            'data_class' => 'AppBundle\Entity\Alumno'
+        $resolver->setDefault(array(
+            'data_class' => Alumno::class,
         ));
+
     }
 }
