@@ -62,9 +62,15 @@
                     {% for alumno in alumnos %}
                         <tr>
                             <td>
-                              <a href="{{ path('editarAlumno', { 'id': alumno.id}) }}">
-                                {{ alumno.getNombreCompletoYCurso() }}
-                              </a>
+                                {% if ( is_granted('ROLE_ADMIN')) %}
+                                    <a href="{{ path('editarAlumno', { 'id': alumno.id}) }}">
+                                        {{ alumno.getNombreCompletoYCurso() }}
+                                    </a>
+                                {% endif %}
+                                {% if ( is_granted('ROLE_PROFESOR')) %}
+                                        {{ alumno.getNombreCompletoYCurso() }}
+                                {% endif %}
+
                             </td>
                             <td>{{ alumno.nie }}</td>
                             <td>{{ alumno.telefono }}</td>
@@ -75,9 +81,11 @@
                             <td>{{ alumno.telefonoTL1 }}</td>
                             <td>{{ alumno.telefonoTL2 }}</td>
                             <td>
-                              <a href="{{ path('editarAlumno', { 'id': alumno.id}) }}">
-                                <i class="material-icons">edit</i>
-                              </a>
+                                {% if ( is_granted('ROLE_ADMIN')) %}
+                                    <a href="{{ path('editarAlumno', { 'id': alumno.id}) }}">
+                                        <i class="material-icons">edit</i>
+                                    </a>
+                                {% endif %}
                             </td>
                         </tr>
                     {% endfor %}
