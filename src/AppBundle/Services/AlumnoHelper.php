@@ -4,6 +4,7 @@ namespace AppBundle\Services;
 
 use AppBundle\Entity\Alumno;
 use AppBundle\Entity\Partes;
+use AppBundle\Entity\Profesores;
 use AppBundle\Entity\Sanciones;
 use AppBundle\Entity\Tutores;
 use AppBundle\Model\CarnetData;
@@ -11,6 +12,7 @@ use AppBundle\Model\UserData;
 use AppBundle\Repository\CursosRepository;
 use AppBundle\Repository\DiarioAulaConvivenciaRepository;
 use AppBundle\Repository\PartesRepository;
+use AppBundle\Repository\ProfesoresRepository;
 use AppBundle\Repository\SancionesRepository;
 use AppBundle\Repository\TutoresRepository;
 use Doctrine\ORM\EntityManager;
@@ -43,6 +45,8 @@ class AlumnoHelper
         $this->repositoryAulaConvivencia = $this->emConvivencia->getRepository('AppBundle:DiarioAulaConvivencia');
         /** @var TutoresRepository repositoryTutor */
         $this->repositoryTutor = $this->emConvivencia->getRepository('AppBundle:Tutores');
+        /** @var ProfesoresRepository repositoryProfesor */
+        $this->repositoryProfesor = $this->emConvivencia->getRepository('AppBundle:Profesores');
     }
 
     /**
@@ -410,5 +414,14 @@ class AlumnoHelper
                 $alumnosFiltrados[] = $value;
 
         return $alumnosFiltrados;
+    }
+
+    /**
+     * Función que devuelve los alumnos de un tutor docente
+     * @param Profesores $tutorD
+     * @return mixed
+     */
+    public function getAlumnosByTutorD(Profesores $tutorD){
+        return $this->repositoryAlumno->getAlumnosByCursoYTutorD($tutorD);
     }
 }

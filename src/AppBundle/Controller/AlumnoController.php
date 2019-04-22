@@ -368,7 +368,8 @@ class AlumnoController extends Controller
         if ($request->query->has('like')) {
           $alumnos = $repositoryAlumnos->getAlumnosLike($request->get('like'));
         } else {
-          $alumnos = $repositoryAlumnos->findAll();
+          //$alumnos = $repositoryAlumnos->findAll();
+            $alumnos = $repositoryAlumnos->getAlumnosByCursoYTutorD();
         }
 
         return $this->render('convivencia/alumno/listaAlumnos.html.twig', array(
