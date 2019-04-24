@@ -66,7 +66,7 @@
                             <td class="{{ colorClass }}">{{ carnet.alumno.puntos }}</td>
                             {% if carnet.alumno.idCurso != null %}
                                 <td>
-                                    <a href="{{ path('show_carnets', {'like': carnet.alumno.idCurso.grupo}) }}">{{ carnet.alumno.idCurso.grupo }}</a>
+                                    {{ carnet.alumno.idCurso.grupo }}
                                 </td>
                             {% else %}
                                 <td>Ninguno</td>
@@ -75,16 +75,26 @@
                                 <td>
                                     {% for sancion in carnet.arraySanciones %}
                                         {% if sancion.idEstado.estado == "Iniciada" or sancion.idEstado.estado == "Vigente" %}
-                                            <a href="{{ path('nueva_sancion', {'idSancion':sancion.id}) }}">
-                                                ({{ sancion.fecha|date('d/m/Y') }} - {{ sancion.idTipo.tipo }}
-                                                - {{ sancion.idEstado.estado }})</a><br/>
+
+                                            {% if ( is_granted('ROLE_ADMIN') or is_granted('ROLE_CONVIVENCIA')) %}
+                                                <a href="{{ path('nueva_sancion', {'idSancion':sancion.id}) }}">
+                                                   ({{ sancion.fecha|date('d/m/Y') }} - {{ sancion.idTipo.tipo }}
+                                                   - {{ sancion.idEstado.estado }})</a><br/>
+                                            {% else %}
+                                               ({{ sancion.fecha|date('d/m/Y') }} - {{ sancion.idTipo.tipo }}
+                                                - {{ sancion.idEstado.estado }})<br/>
+                                            {% endif %}
                                         {% endif %}
                                     {% endfor %}
                                 </td>
                             {% else %}
                                 {% if carnet.alumno.puntos >0 %}
-                                    <td><a href="{{ path('nueva_sancion', {'idAlumno': carnet.alumno.id}) }}">Crear
-                                            Sanción</a></td>
+                                    <td>
+                                        {% if ( is_granted('ROLE_ADMIN') or is_granted('ROLE_CONVIVENCIA')) %}
+                                            <a href="{{ path('nueva_sancion', {'idAlumno': carnet.alumno.id}) }}">Crear
+                                                Sanción</a>
+                                        {% endif %}
+                                    </td>
                                     {#<td>No sancionado(implementar crear sanción)</td>#}
                                 {% else %}
                                     <td></td>

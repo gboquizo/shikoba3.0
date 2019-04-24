@@ -113,7 +113,7 @@
                                         <li><a href="{{ path('show_diario') }}">Diario</a></li>
                                     {% endif %}
                                     <!--Filtramos el menú, deshabilitamos opciones para el rol profesor -->
-                                    {% if ( is_granted('ROLE_ADMIN') or is_granted('ROLE_PROFESOR') or is_granted('ROLE_CONVIVENCIA')) %}
+                                    {% if ( is_granted('ROLE_ADMIN') or is_granted('ROLE_CONVIVENCIA')) %}
                                         <li>
                                             <a class="waves-effect waves-blue"
                                                href="{{ path('show_alumnos') }}">Alumnos</a>
