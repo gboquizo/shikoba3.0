@@ -369,6 +369,7 @@ class AlumnoController extends Controller
           $alumnos = $repositoryAlumnos->getAlumnosLike($request->get('like'));
         } else {
           $alumnos = $repositoryAlumnos->findAll();
+            //$alumnos = $repositoryAlumnos->getAlumnosByCursoYTutorD();
         }
 
         return $this->render('convivencia/alumno/listaAlumnos.html.twig', array(

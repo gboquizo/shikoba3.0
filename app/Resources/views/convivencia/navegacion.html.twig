@@ -107,9 +107,9 @@
                                 {% if (is_granted('ROLE_ADMIN') or is_granted('ROLE_PROFESOR') or is_granted('ROLE_CONVIVENCIA')) %}
 
                                     <li><a href="{{ path('show_carnets') }}">Carnets</a></li>
-                                    {% if (is_granted('ROLE_ADMIN')  or is_granted('ROLE_CONVIVENCIA')) %}
                                         <li><a href="{{ path('gestion_partes') }}">Partes</a></li>
                                         <li><a href="{{ path('gestion_sanciones') }}">Medidas</a></li>
+                                    {% if (is_granted('ROLE_ADMIN')  or is_granted('ROLE_CONVIVENCIA')) %}
                                         <li><a href="{{ path('show_diario') }}">Diario</a></li>
                                     {% endif %}
                                     <!--Filtramos el menú, deshabilitamos opciones para el rol profesor -->
