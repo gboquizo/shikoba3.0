@@ -96,7 +96,7 @@ class SancionController extends Controller
     {
 
         $em = $this->getDoctrine()->getManager();
-        $paginator = $this->get('knp_paginator');
+        //$paginator = $this->get('knp_paginator');
         /** @var SancionesRepository $sancionesRepository */
         $sancionesRepository = $em->getRepository('AppBundle:Sanciones');
         if ($request->query->has('like')) {

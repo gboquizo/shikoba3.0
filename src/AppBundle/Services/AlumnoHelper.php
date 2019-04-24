@@ -415,13 +415,4 @@ class AlumnoHelper
 
         return $alumnosFiltrados;
     }
-
-    /**
-     * Función que devuelve los alumnos de un tutor docente
-     * @param Profesores $tutorD
-     * @return mixed
-     */
-    public function getAlumnosByTutorD(Profesores $tutorD){
-        return $this->repositoryAlumno->getAlumnosByCursoYTutorD($tutorD);
-    }
 }
