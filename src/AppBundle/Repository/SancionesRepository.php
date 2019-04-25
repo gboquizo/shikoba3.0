@@ -53,10 +53,14 @@ class SancionesRepository extends \Doctrine\ORM\EntityRepository
     {
         if(!$historico) {
             $query = $this->getEntityManager()->createQuery(
-                "SELECT s
+                /*"SELECT s
                  FROM AppBundle\Entity\Sanciones s
                  JOIN s.idEstado as estado
                  WHERE estado.estado != 'Finalizada'
+                 ORDER BY s.fecha DESC, s.id DESC"*/
+                "SELECT s
+                 FROM AppBundle\Entity\Sanciones s
+                 JOIN s.idEstado as estado
                  ORDER BY s.fecha DESC, s.id DESC"
             );
         }else{
@@ -128,8 +132,10 @@ class SancionesRepository extends \Doctrine\ORM\EntityRepository
              WHERE ((YEAR(s.fecha) = :stringFecha2 AND MONTH(s.fecha) = :stringFecha1
              AND DAY(s.fecha) = :stringFecha0) OR alumno.nombre LIKE :string
              OR tipo.tipo LIKE :string OR estado.estado LIKE :string)
-             AND estado.estado != 'Finalizada'
+             AND estado.estado = 'Finalizada'
              ORDER BY s.fecha DESC, s.id DESC"
+
+
             );
         }
         else{
