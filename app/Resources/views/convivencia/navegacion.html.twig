@@ -24,29 +24,29 @@
                                 <li><a class="waves-effect waves-blue" href="{{ path('show_carnets') }}">Carnets</a>
                                 </li>
                                 <!--Filtramos el menú, deshabilitamos opciones para el rol profesor -->
-                                {% if (is_granted('ROLE_ADMIN')  or is_granted('ROLE_CONVIVENCIA')) %}
                                     <li><a class="waves-effect waves-blue"
                                            href="{{ path('gestion_partes') }}">Partes</a>
                                     </li>
                                     <li><a class="waves-effect waves-blue"
                                            href="{{ path('gestion_sanciones') }}">Medidas</a></li>
+                                    {% if (is_granted('ROLE_ADMIN')  or is_granted('ROLE_CONVIVENCIA')) %}
                                     <li><a class="waves-effect waves-blue" href="{{ path('show_diario') }}">Diario</a>
                                     </li>
                                 {% endif %}
-                                {% if ( is_granted('ROLE_ADMIN') or is_granted('ROLE_PROFESOR') or is_granted('ROLE_CONVIVENCIA')) %}
+                                {% if ( is_granted('ROLE_ADMIN') or is_granted('ROLE_CONVIVENCIA')) %}
                                     <li>
                                         <a class="waves-effect waves-blue" href="{{ path('show_alumnos') }}">Alumnos</a>
                                     </li>
                                 {% endif %}
                                 <div class="divider"></div>
-                                {% if is_granted('ROLE_CONVIVENCIA') %}
+                                {% if (is_granted('ROLE_CONVIVENCIA') or  is_granted('ROLE_ADMIN'))  %}
                                     <li><a class="waves-effect waves-blue" href="{{ path('noticias') }}">Noticias</a>
                                     </li>
                                 {% endif %}
                                 <!--Con este action vamos a definir los alumnos por profesor, esto es, su tutoría-->
                                 <!--Debe ajustarse en la respectiva action en AlumnosController-->
                                 {% if is_granted('ROLE_PROFESOR') %}
-                                    <li><a href="{{ path('show_alumnosgrupo') }}">Tutoría</a></li>
+                                    <li><a href="{{ path('show_alumnos') }}">Tutoría</a></li>
 
                                 {% endif %}
                                 {% if is_granted('ROLE_ADMIN') %}
