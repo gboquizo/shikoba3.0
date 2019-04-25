@@ -96,7 +96,8 @@
                             </td>
                             {% if parte.idAlumno.idCurso != null %}
                                 <td>
-                                    <a href="{{ path('gestion_partes', {'like': parte.idAlumno.idCurso.grupo}) }}">{{ parte.idAlumno.idCurso.grupo }}</a>
+                                    {#<a href="{{ path('gestion_partes', {'like': parte.idAlumno.idCurso.grupo}) }}">{{ parte.idAlumno.idCurso.grupo }}</a>#}
+                                    {{ parte.idAlumno.idCurso.grupo }}
                                 </td>
                             {% else %}
                                 <td>Ninguno</td>
@@ -107,7 +108,7 @@
                             <td class="{{ colorClass }}">{{ parte.idTipo.tipo }}</td>
                             <td>{{ parte.puntos }}</td>
                             <td>{{ parte.idEstado.estado }}</td>
-                            {% if (is_granted('ROLE_ADMIN') == false) and (is_granted('ROLE_PROFESOR')) %}
+                            {% if (is_granted('ROLE_ADMIN') == false) and (is_granted('ROLE_PROFESOR')) or (is_granted('ROLE_CONVIVENCIA')) %}
                                 {% if(parte.idProfesor.idUsuario.id == app.user.id) %}
                                     <td><a href="{{ path('nuevoParte') }}?idParte={{ parte.id }}">
                                     <i class="material-icons">edit</i></a>
