@@ -87,7 +87,7 @@ knp_snappy:
         #binary:  "wkhtmltopdf"
         #binary:  "C:\\Users\\Josema\\AppData\\Local\\lxss\\rootfs\\usr\\local\\bin\\wkhtmltopdf.sh"
         #binary:     "\"C:\\Program Files\\wkhtmltopdf\\bin\\wkhtmltopdf.exe\""
-        binary:     "/usr/local/bin/wkhtmltopdf"
+        binary:     "\"C:\\wkhtmltopdf\\bin\\wkhtmltopdf.exe\""
         options:
                   no-outline: true
                   page-size: LETTER

@@ -44,20 +44,21 @@
     .borde {
         width: 80%;
         margin: 0 auto;
-        margin-top: 2%;
-        padding: 20px;
+/*        margin-top: 2%;*/
+        padding: 10px;
         border: 3px solid black;
     }
 </style>
 <div>
     <br>
-    <div style="width: 10%;display: inline-block"><img
+    <div style="width: 10%;display: inline-block; margin-right: 20px"><img
                 src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/36/Logotipo_de_la_Junta_de_Andaluc%C3%ADa.svg/1200px-Logotipo_de_la_Junta_de_Andaluc%C3%ADa.svg.png"
                 width="110" height="90"></div>
-    <div style="width: 28%;display: inline-block;vertical-align: top;margin-top: 2%;margin-left: 1%">CONSEJERERÍA DE
-        EDUCACIÓN<br>IES GRAN CAPITÁN<br>Córdoba
-    </div>
-    <div style="width: 50%;display: inline-block;vertical-align: middle"><h2 style="font-size: 22px">PARTE DE
+    <div style="width: 28%;display: inline-block;vertical-align: top;margin-top: 2%;margin-left: 1%">CONSEJERERÍA DE EDUCACIÓNIES GRAN CAPITÁN Córdoba
+    </div>{#<br>#}
+   {# <div style="width: 50%;display: inline-block;vertical-align: middle"><h2 style="font-size: 22px">PARTE DE
+            INCIDENCIAS</h2></div>#}
+    <div style="width: 100%"><h2 style="font-size: 22px; text-align: center">PARTE DE
             INCIDENCIAS</h2></div>
     {#<div>RESULTADOS<br>{{ dump(partes) }}</div>#}
 
@@ -79,9 +80,9 @@
                 <td COLSPAN="2">PROFESOR QUE TRAMITA EL
                     PARTE<br>{{ partes.idProfesor.nombre ~ " " ~ partes.idProfesor.apellido1 ~ " " ~ partes.idProfesor.apellido2 }}
                 </td>
-                {#<td colspan="2">TUTOR DEL GRUPO DEL ALUMNO<br>{{ partes.idAlumno.idCurso.idTutor.nombre ~ " " ~ partes.idAlumno.idCurso.idTutor.apellido1 ~ " " ~ partes.idAlumno.idCurso.idTutor.apellido2 }}
+                <td colspan="2">TUTOR DEL GRUPO DEL ALUMNO<br>{{ partes.idAlumno.idCurso.idTutor.nombre ~ " " ~ partes.idAlumno.idCurso.idTutor.apellido1 ~ " " ~ partes.idAlumno.idCurso.idTutor.apellido2 }}
                     <br>
-                </td>#}
+                </td>
             </tr>
             <tr class="back">
                 <td COLSPAN="4">CAUSAS DEL PARTE (marcar todas las que correspondan)</td>
@@ -178,7 +179,7 @@
 
         </table>
     <br><br>
-    <br><br>
+   {# <br><br>#}
         <div class="borde"><p>D./Dña.
                 _____________________________________________________________________________</p>
             <p>padre/madre/tutor legal
