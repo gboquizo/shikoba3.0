@@ -115,7 +115,7 @@ class PartesRepository extends \Doctrine\ORM\EntityRepository
             $query = $this->createQueryBuilder('partes');
             $query->select('partes');
             $query->join('partes.idEstado', 'estado');
-            $query->where("estado.estado != 'Caducado' ");
+            //$query->where("estado.estado != 'Caducado' ");
         } else {
             $query = $this->createQueryBuilder('partes');
             $query->select('partes');
