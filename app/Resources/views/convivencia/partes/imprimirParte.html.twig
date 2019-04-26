@@ -14,6 +14,7 @@
     }
     td{
         padding: 1%;
+        font-size: 16px;
     }
 
     .faltas {
@@ -22,8 +23,8 @@
         width: 43%;
     }
     .curso{
-        width: 14%;
-
+        width: 20%;
+        font-size: 13px;
     }
 
     .faltas2 {
@@ -32,13 +33,16 @@
         border: 0;
         border-right: 1px solid black;
     }
-
+    label{
+        font-size: 14.5px;
+    }
     .alig {
         text-align: right;
     }
 
     .back {
         background-color: darkgrey;
+        font-size: 15.5px;
     }
 
     .borde {
@@ -46,19 +50,27 @@
         margin: 0 auto;
 /*        margin-top: 2%;*/
         padding: 10px;
-        border: 3px solid black;
+        border: 2px solid black;
+
     }
+    .firma{
+        text-align: center;
+        font-size: 13.5px;
+    }
+    .expulsion{
+        font-size: 13.5px;
+    }
+
 </style>
 <div>
-    <br>
     <div style="width: 10%;display: inline-block; margin-right: 20px"><img
                 src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/36/Logotipo_de_la_Junta_de_Andaluc%C3%ADa.svg/1200px-Logotipo_de_la_Junta_de_Andaluc%C3%ADa.svg.png"
-                width="110" height="90"></div>
-    <div style="width: 28%;display: inline-block;vertical-align: top;margin-top: 2%;margin-left: 1%">CONSEJERERÍA DE EDUCACIÓNIES GRAN CAPITÁN Córdoba
+                width="90" height="70"></div>
+    <div style="width: 28%;display: inline-block;vertical-align: top;margin-top: 2%;margin-left:1%; font-size: 15px">CONSEJERÍA DE EDUCACIÓN GRAN CAPITÁN Córdoba
     </div>{#<br>#}
    {# <div style="width: 50%;display: inline-block;vertical-align: middle"><h2 style="font-size: 22px">PARTE DE
             INCIDENCIAS</h2></div>#}
-    <div style="width: 100%"><h2 style="font-size: 22px; text-align: center">PARTE DE
+    <div style="width: 100%"><h2 style="font-size: 20px; text-align: center; margin-top:0">PARTE DE
             INCIDENCIAS</h2></div>
     {#<div>RESULTADOS<br>{{ dump(partes) }}</div>#}
 
@@ -85,13 +97,13 @@
                 </td>
             </tr>
             <tr class="back">
-                <td COLSPAN="4">CAUSAS DEL PARTE (marcar todas las que correspondan)</td>
+                <td COLSPAN="4" class="back">CAUSAS DEL PARTE (marcar todas las que correspondan)</td>
             </tr>
             <tr class="back">
-                <td COLSPAN="1">A/ FALTAS LEVES</td>
-                <td COLSPAN="1" class="alig">PUNTOS</td>
+                <td COLSPAN="1" class="back">A/ FALTAS LEVES</td>
+                <td COLSPAN="1" class="alig back">PUNTOS</td>
                 <td COLSPAN="1" class="back">B/ FALTAS GRAVES</td>
-                <td COLSPAN="1" class="alig">PUNTOS</td>
+                <td COLSPAN="1" class="alig back">PUNTOS</td>
             </tr>
 
             {% for conductas in partes.idConducta %}
@@ -115,7 +127,7 @@
 
 
             <tr class="back">
-                <td COLSPAN="4">DETALLE DE LA CONDUCTA</td>
+                <td COLSPAN="4" class="back">DETALLE DE LA CONDUCTA</td>
             </tr>
             <TR>
                 <TD COLSPAN="4">
@@ -128,7 +140,7 @@
                 </TD>
             </TR>
             <tr class="back">
-                <td COLSPAN="4">TAREA PROPUESTA</td>
+                <td COLSPAN="4"  class="back">TAREA PROPUESTA</td>
             </tr>
             <TR>
                 <TD COLSPAN="4">
@@ -141,35 +153,35 @@
                 </TD>
             </TR>
             <tr class="back">
-                <td COLSPAN="4">SI IMPLICA EXULSIÓN DEL AULA</td>
+                <td COLSPAN="4"  class="back">SI IMPLICA EXULSIÓN DEL AULA</td>
             </tr>
-            <tr>
-                <td>Hora de salida del aula</td>
-                <td>
+            <tr >
+                <td class="expulsion">Hora de salida del aula</td>
+                <td class="expulsion">
                     {{ partes.horaSalidaAula|date('H:i') }}
                 </td>
-                <td>Hora de llegada a jefatura</td>
-                <td>
+                <td class="expulsion">Hora de llegada a jefatura</td>
+                <td class="expulsion">
                     {{ partes.horaLlegadaJefatura|date('H:i') }}
                 </td>
             </tr>
             <tr>
-                <td>Fecha</td>
-                <td>
+                <td class="expulsion">Fecha</td>
+                <td class="expulsion">
                     {{ partes.fecha|date('d/m/Y') }}
                 </td>
-                <td style="border-right: 0">Firma del profesor</td>
-                <td style="border-left: 0"><br><br></td>
+                <td class="expulsion" style="border-right: 0">Firma del profesor</td>
+                <td class="expulsion" style="border-left: 0"><br></td>
             </tr>
             <tr>
                 {% if partes.recupera != 0 %}
-                    <td COLSPAN="4"><input type="checkbox" checked id="checkbo"><label for="checkbo"> Actitud correcta
+                    <td COLSPAN="4"><input type="checkbox" checked id="checkbo"><label class="expulsion" for="checkbox"> Actitud correcta
                             en el aula de convivencia y/o
                             realización de tareas (Rebaja 1 punto)</label>
                     </td>
                 {% endif %}
                 {% if partes.recupera == 0 %}
-                    <td COLSPAN="4"><input type="checkbox" id="checkbo"><label for="checkbo"> Actitud correcta en el
+                    <td COLSPAN="4"><input type="checkbox" id="checkbo"><label class="expulsion" for="checkbox"> Actitud correcta en el
                             aula de convivencia y/o
                             realización de tareas (Rebaja 1 punto)</label>
                     </td>
@@ -180,13 +192,13 @@
         </table>
     <br><br>
    {# <br><br>#}
-        <div class="borde"><p>D./Dña.
+        <div class="borde firma"><p class="firma">D./Dña.
                 _____________________________________________________________________________</p>
-            <p>padre/madre/tutor legal
-                de <b>{{ partes.idAlumno.nombre ~ " " ~ partes.idAlumno.apellido1 ~ " " ~ partes.idAlumno.apellido2 }}
+            <p class="firma">padre/madre/tutor legal
+                de <b class="firma">{{ partes.idAlumno.nombre ~ " " ~ partes.idAlumno.apellido1 ~ " " ~ partes.idAlumno.apellido2 }}
                 </b>, ha recibido el Parte de Incidencias relativo a su hijo/a.</p>
-            <p><br><br> En Córdoba a ______ de ___________________ de 20_____</p>
-            <p style="text-align: right">Firma</p>
+            <p class="firma">En Córdoba a ______ de ___________________ de 20_____</p>
+            <p class="firma">Firma</p><br>
         </div>
         <div style="font-size: 14px;text-align: center"><br>(El presente parte de incidencias se devolverá Firmado al día siguiente de
             su recepción. En otro caso, el alumno será objeto de un nuevo parte sancionador)
