@@ -113,11 +113,12 @@ class AlumnoController extends Controller
         $em = $this->getDoctrine()->getManager();
         /** @var AlumnoRepository $repositoryAlumnos */
         $repositoryAlumnos = $em->getRepository("AppBundle:Alumno");
-        if ($request->query->has('like')) {
+       /* if ($request->query->has('like')) {
             $alumnos = $repositoryAlumnos->getAlumnosLike($request->get('like'));
         } else {
             $alumnos = $repositoryAlumnos->findAll();
-        }
+        }*/
+        $alumnos = $repositoryAlumnos->getAlumnosByCursoYTutorD();
 
         return $this->render('convivencia/alumno/listaAlumnos.html.twig', array(
             'alumnos' => $alumnos,
