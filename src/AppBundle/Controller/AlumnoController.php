@@ -5,6 +5,7 @@ namespace AppBundle\Controller;
 
 use AppBundle\Entity\Alumno;
 use AppBundle\Entity\Cursos;
+use AppBundle\Entity\Profesores;
 use AppBundle\Entity\Usuarios;
 use AppBundle\Form\ImportFormType;
 use AppBundle\Form\PerfilAlumnoFormType;
@@ -113,12 +114,9 @@ class AlumnoController extends Controller
         $em = $this->getDoctrine()->getManager();
         /** @var AlumnoRepository $repositoryAlumnos */
         $repositoryAlumnos = $em->getRepository("AppBundle:Alumno");
-       /* if ($request->query->has('like')) {
-            $alumnos = $repositoryAlumnos->getAlumnosLike($request->get('like'));
-        } else {
-            $alumnos = $repositoryAlumnos->findAll();
-        }*/
-        $alumnos = $repositoryAlumnos->getAlumnosByCursoYTutorD();
+
+            $alumnos = $repositoryAlumnos->getAlumnosByCursoYTutorD();
+
 
         return $this->render('convivencia/alumno/listaAlumnos.html.twig', array(
             'alumnos' => $alumnos,
