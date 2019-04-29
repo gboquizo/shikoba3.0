@@ -46,7 +46,7 @@
                                 <!--Con este action vamos a definir los alumnos por profesor, esto es, su tutoría-->
                                 <!--Debe ajustarse en la respectiva action en AlumnosController-->
                                 {% if is_granted('ROLE_PROFESOR') %}
-                                    <li><a href="{{ path('show_alumnos') }}">Tutoría</a></li>
+                                    <li><a href="{{ path('show_alumnosgrupo') }}">Tutoría</a></li>
 
                                 {% endif %}
                                 {% if is_granted('ROLE_ADMIN') %}

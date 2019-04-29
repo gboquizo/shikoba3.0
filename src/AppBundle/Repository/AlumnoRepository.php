@@ -134,19 +134,17 @@ class AlumnoRepository extends EntityRepository
      * @param $tutorD
      * @return array
      */
-    public function getAlumnosByCursoYTutorD(Cursos $curso, Profesores $tutorD)
+    public function getAlumnosByCursoYTutorD(/*Profesores $profesores*/)
     {
+
         $query = $this->getEntityManager()->createQuery(
-            'SELECT a
-           FROM AppBundle\Entity\Alumno as a
-           JOIN AppBundle\Entity\Profesores as p
-           JOIN AppBundle\Entity\Cursos as c
-            WHERE c.idProfesor = :tutorD
-            and a.idCurso = :curso'
+            'select A from AppBundle\Entity\Alumno as A, 
+            AppBundle\Entity\Cursos as C, 
+            AppBundle\Entity\Profesores as P 
+            where C.idProfesor = 110 and C.idProfesor=P.id and A.idCurso=C.id'
         );
 
-        $query->setParameter('curso', $curso->getId());
-        $query->setParameter('tutorD', $tutorD->getId());;
+        /*$query->setParameter('tutorD', $profesores->getId());*/
         return $query->getResult();
     }
 }
