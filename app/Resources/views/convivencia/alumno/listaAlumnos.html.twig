@@ -81,7 +81,7 @@
                             <td>{{ alumno.telefonoTL1 }}</td>
                             <td>{{ alumno.telefonoTL2 }}</td>
                             <td>
-                                {% if ( is_granted('ROLE_ADMIN')) %}
+                                {% if ( is_granted('ROLE_ADMIN') or is_granted('ROLE_PROFESOR')) %}
                                     <a href="{{ path('editarAlumno', { 'id': alumno.id}) }}">
                                         <i class="material-icons">edit</i>
                                     </a>
