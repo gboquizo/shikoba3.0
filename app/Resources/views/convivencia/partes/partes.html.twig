@@ -121,7 +121,7 @@
                                     <td></td>
                                 {% endif %}
                             {% endif %}
-                            {% if is_granted('ROLE_ADMIN') %}{# pendiente de ver quien tiene acceso#}
+                            {% if is_granted('ROLE_ADMIN') or (is_granted('ROLE_CONVIVENCIA'))%}{# pendiente de ver quien tiene acceso#}
                             <td><a href="{{ path('nuevoParte') }}?idParte={{ parte.id }}">
                                     <i class="material-icons">edit</i></a>
                                 <a class="confirm paddingRightLeft "
