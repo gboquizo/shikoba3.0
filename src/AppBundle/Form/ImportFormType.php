@@ -13,19 +13,17 @@ class ImportFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('importar', FileType::class, array(
-                'label' => 'Fichero csv',
-                'attr' => array('class' => 'file-field input-field'),
-                'label_attr' => array('class' => '')
-            ));
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function configureOptions(OptionsResolver $resolver)
-    {
-        $resolver->setDefaults(array(
-            'data_class' => 'AppBundle\Entity\Conductas'
+            'label' => 'Fichero csv',
+            'attr' => array('class' => 'file-field input-field'),
+            'label_attr' => array('class' => '')
         ));
     }
+
+//    public function setDefaultOptions(OptionsResolver $resolver)
+//    {
+//        $resolver->setDefault(array(
+//            'data_class' => Conductas::class,
+//        ));
+//
+//    }
 }
