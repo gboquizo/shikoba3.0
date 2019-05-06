@@ -4,7 +4,13 @@
     {% include 'convivencia/navegacion.html.twig' %}
 
     <div class="">
+        {% if ( is_granted('ROLE_PROFESOR')) %}
+            <h3 class="center azul-prof fuente">Tutoría</h3>
+        {% else %}
         <h3 class="center azul-prof fuente">Gestión Alumnos</h3>
+
+        {% endif %}
+
 
         <div class="col s12 l4 offset-l4 center">
             {% for flash_message in app.session.flashBag.get('alumno') %}
@@ -28,13 +34,13 @@
                       <div class="i-checks col s12 right-align" style="margin-top: 8%;padding-left: 0;" id="aqui">
 
 
-                          <div class="" id="botonbus" style="margin-left: -5%;">
+                          {#<div class="" id="botonbus" style="margin-left: -5%;">
                               <button class=" z-depth-3 btn btn-floating blue darken-3 waves-effect waves-light"
                                       type="submit"
                                       value="Buscar" title="Buscar"><i
                                           class="material-icons right">search</i></button>
 
-                          </div>
+                          </div>#}
                       </div>
 
 
