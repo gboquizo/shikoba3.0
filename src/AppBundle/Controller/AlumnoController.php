@@ -13,6 +13,7 @@ use AppBundle\Form\AlumnoType;
 use AppBundle\Repository\AlumnoRepository;
 use AppBundle\Repository\CursosRepository;
 use AppBundle\Repository\NoticiasRepository;
+use AppBundle\Repository\PerfilRepository;
 use AppBundle\Services\AlumnoHelper;
 use AppBundle\Services\ImportHelper;
 use AppBundle\Utils\CsvResponse;
@@ -101,8 +102,7 @@ class AlumnoController extends Controller
     /**
      * @Route("/tutoria", name="show_alumnosgrupo")
      */
-    public function showAlumnosGrupoAction( Request $request ){
-
+    public function showAlumnosGrupoAction( Request $request){
         if (
             !in_array("ROLE_ADMIN",         $this->getUser()->getRoles())  &&
             !in_array("ROLE_CONVIVENCIA",   $this->getUser()->getRoles())  &&
@@ -115,7 +115,9 @@ class AlumnoController extends Controller
         /** @var AlumnoRepository $repositoryAlumnos */
         $repositoryAlumnos = $em->getRepository("AppBundle:Alumno");
 
-            $alumnos = $repositoryAlumnos->getAlumnosByCursoYTutorD();
+        $profesor=$this->getUser()->getId();
+
+            $alumnos = $repositoryAlumnos->getAlumnosByCursoYTutorD($profesor);
 
 
         return $this->render('convivencia/alumno/listaAlumnos.html.twig', array(

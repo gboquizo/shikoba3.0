@@ -130,21 +130,20 @@ class AlumnoRepository extends EntityRepository
 
     /**
      * Función que devuelve los alumnos por curso y tutor docente
-     * @param $curso
      * @param $tutorD
      * @return array
      */
-    public function getAlumnosByCursoYTutorD(/*Profesores $profesores*/)
+    public function getAlumnosByCursoYTutorD($id)
     {
 
         $query = $this->getEntityManager()->createQuery(
             'select A from AppBundle\Entity\Alumno as A, 
             AppBundle\Entity\Cursos as C, 
             AppBundle\Entity\Profesores as P 
-            where C.idProfesor = 23 and C.idProfesor=P.id and A.idCurso=C.id'
+            where P.idUsuario=:tutorD and P.id=C.idProfesor and C.id=A.idCurso'
         );
 
-        /*$query->setParameter('tutorD', $profesores->getId());*/
+        $query->setParameter('tutorD', $id);
         return $query->getResult();
     }
 }
