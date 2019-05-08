@@ -293,6 +293,14 @@ class ConvivenciaController extends Controller
     }
 
     /**
+     * @Route("/admin/importProfesorGrupo", name="admin_import_profesorGrupo")
+     * @Security("has_role('ROLE_ADMIN')")
+     */
+    public function importProfesorGrupoAction(Request $request)
+    {
+            return $this->render('convivencia/admin/gestionProfesoresGrupo.html.twig');
+    }
+    /**
      * @Route("recuperarPassword", name="recuperarPassword")
      */
     public function recuperarPassword(Request $request)

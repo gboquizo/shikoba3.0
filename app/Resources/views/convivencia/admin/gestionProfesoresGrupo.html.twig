@@ -1,0 +1,24 @@
+{% extends 'base2.html.twig' %}
+
+
+{% block body %}
+    {% include 'convivencia/navegacion.html.twig' %}
+    <div class="">
+        <h3 class="center azul-prof fuente">Modificar Tutor de grupos</h3>
+
+<br><br>
+        <div class="col s12 m6">
+            <label class="required" style="width: 18%;">Tutor:</label>
+            <input type="text" name="profesor"  id=""  value="">
+        </div>
+        <div class="col s12 m6">
+            <label class="required" style="width: 18%;">Grupo:</label>
+            <input type="text" name="grupo"  id="" value=" ">
+        </div>
+        <div class="col s12 l4 offset-l4 center">
+            <button class=" btn z-depth-3 blue darken-4 waves-effect waves-light" type="submit" style="margin: 2rem auto" name="guardar" value="Enviar">Enviar <i class="material-icons right">send</i></button>
+        </div>
+
+    </div>
+
+{% endblock %}
