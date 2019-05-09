@@ -129,7 +129,7 @@ class AlumnoRepository extends EntityRepository
 
     /**
      * Función que devuelve los alumnos por curso y tutor docente
-     * @param $tutorD
+     * @param $id
      * @return array
      */
     public function getAlumnosByCursoYTutorD($id)
