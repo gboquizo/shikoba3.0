@@ -55,7 +55,7 @@ class AlumnoController extends Controller
         $em = $this->getDoctrine()->getManager();
         /** @var NoticiasRepository $repositoryNoticias */
         $repositoryNoticias = $em->getRepository("AppBundle:Noticias");
-        $noticias = $repositoryNoticias->getNoticiasCurso($userData->getAlumno()->getIdCurso(),$userData->getAlumno()->getPuntos());
+        $noticias = $repositoryNoticias->getNoticiasCurso($userData->getAlumno()->getIdCurso(), $userData->getAlumno()->getPuntos());
 
         return $this->render('convivencia/alumno/alumno.html.twig', array(
                 'alumnoData' => $userData,
@@ -89,7 +89,7 @@ class AlumnoController extends Controller
 
         /** @var NoticiasRepository $repositoryNoticias */
         $repositoryNoticias = $em->getRepository("AppBundle:Noticias");
-        $noticias = $repositoryNoticias->getNoticiasCurso($userData->getAlumno()->getIdCurso(),$userData->getAlumno()->getPuntos());
+        $noticias = $repositoryNoticias->getNoticiasCurso($userData->getAlumno()->getIdCurso(), $userData->getAlumno()->getPuntos());
 
         return $this->render('convivencia/alumno/alumno.html.twig', array(
                 'alumnoData' => $userData,
@@ -102,11 +102,12 @@ class AlumnoController extends Controller
     /**
      * @Route("/tutoria", name="show_alumnosgrupo")
      */
-    public function showAlumnosGrupoAction( Request $request){
+    public function showAlumnosGrupoAction(Request $request)
+    {
         if (
-            !in_array("ROLE_ADMIN",         $this->getUser()->getRoles())  &&
-            !in_array("ROLE_CONVIVENCIA",   $this->getUser()->getRoles())  &&
-            !in_array("ROLE_PROFESOR",      $this->getUser()->getRoles())  &&
+            !in_array("ROLE_ADMIN", $this->getUser()->getRoles()) &&
+            !in_array("ROLE_CONVIVENCIA", $this->getUser()->getRoles()) &&
+            !in_array("ROLE_PROFESOR", $this->getUser()->getRoles()) &&
             !in_array("ROLE_TUTOR_DOCENTE", $this->getUser()->getRoles())
         )
             return $this->redirectToRoute("index");
@@ -115,9 +116,9 @@ class AlumnoController extends Controller
         /** @var AlumnoRepository $repositoryAlumnos */
         $repositoryAlumnos = $em->getRepository("AppBundle:Alumno");
 
-        $profesor=$this->getUser()->getId();
+        $profesor = $this->getUser()->getId();
 
-            $alumnos = $repositoryAlumnos->getAlumnosByCursoYTutorD($profesor);
+        $alumnos = $repositoryAlumnos->getAlumnosByCursoYTutorD($profesor);
 
 
         return $this->render('convivencia/alumno/listaAlumnos.html.twig', array(
@@ -353,23 +354,24 @@ class AlumnoController extends Controller
     /**
      * @Route("/alumnos", name="show_alumnos")
      */
-    public function indexAlumnos( Request $request ){
+    public function indexAlumnos(Request $request)
+    {
 
-      if (
-        !in_array("ROLE_ADMIN",         $this->getUser()->getRoles())  &&
-        !in_array("ROLE_CONVIVENCIA",   $this->getUser()->getRoles())  &&
-        !in_array("ROLE_PROFESOR",      $this->getUser()->getRoles())  &&
-        !in_array("ROLE_TUTOR_DOCENTE", $this->getUser()->getRoles())
-      )
-        return $this->redirectToRoute("index");
+        if (
+            !in_array("ROLE_ADMIN", $this->getUser()->getRoles()) &&
+            !in_array("ROLE_CONVIVENCIA", $this->getUser()->getRoles()) &&
+            !in_array("ROLE_PROFESOR", $this->getUser()->getRoles()) &&
+            !in_array("ROLE_TUTOR_DOCENTE", $this->getUser()->getRoles())
+        )
+            return $this->redirectToRoute("index");
 
         $em = $this->getDoctrine()->getManager();
         /** @var AlumnoRepository $repositoryAlumnos */
         $repositoryAlumnos = $em->getRepository("AppBundle:Alumno");
         if ($request->query->has('like')) {
-          $alumnos = $repositoryAlumnos->getAlumnosLike($request->get('like'));
+            $alumnos = $repositoryAlumnos->getAlumnosLike($request->get('like'));
         } else {
-          $alumnos = $repositoryAlumnos->findAll();
+            $alumnos = $repositoryAlumnos->findAll();
             //$alumnos = $repositoryAlumnos->getAlumnosByCursoYTutorD();
         }
 
@@ -382,39 +384,40 @@ class AlumnoController extends Controller
     /**
      * @Route("/alumnos/{id}", name="editarAlumno", requirements={"id": "\d+"})
      */
-    public function editAlumno(Request $request){
+    public function editAlumno(Request $request)
+    {
 
-      if (
-        !in_array("ROLE_ADMIN",         $this->getUser()->getRoles())  &&
-        !in_array("ROLE_CONVIVENCIA",   $this->getUser()->getRoles())  &&
-        !in_array("ROLE_PROFESOR",      $this->getUser()->getRoles())  &&
-        !in_array("ROLE_TUTOR_DOCENTE", $this->getUser()->getRoles())
-      )
-        return $this->redirectToRoute("index");
+        if (
+            !in_array("ROLE_ADMIN", $this->getUser()->getRoles()) &&
+            !in_array("ROLE_CONVIVENCIA", $this->getUser()->getRoles()) &&
+            !in_array("ROLE_PROFESOR", $this->getUser()->getRoles()) &&
+            !in_array("ROLE_TUTOR_DOCENTE", $this->getUser()->getRoles())
+        )
+            return $this->redirectToRoute("index");
 
-      $em = $this->getDoctrine()->getManager();
-      /** @var AlumnoRepository $repositoryAlumnos */
-      $repositoryAlumnos = $em->getRepository('AppBundle:Alumno');
-      $alumno = $repositoryAlumnos->getAlumno( $request->get('id') );
-      $form = $this->createForm(AlumnoType::class,$alumno);
+        $em = $this->getDoctrine()->getManager();
+        /** @var AlumnoRepository $repositoryAlumnos */
+        $repositoryAlumnos = $em->getRepository('AppBundle:Alumno');
+        $alumno = $repositoryAlumnos->getAlumno($request->get('id'));
+        $form = $this->createForm(AlumnoType::class, $alumno);
 
-      $form->handleRequest($request);
-      if ($form->isSubmitted() && $form->isValid()) {
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
 
-        try {
-          $em->persist($alumno);
-          $em->flush();
+            try {
+                $em->persist($alumno);
+                $em->flush();
 
-          $this->addFlash("alumno", "Se ha modificado correctamente");
-        } catch (\Exception $e) {
-          $this->addFlash("alumnoError", $e);
+                $this->addFlash("alumno", "Se ha modificado correctamente");
+            } catch (\Exception $e) {
+                $this->addFlash("alumnoError", $e);
+            }
+            return $this->redirectToRoute("show_alumnos");
         }
-          return $this->redirectToRoute("show_alumnos");
-      }
 
-      return $this->render('convivencia/alumno/modificarAlumno.html.twig', array(
-        'form' => $form->createView()
-      ));
+        return $this->render('convivencia/alumno/modificarAlumno.html.twig', array(
+            'form' => $form->createView()
+        ));
     }
 
 
