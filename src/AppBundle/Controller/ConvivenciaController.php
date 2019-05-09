@@ -23,6 +23,7 @@ use AppBundle\Form\UsuarioFormType;
 use AppBundle\Repository\CursosRepository;
 use AppBundle\Repository\DiarioAulaConvivenciaRepository;
 use AppBundle\Repository\PartesRepository;
+use AppBundle\Repository\ProfesoresRepository;
 use AppBundle\Repository\SancionesRepository;
 use AppBundle\Repository\UsuariosRepository;
 use AppBundle\Services\CrearSancionHelper;
@@ -298,19 +299,26 @@ class ConvivenciaController extends Controller
     /**
      * @Route("/admin/importProfesorGrupo", name="admin_import_profesorGrupo")
      * @Security("has_role('ROLE_ADMIN')")
+     * @Method({"GET", "POST"})
      */
     public function importProfesorGrupoAction(Request $request)
     {
-        $em = $this->getDoctrine()->getManager();
-        /** @var PartesHelper $parteHelper */
-        $parteHelper = $this->get('app.partesHelper');
-        /** @var Cursos $curso */
-        $cursos = $parteHelper->getAllCursos();
+        if (
+            !in_array("ROLE_ADMIN",         $this->getUser()->getRoles())  &&
+            !in_array("ROLE_CONVIVENCIA",   $this->getUser()->getRoles())  &&
+            !in_array("ROLE_PROFESOR",      $this->getUser()->getRoles())
+        )
+            return $this->redirectToRoute("index");
 
-        $compound = $parteHelper->getAllProfesores();
+        $em = $this->getDoctrine()->getManager();
+        $repositoryCursos = $em->GetRepository('AppBundle:Cursos');
+        /** @var ProfesoresRepository $repositoryProfesores */
+        $repositoryProfesores = $em->getRepository('AppBundle:Profesores');
+        $cursos = $repositoryCursos->findAll();
+        $profesores = $repositoryProfesores->findAll();
 
         $form = $this->createForm(ProfesoresFormType::class, array(
-            'compound' => $compound,
+            'profesores' => $profesores,
             'cursos' => $cursos
         ));
         $form->handleRequest($request);
