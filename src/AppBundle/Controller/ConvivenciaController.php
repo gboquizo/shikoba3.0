@@ -304,16 +304,19 @@ class ConvivenciaController extends Controller
     public function importProfesorGrupoAction(Request $request)
     {
         if (
-            !in_array("ROLE_ADMIN",         $this->getUser()->getRoles())  &&
-            !in_array("ROLE_CONVIVENCIA",   $this->getUser()->getRoles())  &&
-            !in_array("ROLE_PROFESOR",      $this->getUser()->getRoles())
+            !in_array("ROLE_ADMIN", $this->getUser()->getRoles()) &&
+            !in_array("ROLE_CONVIVENCIA", $this->getUser()->getRoles()) &&
+            !in_array("ROLE_PROFESOR", $this->getUser()->getRoles())
         )
             return $this->redirectToRoute("index");
 
         $em = $this->getDoctrine()->getManager();
-        $repositoryCursos = $em->GetRepository('AppBundle:Cursos');
+
+        /** @var CursosRepository $repositoryCursos */
+        $repositoryCursos = $em->getRepository('AppBundle:Cursos');
         /** @var ProfesoresRepository $repositoryProfesores */
         $repositoryProfesores = $em->getRepository('AppBundle:Profesores');
+
         $cursos = $repositoryCursos->findAll();
         $profesores = $repositoryProfesores->findAll();
 
@@ -323,10 +326,19 @@ class ConvivenciaController extends Controller
         ));
         $form->handleRequest($request);
 
-            return $this->render('convivencia/admin/gestionProfesoresGrupo.html.twig', array(
-                'form' => $form->createView()
-            ));
+        if ($form->isSubmitted() && $form->isValid()) {
+
+
+            $em->flush();
+
+            return $this->redirectToRoute('admin_import_profesorGrupo');
+        }
+
+        return $this->render('convivencia/admin/gestionProfesoresGrupo.html.twig', array(
+            'form' => $form->createView()
+        ));
     }
+
     /**
      * @Route("recuperarPassword", name="recuperarPassword")
      */
@@ -350,16 +362,14 @@ class ConvivenciaController extends Controller
 
             $hash = $user->getHash();
 
-            if ($repositoryAlumnos->findOneByIdUsuario($user->getId()) != null){
+            if ($repositoryAlumnos->findOneByIdUsuario($user->getId()) != null) {
                 $user = $repositoryAlumnos->findOneByIdUsuario($user->getId());
-                }
-            elseif ($repositoryProfesores->findOneByIdUsuario($user->getId()) != null){
+            } elseif ($repositoryProfesores->findOneByIdUsuario($user->getId()) != null) {
                 $user = $repositoryProfesores->findOneByIdUsuario($user->getId());
-                $email = $user->getEmail() ;
-               }
-            elseif ($repositoryTutores->findOneByIdUsuario($user->getId()) != null) {
-                $user = $repositoryTutores->findOneByIdUsuario($user->getId());}
-            else {
+                $email = $user->getEmail();
+            } elseif ($repositoryTutores->findOneByIdUsuario($user->getId()) != null) {
+                $user = $repositoryTutores->findOneByIdUsuario($user->getId());
+            } else {
                 $this->addFlash('passwordError', 'El usuario no existe');
                 return $this->redirectToRoute('recuperarPassword');
             }
@@ -369,13 +379,13 @@ class ConvivenciaController extends Controller
                 return $this->redirectToRoute('recuperarPassword');
             }
 
-            
+
             $message = \Swift_Message::newInstance()
                 ->setSubject('Proyecto Convivencia. Recuperación de contraseña')
                 //->setFrom('proyectoiesgrancapitan@gmail.com')
                 ->setFrom('shikobatres@gmail.com')
                 ->setTo($email)
-                ->setBody("Enlace para recuperar su contraseña:\n" . $this->generateUrl("reset_password", array(), UrlGeneratorInterface::ABSOLUTE_URL )."?hash=".$hash);
+                ->setBody("Enlace para recuperar su contraseña:\n" . $this->generateUrl("reset_password", array(), UrlGeneratorInterface::ABSOLUTE_URL) . "?hash=" . $hash);
             $this->get('mailer')->send($message);
             $this->addFlash('login', 'Se ha enviado un mensaje a su correo');
             return $this->redirectToRoute('login');
@@ -391,7 +401,7 @@ class ConvivenciaController extends Controller
      */
     public function resetPassword(Request $request)
     {
-        if($request->get('hash') == null)
+        if ($request->get('hash') == null)
             return $this->redirectToRoute('recuperarPassword');
 
         try {
