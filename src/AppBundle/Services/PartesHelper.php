@@ -168,4 +168,14 @@ class PartesHelper
         $repositoryProfesor = $this->em->getRepository("AppBundle:Profesores");
         return [$repositoryProfesor->findOneByIdUsuario($usuario)];
     }
+
+    /**
+     * Función que devuelve todos los profesores
+     * @return array
+     */
+    public function getAllProfesores(){
+        /** @var ProfesoresRepository $repositoryProfesor */
+        $repositoryProfesor = $this->em->getRepository("AppBundle:Profesores");
+        return $repositoryProfesor->findAll();
+    }
 }
