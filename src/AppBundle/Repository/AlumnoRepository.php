@@ -5,7 +5,6 @@ namespace AppBundle\Repository;
 use AppBundle\Entity\Alumno;
 use AppBundle\Entity\Cursos;
 use AppBundle\Entity\Tutores;
-use AppBundle\Entity\Profesores;
 use Doctrine\ORM\EntityRepository;
 
 /**

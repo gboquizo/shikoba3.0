@@ -69,4 +69,5 @@ class CursosRepository extends \Doctrine\ORM\EntityRepository
         $qb->setParameter('curso', $curso);
         return $qb->getResult();
     }
+
 }

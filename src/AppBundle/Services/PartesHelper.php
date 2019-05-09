@@ -15,6 +15,7 @@ use AppBundle\Entity\EstadosParte;
 use AppBundle\Entity\Partes;
 use AppBundle\Entity\Sanciones;
 use AppBundle\Entity\Usuarios;
+use AppBundle\Repository\CursosRepository;
 use AppBundle\Repository\EstadosParteRepository;
 use AppBundle\Repository\EstadosSancionRepository;
 use AppBundle\Repository\PartesRepository;
@@ -176,5 +177,15 @@ class PartesHelper
         /** @var ProfesoresRepository $repositoryProfesor */
         $repositoryProfesor = $this->em->getRepository("AppBundle:Profesores");
         return $repositoryProfesor->findAll();
+    }
+
+    /**
+     * Función que devuelve todos los cursos
+     * @return array
+     */
+    public function getAllCursos(){
+        /** @var CursosRepository $repositoryCursos */
+        $repositoryCursos = $this->em->getRepository("AppBundle:Cursos");
+        return $repositoryCursos->findAll();
     }
 }

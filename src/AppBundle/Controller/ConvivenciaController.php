@@ -9,6 +9,7 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Alumno;
+use AppBundle\Entity\Cursos;
 use AppBundle\Entity\EstadosParte;
 use AppBundle\Entity\EstadosSancion;
 use AppBundle\Entity\Profesores;
@@ -16,8 +17,10 @@ use AppBundle\Entity\TipoParte;
 use AppBundle\Entity\TipoSancion;
 use AppBundle\Entity\Usuarios;
 use AppBundle\Form\ImportFormType;
+use AppBundle\Form\ProfesoresFormType;
 use AppBundle\Form\RegistroFormType;
 use AppBundle\Form\UsuarioFormType;
+use AppBundle\Repository\CursosRepository;
 use AppBundle\Repository\DiarioAulaConvivenciaRepository;
 use AppBundle\Repository\PartesRepository;
 use AppBundle\Repository\SancionesRepository;
@@ -298,7 +301,23 @@ class ConvivenciaController extends Controller
      */
     public function importProfesorGrupoAction(Request $request)
     {
-            return $this->render('convivencia/admin/gestionProfesoresGrupo.html.twig');
+        $em = $this->getDoctrine()->getManager();
+        /** @var PartesHelper $parteHelper */
+        $parteHelper = $this->get('app.partesHelper');
+        /** @var Cursos $curso */
+        $cursos = $parteHelper->getAllCursos();
+
+        $compound = $parteHelper->getAllProfesores();
+
+        $form = $this->createForm(ProfesoresFormType::class, array(
+            'compound' => $compound,
+            'cursos' => $cursos
+        ));
+        $form->handleRequest($request);
+
+            return $this->render('convivencia/admin/gestionProfesoresGrupo.html.twig', array(
+                'form' => $form->createView()
+            ));
     }
     /**
      * @Route("recuperarPassword", name="recuperarPassword")
