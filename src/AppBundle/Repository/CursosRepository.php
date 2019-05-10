@@ -31,7 +31,7 @@ class CursosRepository extends \Doctrine\ORM\EntityRepository
      */
     public function updateProfesorCurso($idprofesor,$grupo){
         $query = $this->getEntityManager()->createQuery(
-            ' UPDATE AppBundle\Entity\cursos C set C.idProfesor =:idprofesor  where C.grupo = :grupo');
+            'UPDATE AppBundle\Entity\cursos C set C.idProfesor =:idprofesor where C.grupo = :grupo');
 
         $query->setParameter('idprofesor', $idprofesor);
         $query->setParameter('grupo', $grupo);

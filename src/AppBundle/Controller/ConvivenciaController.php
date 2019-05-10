@@ -310,18 +310,17 @@ class ConvivenciaController extends Controller
         )
             return $this->redirectToRoute("index");
 
-        //$profesor = $alumnoHelper->getAlumnosByRequest($request);
-        //$curso = $parteHelper->getParteFromRequest($request);
-
         $em = $this->getDoctrine()->getManager();
-
         $form = $this->createForm(ProfesoresFormType::class);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $data = $form->getData();
+            $profesor = $data['idProfesor']->getId();
+            $grupo = $data['grupo']->getGrupo();
 
             $repositoryCursos = $em->getRepository('AppBundle:Cursos');
-            $repositoryCursos->updateProfesorCurso(12,"2º ESO A");
+            $repositoryCursos->updateProfesorCurso($profesor, $grupo);
 
             $em->flush();
             return $this->redirectToRoute('admin_import_profesorGrupo');
