@@ -264,8 +264,8 @@ $(document).ready(function () {
         $("#DataTables_Table_0_info").addClass("col s12 l4 left");
         $("#DataTables_Table_0_paginate a").css("margin", "0.3% 0.2%");
         //select mostrar datatables
-        $('#DataTables_Table_0_length select').css("display", "block");
-        $('#DataTables_Table_0_length').addClass("col s4 m2 l1 left");
+        //$('#DataTables_Table_0_length select').css("display", "block");
+        //$('#DataTables_Table_0_length').addClass("col s4 m2 l1 left");
 
         //estilo al filtro datatables
         $('#DataTables_Table_0_filter').addClass("col s8 m6 l3 left");
