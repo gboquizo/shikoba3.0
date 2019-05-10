@@ -312,26 +312,16 @@ class ConvivenciaController extends Controller
 
         $em = $this->getDoctrine()->getManager();
 
-        /** @var CursosRepository $repositoryCursos */
-        $repositoryCursos = $em->getRepository('AppBundle:Cursos');
-        /** @var ProfesoresRepository $repositoryProfesores */
-        $repositoryProfesores = $em->getRepository('AppBundle:Profesores');
-
-        $cursos = $repositoryCursos->findAll();
-        $profesores = $repositoryProfesores->findAll();
-
-        $form = $this->createForm(ProfesoresFormType::class, array(
-            'profesores' => $profesores,
-            'cursos' => $cursos
-        ));
+        $form = $this->createForm(ProfesoresFormType::class);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
 
+            $repositoryCursos = $em->getRepository('AppBundle:Cursos');
+            $repositoryCursos->updateProfesorCurso(12,"2º ESO A");
 
             $em->flush();
-
-            return $this->redirectToRoute('admin_import_profesorGrupo');
+            return $this->redirectToRoute('gestionProfesoresGrupo');
         }
 
         return $this->render('convivencia/admin/gestionProfesoresGrupo.html.twig', array(
