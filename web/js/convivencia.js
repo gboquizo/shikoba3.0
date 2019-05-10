@@ -255,7 +255,7 @@ $(document).ready(function () {
             if ($(window).width() > "991") {
                 $("#DataTables_Table_0_wrapper>div:first-child").removeClass("center");
                 $("#DataTables_Table_0_wrapper>div:first-child").addClass("right l3");
-                $("#DataTables_Table_0_wrapper>div:first-child").css("text-align", "end");
+                $("#DataTables_Table_0_wrapper>div:first-child").css("text-align", "left");
                 $("#DataTables_Table_0_wrapper>div:first-child").css("margin-top", "2%");
                 $("#nuevo").addClass("center");
                 //esta condicion sirve para la ventana de partes
@@ -274,9 +274,7 @@ $(document).ready(function () {
             $(".paginate_button.current").removeClass("paginate_button current");
             $(".paginate_button").removeClass("paginate_button");
             //muestro los select de las tablas
-            $("#DataTables_Table_0_length select").css("display", "block");
-
-
+            $("#DataTables_Table_0_length select").css("display", "inline-block");
         },
         "lengthMenu": [[5, 10, 20, 30, -1], [5, 10, 20, 30, "Todos"]],
         language: {
@@ -298,7 +296,7 @@ $(document).ready(function () {
             {"sType": "date-eu", "aTargets": [1]}
         ],
         //botones para exportacion
-        dom: 'Blfrtip',
+        dom: 'Bfrtilp',
         buttons: [
             {
                 extend: 'pdfHtml5',
@@ -344,7 +342,7 @@ $(document).ready(function () {
             if ($(window).width() > "991") {
                 $("#DataTables_Table_0_wrapper>div:first-child").removeClass("center");
                 $("#DataTables_Table_0_wrapper>div:first-child").addClass("right l3");
-                $("#DataTables_Table_0_wrapper>div:first-child").css("text-align", "end");
+                $("#DataTables_Table_0_wrapper>div:first-child").css("text-align", "left");
                 $("#DataTables_Table_0_wrapper>div:first-child").css("margin-top", "2%");
                 $("#nuevo").addClass("center");
 
@@ -379,7 +377,7 @@ $(document).ready(function () {
             zeroRecords: "No se encuentra ningun registro",
         },
         //botones para exportacion
-        dom: 'Blfrtip',
+        dom: 'Bfrtilp',
         buttons: [
             {
                 extend: 'pdfHtml5',
