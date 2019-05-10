@@ -24,6 +24,19 @@ class CursosRepository extends \Doctrine\ORM\EntityRepository
 
         return $qb->getResult();
     }
+
+    /**
+     * Función que devuelve los cursos agrupados por curso
+     * @return array
+     */
+    public function updateProfesorCurso($idprofesor,$grupo){
+        $query = $this->getEntityManager()->createQuery(
+            ' UPDATE AppBundle\Entity\cursos C set C.idProfesor =:idprofesor  where C.grupo = :grupo');
+
+        $query->setParameter('idprofesor', $idprofesor);
+        $query->setParameter('grupo', $grupo);
+        return $query->getResult();
+    }
     /**
      * Función que devuelve los cursos agrupados por curso
      * @return array
