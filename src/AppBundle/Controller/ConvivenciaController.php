@@ -310,6 +310,9 @@ class ConvivenciaController extends Controller
         )
             return $this->redirectToRoute("index");
 
+        //$profesor = $alumnoHelper->getAlumnosByRequest($request);
+        //$curso = $parteHelper->getParteFromRequest($request);
+
         $em = $this->getDoctrine()->getManager();
 
         $form = $this->createForm(ProfesoresFormType::class);
@@ -321,7 +324,7 @@ class ConvivenciaController extends Controller
             $repositoryCursos->updateProfesorCurso(12,"2º ESO A");
 
             $em->flush();
-            return $this->redirectToRoute('gestionProfesoresGrupo');
+            return $this->redirectToRoute('admin_import_profesorGrupo');
         }
 
         return $this->render('convivencia/admin/gestionProfesoresGrupo.html.twig', array(
