@@ -277,4 +277,39 @@ class PartesRepository extends \Doctrine\ORM\EntityRepository
         return $partesExportarFinal2;
     }
 
+    /**
+     * Función que devuelve el informe de partes de los alumnos
+     * @param $fechaInicial, la fecha inicial
+     * @param $fechaFinal, la fecha final
+     * @return $result, el resultado del informe
+     * @throws
+     */
+    public function getInformePartesAlumnos($fechaInicial, $fechaFinal)
+    {
+        $stmt = $this->getEntityManager()
+            ->getConnection()
+            ->prepare('CALL `estPartesAlumnado`(:fechaInicial, :fechaFinal);');
+        $stmt->bindParam(':fechaInicial',$fechaInicial);
+        $stmt->bindParam(':fechaFinal',$fechaFinal);
+        $stmt->execute();
+        return $stmt->fetchAll();
+    }
+
+    /**
+     * Función que devuelve el informe de partes de los profesores
+     * @param $fechaInicial, la fecha inicial
+     * @param $fechaFinal, la fecha final
+     * @return $query, el resultado del informe
+     * @throws
+     */
+    public function getInformePartesProfesorado($fechaInicial,$fechaFinal)
+    {
+        $query = $this->getEntityManager()
+            ->getConnection()
+            ->prepare( 'CALL estPartesProfesorado(:fecha1,:fecha2)');
+        $query->bindParam(':fecha1', $fechaInicial);
+        $query->bindParam(':fecha2', $fechaFinal);
+        $query->execute();
+        return $query->fetchAll();
+    }
 }
