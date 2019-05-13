@@ -308,4 +308,63 @@ class PartesController extends Controller
         ));
     }
 
+    /**
+     * @Route("/informePartesAlumno", name="partes_alumno_informe")
+     */
+    public function partesAlumnoInforme()
+    {
+//        $em = $this->getDoctrine()->getManager();
+//        /** @var AlumnoRepository $repositoryAlumnos */
+//        $repositoryAlumnos = $em->getRepository('AppBundle:Alumno');
+//        $repositoryCursos = $em->GetRepository('AppBundle:Cursos');
+//        /** @var ProfesoresRepository $repositoryProfesores */
+//        $repositoryProfesores = $em->getRepository('AppBundle:Profesores');
+//        $alumnos = $repositoryAlumnos->findAll();
+//        $cursos = $repositoryCursos->findAll();
+//        $profesores = $repositoryProfesores->findAll();
+
+        return $this->render('convivencia/informes/partesAlumnoInforme.html.twig', array(
+
+        ));
+    }
+
+    /**
+     * @Route("/informePartesProfesor", name="partes_profesor_informe")
+     */
+    public function partesProfesorInforme()
+    {
+//        $em = $this->getDoctrine()->getManager();
+//        /** @var AlumnoRepository $repositoryAlumnos */
+//        $repositoryAlumnos = $em->getRepository('AppBundle:Alumno');
+//        $repositoryCursos = $em->GetRepository('AppBundle:Cursos');
+//        /** @var ProfesoresRepository $repositoryProfesores */
+//        $repositoryProfesores = $em->getRepository('AppBundle:Profesores');
+//        $alumnos = $repositoryAlumnos->findAll();
+//        $cursos = $repositoryCursos->findAll();
+//        $profesores = $repositoryProfesores->findAll();
+
+        return $this->render('convivencia/informes/partesProfesorInforme.html.twig', array(
+
+        ));
+    }
+
+    /**
+     * @Route("/informePartesGrupo", name="partes_grupos_informe")
+     */
+    public function partesGruposInforme()
+    {
+//        $em = $this->getDoctrine()->getManager();
+//        /** @var AlumnoRepository $repositoryAlumnos */
+//        $repositoryAlumnos = $em->getRepository('AppBundle:Alumno');
+//        $repositoryCursos = $em->GetRepository('AppBundle:Cursos');
+//        /** @var ProfesoresRepository $repositoryProfesores */
+//        $repositoryProfesores = $em->getRepository('AppBundle:Profesores');
+//        $alumnos = $repositoryAlumnos->findAll();
+//        $cursos = $repositoryCursos->findAll();
+//        $profesores = $repositoryProfesores->findAll();
+
+        return $this->render('convivencia/informes/partesGruposInforme.html.twig', array(
+
+        ));
+    }
 }

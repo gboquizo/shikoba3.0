@@ -58,16 +58,16 @@
                                                 <div class="collapsible-body ">
                                                     <ul>
                                                         <li><a class="waves-effect waves-blue"
-                                                               href="">PartesAlumnado</a>
+                                                               href="{{ path('partes_alumno_informe') }}">Partes Alumnado</a>
                                                         </li>
                                                         <li><a class="waves-effect waves-blue"
-                                                               href="">PartesGrupos</a>
+                                                               href={{ path('partes_grupos_informe') }}>Partes Grupos</a>
                                                         </li>
                                                         <li><a class="waves-effect waves-blue"
-                                                               href="">PartesProfesorado</a>
+                                                               href="{{ path('partes_profesor_informe') }}">Partes Profesorado</a>
                                                         </li>
                                                         <li><a class="waves-effect waves-blue"
-                                                               href=""
+                                                               href="{{ path('sanciones_alumnosgrupos_informe') }}"
                                                             >Sanciones alumnado</a>
                                                         </li>
                                                     </ul>
@@ -90,6 +90,9 @@
                                                         <li><a class="waves-effect waves-blue"
                                                                href="{{ path('admin_import_profesor') }}"
                                                             >Profesorado</a>
+                                                        </li>
+                                                        <li><a href="{{ path('admin_import_profesorGrupo') }}"
+                                                               class="blue darken-2 white-text">Tutoría</a>
                                                         </li>
                                                         {# <li><a class="waves-effect waves-blue"
                                                                 href="{{ path('admin_security') }}"
@@ -161,16 +164,16 @@
                                         <li><a class="dropdown-button" href="#!" data-activates="dropdown1">Informes<i
                                                         class="material-icons right">keyboard_arrow_right</i></a>
                                             <ul id="dropdown1" class="dropdown-content">
-                                                <li><a href=""
+                                                <li><a href="{{ path('partes_alumno_informe') }}"
                                                        class="blue darken-5 white-text">Partes Alumnos</a>
                                                 </li>
-                                                <li><a href=""
-                                                       class="blue darken-2 white-text">Partes Profesorado</a>
-                                                </li>
-                                                <li><a href=""
+                                                <li><a href="{{ path('partes_grupos_informe') }}"
                                                        class="blue darken-2 white-text">Partes Grupos</a>
                                                 </li>
-                                                <li><a href=""
+                                                <li><a href="{{ path('partes_profesor_informe') }}"
+                                                            class="blue darken-2 white-text">Partes Profesorado</a>
+                                                </li>
+                                                <li><a href="{{ path('sanciones_alumnosgrupos_informe') }}"
                                                        class="blue darken-2 white-text">Sanciones Alumnos</a>
                                                 </li>
                                             </ul>
