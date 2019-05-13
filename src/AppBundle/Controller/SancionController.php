@@ -222,4 +222,24 @@ class SancionController extends Controller
             'tipos' => $tipos,
         ));
     }
+
+    /**
+     * @Route("/informeSancionesAlumnosGrupo", name="sanciones_alumnosgrupos_informe")
+     */
+    public function sancionesAlumnosGrupoInforme()
+    {
+//        $em = $this->getDoctrine()->getManager();
+//        /** @var AlumnoRepository $repositoryAlumnos */
+//        $repositoryAlumnos = $em->getRepository('AppBundle:Alumno');
+//        $repositoryCursos = $em->GetRepository('AppBundle:Cursos');
+//        /** @var ProfesoresRepository $repositoryProfesores */
+//        $repositoryProfesores = $em->getRepository('AppBundle:Profesores');
+//        $alumnos = $repositoryAlumnos->findAll();
+//        $cursos = $repositoryCursos->findAll();
+//        $profesores = $repositoryProfesores->findAll();
+
+        return $this->render('convivencia/informes/sancionesAlumnadoGrupoInforme.html.twig', array(
+
+        ));
+    }
 }
