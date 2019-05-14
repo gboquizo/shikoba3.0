@@ -312,4 +312,15 @@ class PartesRepository extends \Doctrine\ORM\EntityRepository
         $query->execute();
         return $query->fetchAll();
     }
+
+    public function getInformePartesGrupo($fechaInicial,$fechaFinal)
+    {
+        $query = $this->getEntityManager()
+            ->getConnection()
+            ->prepare( 'CALL estPartesGrupos(:fecha1,:fecha2)');
+        $query->bindParam(':fecha1', $fechaInicial);
+        $query->bindParam(':fecha2', $fechaFinal);
+        $query->execute();
+        return $query->fetchAll();
+    }
 }
