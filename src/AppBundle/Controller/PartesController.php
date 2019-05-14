@@ -354,7 +354,9 @@ class PartesController extends Controller
         ));
 
     }
-
+    /**
+     * @Route("/informeSancionesAlumnosGrupo", name="sanciones_alumnos_informe")
+     */
     public function informeSancionesAlumnosGrupo()
     {
         $em = $this->getDoctrine()->getManager();
