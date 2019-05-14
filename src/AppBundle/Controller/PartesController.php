@@ -347,7 +347,7 @@ class PartesController extends Controller
      $em = $this->getDoctrine()->getManager();
         /** @var PartesRepository $repositoryPartes */
         $repositoryPartes = $em->getRepository("AppBundle:Partes");
-        $data = $repositoryPartes->getInformePartesProfesorado("1/12/2018","1/12/2019");
+        $data = $repositoryPartes->getInformePartesGrupo("1/12/2018","1/12/2019");
 
         return $this->render('convivencia/informes/partesGruposInforme.html.twig', array(
             'data' => $data
@@ -362,7 +362,7 @@ class PartesController extends Controller
         $em = $this->getDoctrine()->getManager();
         /** @var PartesRepository $repositoryPartes */
         $repositoryPartes = $em->getRepository("AppBundle:Partes");
-        $data = $repositoryPartes->getInformePartesProfesorado("1/12/2018","1/12/2019");
+        $data = $repositoryPartes->getInformeSancionesAlumnos("1/12/2018","1/12/2019");
 
         return $this->render('convivencia/informes/sancionesAlumnosGrupoInforme.html.twig', array(
             'data' => $data
