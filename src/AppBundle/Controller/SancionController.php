@@ -18,12 +18,17 @@ use AppBundle\Services\CrearSancionHelper;
 use AppBundle\Utils\CsvResponse;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\PersistentCollection;
+use http\Env\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Component\Config\Definition\Exception\Exception;
 use Symfony\Component\HttpFoundation\Request;
 
+/**
+ * Class SancionController
+ * @package AppBundle\Controller
+ */
 class SancionController extends Controller
 {
     /**
@@ -239,6 +244,5 @@ class SancionController extends Controller
         return $this->render('convivencia/informes/sancionesAlumnadoGrupoInforme.html.twig', array(
             'data' => $data
         ));
-
     }
 }
