@@ -311,28 +311,35 @@ class PartesController extends Controller
     /**
      * @Route("/informePartesAlumno", name="partes_alumno_informe")
      */
-    public function partesAlumnoInforme()
+    public function partesAlumnoInforme(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
         /** @var PartesRepository $repositoryPartes */
         $repositoryPartes = $em->getRepository('AppBundle:Partes');
-        $data = $repositoryPartes->getInformePartesAlumnos("01/01/2018", "13/05/2019");
+        $fechaI = $request->get('fechaI');
+        $fechaF = $request->get('fechaF');
+        $fomateadaI = date("d/m/Y", strtotime($fechaI));
+        $fomateadaF = date("d/m/Y", strtotime($fechaF));
+        $data = $repositoryPartes->getInformePartesAlumnos("$fomateadaI", "$fomateadaF");
 
         return $this->render('convivencia/informes/partesAlumnoInforme.html.twig', array(
             'data' => $data
-
         ));
     }
 
     /**
      * @Route("/informePartesProfesor", name="partes_profesor_informe")
      */
-    public function partesProfesorInforme()
+    public function partesProfesorInforme(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
         /** @var PartesRepository $repositoryPartes */
         $repositoryPartes = $em->getRepository("AppBundle:Partes");
-        $data = $repositoryPartes->getInformePartesProfesorado("1/12/2018","1/12/2019");
+        $fechaI = $request->get('fechaI');
+        $fechaF = $request->get('fechaF');
+        $fomateadaI = date("d/m/Y", strtotime($fechaI));
+        $fomateadaF = date("d/m/Y", strtotime($fechaF));
+        $data = $repositoryPartes->getInformePartesProfesorado("$fomateadaI", "$fomateadaF");
 
         return $this->render('convivencia/informes/partesProfesorInforme.html.twig', array(
             'data' => $data
@@ -342,16 +349,19 @@ class PartesController extends Controller
     /**
      * @Route("/informePartesGrupo", name="partes_grupos_informe")
      */
-    public function partesGruposInforme()
+    public function partesGruposInforme(Request $request)
     {
      $em = $this->getDoctrine()->getManager();
         /** @var PartesRepository $repositoryPartes */
         $repositoryPartes = $em->getRepository("AppBundle:Partes");
-        $data = $repositoryPartes->getInformePartesGrupo("1/12/2018","1/12/2019");
+        $fechaI = $request->get('fechaI');
+        $fechaF = $request->get('fechaF');
+        $fomateadaI = date("d/m/Y", strtotime($fechaI));
+        $fomateadaF = date("d/m/Y", strtotime($fechaF));
+        $data = $repositoryPartes->getInformePartesGrupo("$fomateadaI", "$fomateadaF");
 
         return $this->render('convivencia/informes/partesGruposInforme.html.twig', array(
             'data' => $data
         ));
-
     }
 }
