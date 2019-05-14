@@ -344,18 +344,14 @@ class PartesController extends Controller
      */
     public function partesGruposInforme()
     {
-//        $em = $this->getDoctrine()->getManager();
-//        /** @var AlumnoRepository $repositoryAlumnos */
-//        $repositoryAlumnos = $em->getRepository('AppBundle:Alumno');
-//        $repositoryCursos = $em->GetRepository('AppBundle:Cursos');
-//        /** @var ProfesoresRepository $repositoryProfesores */
-//        $repositoryProfesores = $em->getRepository('AppBundle:Profesores');
-//        $alumnos = $repositoryAlumnos->findAll();
-//        $cursos = $repositoryCursos->findAll();
-//        $profesores = $repositoryProfesores->findAll();
+     $em = $this->getDoctrine()->getManager();
+        /** @var PartesRepository $repositoryPartes */
+        $repositoryPartes = $em->getRepository("AppBundle:Partes");
+        $data = $repositoryPartes->getInformePartesProfesorado("1/12/2018","1/12/2019");
 
         return $this->render('convivencia/informes/partesGruposInforme.html.twig', array(
-
+            'data' => $data
         ));
+
     }
 }
