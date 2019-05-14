@@ -330,4 +330,23 @@ class PartesRepository extends \Doctrine\ORM\EntityRepository
         $query->execute();
         return $query->fetchAll();
     }
+
+
+    /**
+     * Función que devuelve el informe de las sanciones de la alumnos
+     * @param $fechaInicial, la fecha inicial
+     * @param $fechaFinal, la fecha final
+     * @return $query, el resultado del informe
+     * @throws
+     */
+    public function getInformeSancionesAlumnos($fechaInicial,$fechaFinal)
+    {
+        $query = $this->getEntityManager()
+            ->getConnection()
+            ->prepare( 'CALL estSancionesAlumnadoGrupo(:fecha1,:fecha2)');
+        $query->bindParam(':fecha1', $fechaInicial);
+        $query->bindParam(':fecha2', $fechaFinal);
+        $query->execute();
+        return $query->fetchAll();
+    }
 }
