@@ -1,6 +1,7 @@
 <?php
 
 namespace AppBundle\Repository;
+
 use AppBundle\Entity\Alumno;
 use AppBundle\Entity\Partes;
 use AppBundle\Entity\TipoSancion;
@@ -51,19 +52,19 @@ class SancionesRepository extends \Doctrine\ORM\EntityRepository
      */
     public function getSancionesOrdenadas($historico = false)
     {
-        if(!$historico) {
+        if (!$historico) {
             $query = $this->getEntityManager()->createQuery(
-                /*"SELECT s
-                 FROM AppBundle\Entity\Sanciones s
-                 JOIN s.idEstado as estado
-                 WHERE estado.estado != 'Finalizada'
-                 ORDER BY s.fecha DESC, s.id DESC"*/
+            /*"SELECT s
+             FROM AppBundle\Entity\Sanciones s
+             JOIN s.idEstado as estado
+             WHERE estado.estado != 'Finalizada'
+             ORDER BY s.fecha DESC, s.id DESC"*/
                 "SELECT s
                  FROM AppBundle\Entity\Sanciones s
                  JOIN s.idEstado as estado
                  ORDER BY s.fecha DESC, s.id DESC"
             );
-        }else{
+        } else {
             $query = $this->getEntityManager()->createQuery(
                 'SELECT s
                  FROM AppBundle\Entity\Sanciones s
@@ -112,7 +113,6 @@ class SancionesRepository extends \Doctrine\ORM\EntityRepository
     }
 
 
-
     /**
      * Función que devuelve las sanciones que contienen la cadena pasada por parámetro
      * @param $string
@@ -137,8 +137,7 @@ class SancionesRepository extends \Doctrine\ORM\EntityRepository
 
 
             );
-        }
-        else{
+        } else {
             $query = $this->getEntityManager()->createQuery(
                 "SELECT s
              FROM AppBundle\Entity\Sanciones s
@@ -153,12 +152,11 @@ class SancionesRepository extends \Doctrine\ORM\EntityRepository
         }
         $query->setParameter("string", '%' . $string . '%');
         $fecha = explode('/', $string);
-        for($i=0; $i<3; $i++){
-            if(count($fecha) >= ($i+1)) {
+        for ($i = 0; $i < 3; $i++) {
+            if (count($fecha) >= ($i + 1)) {
                 $query->setParameter('stringFecha' . $i, $fecha[$i]);
-            }
-            else
-                $query->setParameter('stringFecha'.$i, '');
+            } else
+                $query->setParameter('stringFecha' . $i, '');
         }
         return $query->getResult();
     }
@@ -184,14 +182,15 @@ class SancionesRepository extends \Doctrine\ORM\EntityRepository
         return $query->getResult();
     }
 
-    public function getSancionesByPartes(Partes $parte){
+    public function getSancionesByPartes(Partes $parte)
+    {
         $query = $this->getEntityManager()->createQuery('SELECT s
                  FROM AppBundle\Entity\Sanciones s
                  JOIN s.idParte as parte
                  WHERE parte.id = :parte');
 
         $query->setParameter('parte', $parte->getId());
-         return $query->getResult();
+        return $query->getResult();
     }
 
     /**
@@ -256,4 +255,21 @@ class SancionesRepository extends \Doctrine\ORM\EntityRepository
         return $sancionesExportarFinal;
     }
 
+    /**
+     * Función que devuelve el informe de las sanciones de la alumnos
+     * @param $fechaInicial , la fecha inicial
+     * @param $fechaFinal , la fecha final
+     * @return $query, el resultado del informe
+     * @throws
+     */
+    public function getInformeSancionesAlumnos($fechaInicial, $fechaFinal)
+    {
+        $query = $this->getEntityManager()
+            ->getConnection()
+            ->prepare('CALL estSancionesAlumnadoGrupo(:fecha1,:fecha2)');
+        $query->bindParam(':fecha1', $fechaInicial);
+        $query->bindParam(':fecha2', $fechaFinal);
+        $query->execute();
+        return $query->fetchAll();
+    }
 }

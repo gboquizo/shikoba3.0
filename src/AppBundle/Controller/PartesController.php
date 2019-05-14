@@ -354,19 +354,4 @@ class PartesController extends Controller
         ));
 
     }
-    /**
-     * @Route("/informeSancionesAlumnosGrupo", name="sanciones_alumnos_informe")
-     */
-    public function informeSancionesAlumnosGrupo()
-    {
-        $em = $this->getDoctrine()->getManager();
-        /** @var PartesRepository $repositoryPartes */
-        $repositoryPartes = $em->getRepository("AppBundle:Partes");
-        $data = $repositoryPartes->getInformeSancionesAlumnos("1/12/2018","1/12/2019");
-
-        return $this->render('convivencia/informes/sancionesAlumnosGrupoInforme.html.twig', array(
-            'data' => $data
-        ));
-
-    }
 }
