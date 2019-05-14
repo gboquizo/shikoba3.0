@@ -225,22 +225,20 @@ class SancionController extends Controller
     /**
      * @Route("/informeSancionesAlumnosGrupo", name="sanciones_alumnosgrupos_informe")
      */
-    public function informeSancionesAlumnosGrupo()
+    public function informeSancionesAlumnosGrupo(Request $request)
     {
-        if (isset($_POST['fechaI'])) {
-            $em = $this->getDoctrine()->getManager();
-            /** @var SancionesRepository $repositorySanciones */
-            $repositorySanciones = $em->getRepository("AppBundle:Sanciones");
-            $fechaI = $_POST['fechaI'];
-            $fechaF = $_POST['fechaF'];
-            $fomateadaI = date("d/m/Y", strtotime($fechaI));
-            $fomateadaF = date("d/m/Y", strtotime($fechaF));
-            $data = $repositorySanciones->getInformeSancionesAlumnos("$fomateadaI", "$fomateadaF");
+        $em = $this->getDoctrine()->getManager();
+        /** @var SancionesRepository $repositorySanciones */
+        $repositorySanciones = $em->getRepository("AppBundle:Sanciones");
+        $fechaI = $request->get('fechaI');
+        $fechaF = $request->get('fechaF');
+        $fomateadaI = date("d/m/Y", strtotime($fechaI));
+        $fomateadaF = date("d/m/Y", strtotime($fechaF));
+        $data = $repositorySanciones->getInformeSancionesAlumnos("$fomateadaI", "$fomateadaF");
 
-            return $this->render('convivencia/informes/sancionesAlumnadoGrupoInformeDatos.html.twig', array(
-                'data' => $data
-            ));
-        }
-        return $this->render('convivencia/informes/sancionesAlumnadoGrupoInforme.html.twig');
+        return $this->render('convivencia/informes/sancionesAlumnadoGrupoInforme.html.twig', array(
+            'data' => $data
+        ));
+
     }
 }
