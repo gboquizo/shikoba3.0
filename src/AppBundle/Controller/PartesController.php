@@ -349,12 +349,9 @@ class PartesController extends Controller
         $repositoryPartes = $em->getRepository("AppBundle:Partes");
         $data = $repositoryPartes->getInformePartesProfesorado("1/12/2018","1/12/2019");
 
-        return $this->render('convivencia/informes/partesProfesorInforme.html.twig', array(
+        return $this->render('convivencia/informes/partesGruposInforme.html.twig', array(
             'data' => $data
         ));
 
-        return $this->render('convivencia/informes/partesGruposInforme.html.twig', array(
-
-        ));
     }
 }

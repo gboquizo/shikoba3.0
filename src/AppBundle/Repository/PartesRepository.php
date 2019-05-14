@@ -313,6 +313,13 @@ class PartesRepository extends \Doctrine\ORM\EntityRepository
         return $query->fetchAll();
     }
 
+    /**
+     * Función que devuelve el informe de partes de los grupos
+     * @param $fechaInicial, la fecha inicial
+     * @param $fechaFinal, la fecha final
+     * @return $query, el resultado del informe
+     * @throws
+     */
     public function getInformePartesGrupo($fechaInicial,$fechaFinal)
     {
         $query = $this->getEntityManager()
