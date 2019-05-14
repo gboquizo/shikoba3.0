@@ -139,7 +139,7 @@ class SancionController extends Controller
             $em->remove($sancion);
             $this->addFlash("sancion", "Se ha eliminado correctamente");
             $em->flush();
-        }catch (Exception $e) {
+        } catch (Exception $e) {
             $this->addFlash("sancionError", "No se ha podido eliminar la sanción");
         }
         return $this->redirectToRoute("gestion_sanciones");
@@ -159,17 +159,15 @@ class SancionController extends Controller
         $repositoryAlumnos = $em->getRepository('AppBundle:Alumno');
         /** @var TipoSancionRepository $repositoryTipoSancion */
         $repositoryTipoSancion = $em->getRepository('AppBundle:TipoSancion');
-        if($alumnosSeleccionados == "Todos"){
+        if ($alumnosSeleccionados == "Todos") {
             $alumnos = $repositoryAlumnos->findAll();
-        }
-        else{
+        } else {
             $alumnos = $repositoryAlumnos->findById($alumnosSeleccionados);
         }
 
-        if($tiposSeleccionados == "Todos"){
+        if ($tiposSeleccionados == "Todos") {
             $tipos = $repositoryTipoSancion->findAll();
-        }
-        else{
+        } else {
             $tipos = $repositoryTipoSancion->findById($tiposSeleccionados);
         }
         /** @var SancionesRepository $repositorySanciones */
@@ -229,17 +227,19 @@ class SancionController extends Controller
      */
     public function informeSancionesAlumnosGrupo()
     {
-        if(isset($_POST['fechaI'] )){
+        if (isset($_POST['fechaI'])) {
             $em = $this->getDoctrine()->getManager();
             /** @var SancionesRepository $repositorySanciones */
             $repositorySanciones = $em->getRepository("AppBundle:Sanciones");
-            $fechaI=$_POST['fechaI'];
-            $fechaF=$_POST['fechaF'];
-            $fomateadaI= date("d/m/Y", strtotime($fechaI));
-            $fomateadaF= date("d/m/Y", strtotime($fechaF));
-            $data = $repositorySanciones->getInformeSancionesAlumnos("$fomateadaI","$fomateadaF");
-            var_dump($data);
-            die();
+            $fechaI = $_POST['fechaI'];
+            $fechaF = $_POST['fechaF'];
+            $fomateadaI = date("d/m/Y", strtotime($fechaI));
+            $fomateadaF = date("d/m/Y", strtotime($fechaF));
+            $data = $repositorySanciones->getInformeSancionesAlumnos("$fomateadaI", "$fomateadaF");
+
+            return $this->render('convivencia/informes/sancionesAlumnadoGrupoInformeDatos.html.twig', array(
+                'data' => $data
+            ));
         }
         return $this->render('convivencia/informes/sancionesAlumnadoGrupoInforme.html.twig');
     }

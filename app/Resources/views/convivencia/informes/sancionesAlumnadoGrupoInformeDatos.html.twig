@@ -1,0 +1,74 @@
+{#<pre>
+    {{ dump(data)  }}
+</pre>#}
+{% extends 'base2.html.twig' %}
+
+{% block body %}
+    {% include 'convivencia/navegacion.html.twig' %}
+
+    <div class="">
+            <h3 class="center azul-prof fuente">Informe sanciones del alumno</h3>
+
+        <div class="col s12 l4 offset-l4 center">
+            {% for flash_message in app.session.flashBag.get('data') %}
+                <div class="card-panel green white-text" style="position: relative;">
+                    <span class="spancaja">{{ flash_message }} </span><i class="material-icons spanico">done</i>
+                </div>
+            {% endfor %}
+
+            {% for flash_message in app.session.flashBag.get('dataError') %}
+                <div class="card-panel red white-text" style="position: relative;">
+                    <span class="spancaja">{{ flash_message }}</span> <i class="material-icons spanico">clear</i>
+                </div>
+            {% endfor %}
+        </div>
+
+        <form action="">
+            <div class="row" id="busq">
+
+                <div class="col s12 l6">
+                    <div class="row">
+                        <div class="i-checks col s12 right-align" style="margin-top: 8%;padding-left: 0;" id="aqui">
+
+
+                            {#<div class="" id="botonbus" style="margin-left: -5%;">
+                                <button class=" z-depth-3 btn btn-floating blue darken-3 waves-effect waves-light"
+                                        type="submit"
+                                        value="Buscar" title="Buscar"><i
+                                            class="material-icons right">search</i></button>
+
+                            </div>#}
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <table class="responsive-table highlight tableData z-depth-3" data-order='[[ 0, "asc" ]]' data-page-length='10' style="margin-bottom: 1%">
+                    <thead>
+                    <tr class="blue darken-3 white-text">
+                        <th>Grupo</th>
+                        <th>Nombre</th>
+                        <th>Tipo</th>
+                        <th>Sanciones</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for key, values in data %}
+                        <tr>
+                            <td>{{ values["Grupo"] }}</td>
+                            <td>{{ values["Nombre"] }}</td>
+                            <td>{{ values["max(tipo)"] }}</td>
+                            <td>{{ values["Sanciones"]|default("-") }}</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+
+        </form>
+    </div>
+{% endblock %}
+
