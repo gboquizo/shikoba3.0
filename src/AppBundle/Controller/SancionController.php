@@ -229,13 +229,18 @@ class SancionController extends Controller
      */
     public function informeSancionesAlumnosGrupo()
     {
-        $em = $this->getDoctrine()->getManager();
-        /** @var SancionesRepository $repositorySanciones */
-        $repositorySanciones = $em->getRepository("AppBundle:Sanciones");
-        $data = $repositorySanciones->getInformeSancionesAlumnos("1/12/2018","1/12/2019");
-
-        return $this->render('convivencia/informes/sancionesAlumnadoGrupoInforme.html.twig', array(
-            'data' => $data
-        ));
+        if(isset($_POST['fechaI'] )){
+            $em = $this->getDoctrine()->getManager();
+            /** @var SancionesRepository $repositorySanciones */
+            $repositorySanciones = $em->getRepository("AppBundle:Sanciones");
+            $fechaI=$_POST['fechaI'];
+            $fechaF=$_POST['fechaF'];
+            $fomateadaI= date("d/m/Y", strtotime($fechaI));
+            $fomateadaF= date("d/m/Y", strtotime($fechaF));
+            $data = $repositorySanciones->getInformeSancionesAlumnos("$fomateadaI","$fomateadaF");
+            var_dump($data);
+            die();
+        }
+        return $this->render('convivencia/informes/sancionesAlumnadoGrupoInforme.html.twig');
     }
 }
