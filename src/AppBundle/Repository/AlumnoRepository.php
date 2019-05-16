@@ -139,7 +139,7 @@ class AlumnoRepository extends EntityRepository
             'select A from AppBundle\Entity\Alumno as A, 
             AppBundle\Entity\Cursos as C, 
             AppBundle\Entity\Profesores as P 
-            where P.idUsuario=:tutorD and P.id=C.idProfesor and C.id=A.idCurso'
+            where P.idUsuario=:tutorD and P.id=C.idTutor and C.id=A.idCurso'
         );
 
         $query->setParameter('tutorD', $id);

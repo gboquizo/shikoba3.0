@@ -47,9 +47,9 @@ class Cursos
      * @var integer
      *
      * @ORM\ManyToOne(targetEntity="Profesores")
-     * @ORM\JoinColumn(name="idprofesor", referencedColumnName="id")
+     * @ORM\JoinColumn(name="idtutor", referencedColumnName="id")
      */
-    private $idProfesor;
+    private $idTutor;
 
 
     /**
