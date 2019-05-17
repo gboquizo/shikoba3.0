@@ -35,7 +35,7 @@
                                 {% endif %}
                                 {% if ( is_granted('ROLE_ADMIN') or is_granted('ROLE_CONVIVENCIA')) %}
                                     <li>
-                                        <a class="waves-effect waves-blue" href="{{ path('show_alumnos') }}">Alumnos</a>
+                                        <a class="waves-effect waves-blue" href="{{ path('show_alumnos') }}">Alumnado</a>
                                     </li>
                                 {% endif %}
                                 <div class="divider"></div>
@@ -58,13 +58,13 @@
                                                 <div class="collapsible-body ">
                                                     <ul>
                                                         <li><a class="waves-effect waves-blue"
-                                                               href="{{ path('partes_alumno_informe') }}">Partes Alumnado</a>
+                                                               href="{{ path('partes_alumno_informe') }}">Partes alumnado</a>
                                                         </li>
                                                         <li><a class="waves-effect waves-blue"
-                                                               href={{ path('partes_grupos_informe') }}>Partes Grupos</a>
+                                                               href={{ path('partes_grupos_informe') }}>Partes grupos</a>
                                                         </li>
                                                         <li><a class="waves-effect waves-blue"
-                                                               href="{{ path('partes_profesor_informe') }}">Partes Profesorado</a>
+                                                               href="{{ path('partes_profesor_informe') }}">Partes profesorado</a>
                                                         </li>
                                                         <li><a class="waves-effect waves-blue"
                                                                href="{{ path('sanciones_alumnosgrupos_informe') }}"
@@ -146,7 +146,7 @@
                                     {% if ( is_granted('ROLE_ADMIN') or is_granted('ROLE_CONVIVENCIA')) %}
                                         <li>
                                             <a class="waves-effect waves-blue"
-                                               href="{{ path('show_alumnos') }}">Alumnos</a>
+                                               href="{{ path('show_alumnos') }}">Alumnado</a>
                                         </li>
                                     {% endif %}
 
@@ -165,16 +165,16 @@
                                                         class="material-icons right">keyboard_arrow_right</i></a>
                                             <ul id="dropdown1" class="dropdown-content">
                                                 <li><a href="{{ path('partes_alumno_informe') }}"
-                                                       class="blue darken-5 white-text">Partes Alumnos</a>
+                                                       class="blue darken-5 white-text">Partes alumnado</a>
                                                 </li>
                                                 <li><a href="{{ path('partes_grupos_informe') }}"
-                                                       class="blue darken-2 white-text">Partes Grupos</a>
+                                                       class="blue darken-2 white-text">Partes grupos</a>
                                                 </li>
                                                 <li><a href="{{ path('partes_profesor_informe') }}"
-                                                            class="blue darken-2 white-text">Partes Profesorado</a>
+                                                            class="blue darken-2 white-text">Partes profesorado</a>
                                                 </li>
                                                 <li><a href="{{ path('sanciones_alumnosgrupos_informe') }}"
-                                                       class="blue darken-2 white-text">Sanciones Alumnos</a>
+                                                       class="blue darken-2 white-text">Sanciones alumnado</a>
                                                 </li>
                                             </ul>
                                         </li>
