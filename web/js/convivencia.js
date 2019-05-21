@@ -299,6 +299,7 @@ $(document).ready(function () {
         //dom: 'Bfrtilp',
         dom: 'Bfrt<"prefooter"lip>',
         buttons: [
+
             {
                 extend: 'pdfHtml5',
                 text: '<i class="material-icons">picture_as_pdf</i>',
@@ -318,6 +319,11 @@ $(document).ready(function () {
                 extend: 'print',
                 text: '<i class="material-icons">print</i>',
                 titleAttr: 'Imprimir'
+            },
+            {
+                extend: '',
+                text: '<i class="material-icons">Back</i>',
+                titleAttr: 'Volver'
             }
         ]
     });
