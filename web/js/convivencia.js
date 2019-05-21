@@ -274,7 +274,7 @@ $(document).ready(function () {
             $(".paginate_button.current").removeClass("paginate_button current");
             $(".paginate_button").removeClass("paginate_button");
             //muestro los select de las tablas
-            $("#DataTables_Table_0_length select").css("display", "inline-block");
+            $("#DataTables_Table_0_length select").css("display", "flex");
         },
         "lengthMenu": [[5, 10, 20, 30, -1], [5, 10, 20, 30, "Todos"]],
         language: {
@@ -296,7 +296,8 @@ $(document).ready(function () {
             {"sType": "date-eu", "aTargets": [1]}
         ],
         //botones para exportacion
-        dom: 'Bfrtilp',
+        //dom: 'Bfrtilp',
+        dom: 'Bfrt<"prefooter"lip>',
         buttons: [
             {
                 extend: 'pdfHtml5',
@@ -377,7 +378,7 @@ $(document).ready(function () {
             zeroRecords: "No se encuentra ningun registro",
         },
         //botones para exportacion
-        dom: 'Bfrtilp',
+        dom: 'Bfrt<"prefooter"lip>',
         buttons: [
             {
                 extend: 'pdfHtml5',
