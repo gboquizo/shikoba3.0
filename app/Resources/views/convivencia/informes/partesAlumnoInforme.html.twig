@@ -4,65 +4,59 @@
 
     <div class="">
         <h3 class="center azul-prof fuente">Informe partes alumnado</h3>
-        <div class="row" style="margin-left: 23%; margin-bottom: 0" >
-            <div class="col s12 16 ">
-                <div class="row">
-                    <form action="{{ path('partes_alumno_informe') }}" method="post">
-                        <div class="col s4 m4" >
-                            <label for="Name">Fecha inicial</label>
-                            <input type="date" name="fechaI"/>
-                        </div>
-                        <div class="col s4 m4">
-                            <label for="Name">Fecha final</label>
-                            <input type="date" name="fechaF"/>
-                        </div>
-                        <div class="col s4 m4">
-                            <div class="i-checks col s12 left-align" style="margin-top: 8%;padding-left: 0;">
-                                <div class="" id="botonbus">
-                                    <button
-                                            class=" z-depth-3 btn btn-floating blue darken-3 waves-effect waves-light"
-                                            type="submit" value="Buscar" title="Buscar"><i class="material-icons right">search</i>
-                                    </button>
+        <br>
+        <br>
+        <br>
+        {% if data == null %}
+            <div class="row" style="margin-left: 23%; margin-bottom: 0" >
+                <div class="col s12 16 ">
+                    <div class="row">
+                        <form action="{{ path('partes_alumno_informe') }}" method="post">
+                            <div class="col s4 m4" >
+                                <label for="Name">Fecha inicial</label>
+                                <input type="date" name="fechaI"/>
+                            </div>
+                            <div class="col s4 m4">
+                                <label for="Name">Fecha final</label>
+                                <input type="date" name="fechaF"/>
+                            </div>
+                            <div class="col s4 m4">
+                                <div class="i-checks col s12 left-align" style="margin-top: 8%;padding-left: 0;">
+                                    <div class="" id="botonbus">
+                                        <button
+                                                class=" z-depth-3 btn btn-floating blue darken-3 waves-effect waves-light"
+                                                type="submit" value="Buscar" title="Buscar"><i class="material-icons right">search</i>
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    </form>
+                        </form>
+                    </div>
                 </div>
             </div>
-        </div>
+        {% endif %}
 
-        <div class="col s12 l4 offset-l4 center">
-            {% for flash_message in app.session.flashBag.get('data') %}
-                <div class="card-panel green white-text" style="position: relative;">
-                    <span class="spancaja">{{ flash_message }} </span><i class="material-icons spanico">done</i>
-                </div>
-            {% endfor %}
+        {% if data != null %}
 
-            {% for flash_message in app.session.flashBag.get('dataError') %}
-                <div class="card-panel red white-text" style="position: relative;">
-                    <span class="spancaja">{{ flash_message }}</span> <i class="material-icons spanico">clear</i>
-                </div>
-            {% endfor %}
-        </div>
-
-        <table class="responsive-table highlight tableData z-depth-1" data-order='[[ 0, "asc" ]]' data-page-length='10'
-               style="margin-bottom: 2%; margin-top: 0">
-            <thead>
-            <tr class="blue darken-3 white-text">
-                <th>Grupo</th>
-                <th>Nombre</th>
-                <th>Partes</th>
-            </tr>
-            </thead>
-            <tbody>
-            {% for key, values in data %}
-                <tr>
-                    <td>{{ values["Grupo"] }}</td>
-                    <td>{{ values["Nombre"] }}</td>
-                    <td>{{ values["Partes"] }}</td>
+            <table class="responsive-table highlight tableData z-depth-1" data-order='[[ 0, "asc" ]]' data-page-length='10'
+                   style="margin-bottom: 2%; margin-top: 0">
+                <thead>
+                <tr class="blue darken-3 white-text">
+                    <th>Grupo</th>
+                    <th>Nombre</th>
+                    <th>Partes</th>
                 </tr>
-            {% endfor %}
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                {% for key, values in data %}
+                    <tr>
+                        <td>{{ values["Grupo"] }}</td>
+                        <td>{{ values["Nombre"] }}</td>
+                        <td>{{ values["Partes"] }}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        {% endif %}
     </div>
 {% endblock %}
