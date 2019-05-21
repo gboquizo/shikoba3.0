@@ -356,11 +356,13 @@ class ConvivenciaController extends Controller
 
             if ($repositoryAlumnos->findOneByIdUsuario($user->getId()) != null) {
                 $user = $repositoryAlumnos->findOneByIdUsuario($user->getId());
+                $email = $user->getEmail();
             } elseif ($repositoryProfesores->findOneByIdUsuario($user->getId()) != null) {
                 $user = $repositoryProfesores->findOneByIdUsuario($user->getId());
                 $email = $user->getEmail();
             } elseif ($repositoryTutores->findOneByIdUsuario($user->getId()) != null) {
                 $user = $repositoryTutores->findOneByIdUsuario($user->getId());
+                $email = $user->getEmail();
             } else {
                 $this->addFlash('passwordError', 'El usuario no existe');
                 return $this->redirectToRoute('recuperarPassword');
@@ -370,7 +372,6 @@ class ConvivenciaController extends Controller
                 $this->addFlash('passwordError', 'El usuario no tiene email');
                 return $this->redirectToRoute('recuperarPassword');
             }
-
 
             $message = \Swift_Message::newInstance()
                 ->setSubject('Proyecto Convivencia. Recuperación de contraseña')
