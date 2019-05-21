@@ -4,6 +4,10 @@
 
     <div class="">
         <h3 class="center azul-prof fuente">Informe partes grupos</h3>
+        <br>
+        <br>
+        <br>
+        {% if data == null %}
         <div class="row" style="margin-left: 23%; margin-bottom: 0" >
             <div class="col s12 16 ">
                 <div class="row">
@@ -30,37 +34,25 @@
                 </div>
             </div>
         </div>
-
-        <div class="col s12 l4 offset-l4 center">
-            {% for flash_message in app.session.flashBag.get('data') %}
-                <div class="card-panel green white-text" style="position: relative;">
-                    <span class="spancaja">{{ flash_message }} </span><i class="material-icons spanico">done</i>
-                </div>
-            {% endfor %}
-
-            {% for flash_message in app.session.flashBag.get('dataError') %}
-                <div class="card-panel red white-text" style="position: relative;">
-                    <span class="spancaja">{{ flash_message }}</span> <i class="material-icons spanico">clear</i>
-                </div>
-            {% endfor %}
-        </div>
-
-        <table class="responsive-table highlight tableData z-depth-1" data-order='[[ 0, "asc" ]]' data-page-length='10'
-               style="margin-bottom: 2%; margin-top: 0">
-            <thead>
-            <tr class="blue darken-3 white-text">
-                <th>Grupo</th>
-                <th>Partes</th>
-            </tr>
-            </thead>
-            <tbody>
-            {% for key, values in data %}
-                <tr>
-                    <td>{{ values["Grupo"] }}</td>
-                    <td>{{ values["Partes"] }}</td>
+        {% endif %}
+        {% if data != null %}
+            <table class="responsive-table highlight tableData z-depth-1" data-order='[[ 0, "asc" ]]' data-page-length='10'
+                   style="margin-bottom: 2%; margin-top: 0">
+                <thead>
+                <tr class="blue darken-3 white-text">
+                    <th>Grupo</th>
+                    <th>Partes</th>
                 </tr>
-            {% endfor %}
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                {% for key, values in data %}
+                    <tr>
+                        <td>{{ values["Grupo"] }}</td>
+                        <td>{{ values["Partes"] }}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        {% endif %}
     </div>
 {% endblock %}
