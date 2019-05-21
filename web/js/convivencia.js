@@ -312,7 +312,15 @@ $(document).ready(function () {
             {
                 extend: 'pdfHtml5',
                 text: '<i class="material-icons">picture_as_pdf</i>',
-                titleAttr: 'PDF'
+                titleAttr: 'PDF',
+                orientation: 'portrait',
+                title: 'Informes Shikoba',
+                pageSize: 'A3',
+                customize: function(doc) {
+                    doc.defaultStyle.alignment = 'center'
+                    doc.content[1].table.widths =
+                        Array(doc.content[1].table.body[0].length + 1).join('*').split('');
+                }
             },
             {
                 extend: 'excelHtml5',
@@ -395,7 +403,15 @@ $(document).ready(function () {
             {
                 extend: 'pdfHtml5',
                 text: '<i class="material-icons">picture_as_pdf</i>',
-                titleAttr: 'PDF'
+                titleAttr: 'PDF',
+                orientation: 'portrait',
+                title: 'Informes Shikoba',
+                pageSize: 'A3',
+                customize: function(doc) {
+                    doc.defaultStyle.alignment = 'center'
+                    doc.content[1].table.widths =
+                        Array(doc.content[1].table.body[0].length + 1).join('*').split('');
+                }
             },
             {
                 extend: 'excelHtml5',
