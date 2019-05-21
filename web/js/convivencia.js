@@ -1,7 +1,18 @@
 /**
  * Created by Josema on 04/10/2017.
  */
+
+
+
 $(document).ready(function () {
+
+    $.fn.dataTable.ext.buttons.reload = {
+        text: '<i class="material-icons">autorenew</i>',
+        titleAttr: 'Recargar',
+        action: function ( e, dt, node, config ) {
+            window.location.href = window.location.href
+        }
+    };
 
     const SANCION_TYPE_HORAS = 5;
     const HORAS_CLASE = {
@@ -226,7 +237,6 @@ $(document).ready(function () {
             return ((a < b) ? 1 : ((a > b) ? -1 : 0));
         }
     });
-
     $('.tableData').DataTable({
         //css para cambiar el estilo al cargar la tabla
         "drawCallback": function (settings) {
@@ -296,7 +306,6 @@ $(document).ready(function () {
             {"sType": "date-eu", "aTargets": [1]}
         ],
         //botones para exportacion
-        //dom: 'Bfrtilp',
         dom: 'Bfrt<"prefooter"lip>',
         buttons: [
 
@@ -320,11 +329,8 @@ $(document).ready(function () {
                 text: '<i class="material-icons">print</i>',
                 titleAttr: 'Imprimir'
             },
-            {
-                extend: '',
-                text: '<i class="material-icons">Back</i>',
-                titleAttr: 'Volver'
-            }
+
+                'reload'
         ]
     });
 
@@ -405,7 +411,8 @@ $(document).ready(function () {
                 extend: 'print',
                 text: '<i class="material-icons">print</i>',
                 titleAttr: 'Imprimir'
-            }
+            },
+            'reload'
         ]
     }).search(
         $('.dataTables_filter input').val(),

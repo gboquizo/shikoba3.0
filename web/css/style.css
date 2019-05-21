@@ -340,9 +340,8 @@ th {
     justify-content: center;
     align-items: center;
     flex-flow: row;
-    min-height: 10vh;
+    min-height: 15vh;
     width: 100%;
-    max-height: 10vh;
 }
 
 .prefooter .dataTables_length {

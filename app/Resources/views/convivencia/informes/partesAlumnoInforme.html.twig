@@ -3,9 +3,7 @@
     {% include 'convivencia/navegacion.html.twig' %}
 
     <div class="">
-        <h3 class="center azul-prof fuente">Informe partes alumnado</h3>
-        <br>
-        <br>
+        <h3 class="center azul-prof fuente" style="margin-bottom: 50px">Informe partes alumnado</h3>
         {% if data == null %}
             <div class="row" style="margin-left: 23%; margin-bottom: 0" >
                 <div class="col s12 16 ">
@@ -36,7 +34,6 @@
         {% endif %}
 
         {% if data != null %}
-
             <table class="responsive-table highlight tableData z-depth-1" data-order='[[ 0, "asc" ]]' data-page-length='10'
                    style="margin-bottom: 2%; margin-top: 0">
                 <thead>
