@@ -318,9 +318,16 @@ class PartesController extends Controller
         $repositoryPartes = $em->getRepository('AppBundle:Partes');
         $fechaI = $request->get('fechaI');
         $fechaF = $request->get('fechaF');
+        dump($fechaI);
+        dump($fechaF);
+
+
         $fomateadaI = date("d/m/Y", strtotime($fechaI));
         $fomateadaF = date("d/m/Y", strtotime($fechaF));
-        $data = $repositoryPartes->getInformePartesAlumnos("$fomateadaI", "$fomateadaF");
+        $data = $repositoryPartes->getInformePartesAlumnos("$fechaI", "$fechaF");
+
+//        dump($data);
+//        die();
 
         return $this->render('convivencia/informes/partesAlumnoInforme.html.twig', array(
             'data' => $data

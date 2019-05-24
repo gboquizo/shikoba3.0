@@ -1,6 +1,9 @@
 {% extends 'base2.html.twig' %}
+{% set modify = '1' %}
+{#{% set fecha = "now"|date("m/d/Y") %}#}
 {% block body %}
     {% include 'convivencia/navegacion.html.twig' %}
+
 
     <div class="">
         <h3 class="center azul-prof fuente" style="margin-bottom: 50px">Informe partes alumnado</h3>
@@ -10,12 +13,12 @@
                     <div class="row">
                         <form action="{{ path('partes_alumno_informe') }}" method="post">
                             <div class="col s4 m4" >
-                                <label for="Name">Fecha inicial</label>
-                                <input type="date" name="fechaI"/>
+                                <label for="fechaI">Fecha inicial</label>
+                                <input id="fechaI" type="text" name="fechaI" value="{{ fecha|date_modify("-" ~ modify ~ " month")|date("d/m/Y") }}" class="datepicker"/>
                             </div>
                             <div class="col s4 m4">
-                                <label for="Name">Fecha final</label>
-                                <input type="date" name="fechaF"/>
+                                <label for="fechaF">Fecha final</label>
+                                <input id="fechaF" type="text" name="fechaF" value="{{ fecha|date("d/m/Y") }}" class="datepicker"/>
                             </div>
                             <div class="col s4 m4">
                                 <div class="i-checks col s12 left-align" style="margin-top: 8%;padding-left: 0;">
