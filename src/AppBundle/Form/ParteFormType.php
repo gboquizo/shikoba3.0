@@ -90,14 +90,14 @@ class ParteFormType extends AbstractType
                 'attr' => array('class' => 'w3-select w3-border w3-light-grey'),
                 'label_attr' => array('class' => 'w3-text-teal')
             ))*/
-            ->add('Formato', ChoiceType::class, array(
+           /* ->add('Formato', ChoiceType::class, array(
                 'choices' => array(
                     'Papel' => 'Papel',
                     'Digital' => 'Digital'
                 ),
                 'attr' => array('class' => 'input-field'),
                 'label_attr' => array('class' => '')
-            ))
+            ))*/
 
             ->add('fechaConfirmacion', TextType::class, array(
                 'required' => false,
@@ -109,7 +109,8 @@ class ParteFormType extends AbstractType
                 'required' => false,
                 'attr' => array('class' => 'datepicker '),
                 'label' => 'Fecha comunicación',
-                'label_attr' => array('class' => '')
+                'empty_data' => new \DateTime('now'),
+                'label_attr' => array('class' => '',)
             ))
 //            ->add('Puntos', IntegerType::class, array(
 //                'required' =>false,
