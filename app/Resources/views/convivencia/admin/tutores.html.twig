@@ -1,0 +1,60 @@
+{% extends 'base2.html.twig' %}
+
+{% block body %}
+    {% include 'convivencia/navegacion.html.twig' %}
+
+    <div class="">
+        <h3 class="center azul-prof fuente">Gestión Tutores</h3>
+
+        <form action="">
+            <div class="row" id="busq">
+                <div class="col s12 l6">
+                    <div class="row">
+                        <div class="i-checks col s12 right-align" style="margin-top: 8%;padding-left: 0;" id="aqui">
+                            <div class="" id="botonbus" style="margin-left: -5%;">
+                                {% if is_granted('ROLE_ADMIN') %}
+                                    <a id="" href="{{ path('admin_import_profesorGrupo') }}"
+                                       class="btn z-depth-3 blue darken-3 waves-effect waves-light"
+                                       title="Nuevo Tutor">Nuevo<i
+                                                class="material-icons right" style="margin-top: -2%;">add</i></a>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <table class="responsive-table highlight tableData z-depth-3" data-order='[[ 1, "desc" ]]'
+                       style="margin-bottom: 1%" data-page-length='10'>
+                    <thead>
+                    <tr class="blue darken-3 white-text">
+                        <th>NumParte</th>
+                        <th>Fecha</th>
+                        <th>Alumnado</th>
+                        <th>Curso</th>
+                        <th>Profesorado</th>
+                        <th>Tipo</th>
+                        <th>Puntos</th>
+                        <th>Estado</th>
+                        <th>Acciones</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for tutor in tutores %}
+                        <tr>
+                            <td>q</td>
+                            <td>q</td>
+                            <td>q</td>
+                            <td>q</td>
+                            <td>q</td>
+                            <td>1</td>
+                            <td>3</td>
+                            <td>3</td>
+                            <td>3</td>
+                        </tr>
+                    {% endfor %}
+                </table>
+            </div>
+        </form>
+    </div>
+{% endblock %}

@@ -83,4 +83,17 @@ class CursosRepository extends \Doctrine\ORM\EntityRepository
         return $qb->getResult();
     }
 
+    /**
+     * Función que devuelve los cursos que contengan el curso del parámetro
+     * @param $curso
+     * @return array
+     */
+    public function verTutores(){
+        $qb = $this->getEntityManager()->createQuery(
+            'SELECT c.grupo, p.nombre, p.apellido1, p.apellido2 
+                    FROM AppBundle\Entity\cursos c, AppBundle\Entity\Profesores p 
+                    WHERE c.idTutor is not null and c.idTutor = p.id '
+        );
+        return $qb->getResult();
+    }
 }
