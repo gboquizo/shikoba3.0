@@ -297,6 +297,29 @@ class ConvivenciaController extends Controller
     }
 
     /**
+     * @Route("/admin/tutores", name="admin_tutores")
+     * @Security("has_role('ROLE_ADMIN')")
+     * @Method({"GET", "POST"})
+     */
+    public function turoresAction(Request $request)
+    {
+        if (
+            !in_array("ROLE_ADMIN", $this->getUser()->getRoles()) &&
+            !in_array("ROLE_CONVIVENCIA", $this->getUser()->getRoles()) &&
+            !in_array("ROLE_PROFESOR", $this->getUser()->getRoles())
+        )
+            return $this->redirectToRoute("index");
+
+        $em = $this->getDoctrine()->getManager();
+        $repositoryCursos = $em->getRepository('AppBundle:Cursos');
+        $tutores=$repositoryCursos->verTutores();
+
+        return $this->render('convivencia/admin/tutores.html.twig', array(
+            'tutores'=>$tutores
+        ));
+    }
+
+    /**
      * @Route("/admin/importProfesorGrupo", name="admin_import_profesorGrupo")
      * @Security("has_role('ROLE_ADMIN')")
      * @Method({"GET", "POST"})
@@ -323,7 +346,7 @@ class ConvivenciaController extends Controller
             $repositoryCursos->updateProfesorCurso($profesor, $grupo);
 
             $em->flush();
-            return $this->redirectToRoute('admin_import_profesorGrupo');
+            return $this->redirectToRoute('admin_tutores');
         }
 
         return $this->render('convivencia/admin/gestionProfesoresGrupo.html.twig', array(
