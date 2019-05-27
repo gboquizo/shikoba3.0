@@ -346,7 +346,7 @@ class ConvivenciaController extends Controller
             $repositoryCursos->updateProfesorCurso($profesor, $grupo);
 
             $em->flush();
-            return $this->redirectToRoute('admin_import_profesorGrupo');
+            return $this->redirectToRoute('admin_tutores');
         }
 
         return $this->render('convivencia/admin/gestionProfesoresGrupo.html.twig', array(
