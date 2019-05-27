@@ -344,6 +344,26 @@ th {
     width: 100%;
 }
 
+.diarioSearch {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+
+}
+
+.diarioSearch #divfecha {
+    box-sizing: border-box;
+    margin-bottom: 10px;
+    width: calc(1/3*100% - (1 - 1/3) * 10px);
+}
+
+.diarioSearch #divhora {
+    box-sizing: border-box;
+    margin-bottom: 10px;
+    width: calc(1/4 * 100% - (1 - 1/3) * 10px);
+}
+
 .prefooter .dataTables_length {
    margin-left: 20px;
    margin-right: 10px;
