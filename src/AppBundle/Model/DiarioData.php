@@ -2,7 +2,8 @@
 
 namespace AppBundle\Model;
 
-class DiarioData{
+class DiarioData
+{
 
     function __construct($diariosAula, $horas, $horasElegidas, \DateTime $fecha = null)
     {
@@ -25,7 +26,7 @@ class DiarioData{
      */
     public function getFecha()
     {
-        if($this->fecha == null) return new \Datetime();
+        if ($this->fecha == null) return new \Datetime();
         return $this->fecha;
     }
 
