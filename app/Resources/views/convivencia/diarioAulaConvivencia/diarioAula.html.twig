@@ -4,45 +4,45 @@
     {% include 'convivencia/navegacion.html.twig' %}
 
     <div class="">
-        <h3 class="center azul-prof fuente">Diario Aula Convivencia</h3>
+        <h3 class="center azul-prof fuente">Diario del aula de convivencia.</h3>
+        <form action="">
+            <div class="diarioSearch">
+                <div id="divfecha">
+                    <span for="diarioFechaSearchBar">Fecha</span>
+                    <input type="text" class="datepicker" name="likeFecha" id="diarioFechaSearchBar"
+                           value="{{ diarioData.fecha|date('d/m/Y') }}">
+                </div>
+                <div id="divhora">
+                    <span>Horas</span>
+                    <select data-placeholder="Seleccione hora/s..." id="horasSelect"
+                            class="chosen-select col s12" name="likeHora[]"
+                            id="diarioHorasSearchBar" multiple>
+                        {% for key, hora in diarioData.horas %}
+                            {% if key in diarioData.horasElegidas %}
+                                <option value="{{ key }}" selected>{{ hora }}</option>
+                            {% else %}
+                                <option value="{{ key }}">{{ hora }}</option>
+                            {% endif %}
+                        {% endfor %}
+                    </select>
+                </div>
+                <div id="botonbus">
+                    <button class="z-depth-3 btn btn-floating blue darken-3 waves-effect waves-light"
+                            style="margin-top: 21%; margin-left: -5%" type="submit"
+                            value="Buscar" title="Buscar">
+                        <i class="material-icons right">search</i>
+                    </button>
+                </div>
+            </div>
+        </form>
         {% if diarioData.diariosAula == null %}
-            <h4 class="center fuente">No existen registros</h4>
+            <h4 class="center fuente" style="margin: 50px auto">No existen datos para las horas seleccionadas.</h4>
         {% endif %}
         {% if diarioData.diariosAula != null %}
-            <form action="">
-                <div class="diarioSearch">
-                    <div id="divfecha">
-                        <span for="diarioFechaSearchBar">Fecha</span>
-                        <input type="text" class="datepicker" name="likeFecha" id="diarioFechaSearchBar"
-                               value="{{ diarioData.fecha|date('d/m/Y') }}">
-                    </div>
-
-
-                    <div id="divhora">
-                        <span>Horas</span>
-                        <select data-placeholder="Seleccione hora/s..." id="horasSelect"
-                                class="chosen-select col s12" name="likeHora[]"
-                                id="diarioHorasSearchBar" multiple>
-                            {% for key, hora in diarioData.horas %}
-                                {% if key in diarioData.horasElegidas %}
-                                    <option value="{{ key }}" selected>{{ hora }}</option>
-                                {% else %}
-                                    <option value="{{ key }}">{{ hora }}</option>
-                                {% endif %}
-                            {% endfor %}
-                        </select>
-                    </div>
-                    <div id="botonbus">
-                        <button class="z-depth-3 btn btn-floating blue darken-3 waves-effect waves-light"
-                                style="margin-top: 21%; margin-left: -5%" type="submit"
-                                value="Buscar" title="Buscar"><i class="material-icons right">search</i></button>
-                    </div>
-                </div>
-
-                <div class="row" id="busq">
-                    <table class="responsive-table highlight tableData z-depth-3" data-order='[[ 0, "desc" ]]'
-                           style="margin-bottom: 1%" data-page-length='10'>
-                        <thead>
+            <div class="row" id="busq">
+                <table class="responsive-table highlight tableData z-depth-3" data-order='[[ 0, "desc" ]]'
+                       style="margin-bottom: 1%" data-page-length='10'>
+                    <thead>
                         <tr class="blue darken-3 white-text">
                             <th>Fecha</th>
                             <th>Hora</th>
@@ -53,35 +53,37 @@
                             <th>Asiste</th>
                             <th></th>
                         </tr>
-                        </thead>
-                        <tbody>
-                        {% for diario in diarioData.diariosAula %}
-                            <tr>
-                                <td>{{ diario.fecha|date('d/m/Y') }}</td>
-                                <td>{{ diario.hora }}</td>
-                                <td>
-                                    <a href="{{ path('verAlumno', {'id': diario.idSancion.idAlumno.id}) }}">{{ diario.idSancion.idAlumno.getNombreCompleto() }}</a>
-                                </td>
-                                {% if diario.idProfesor == null %}
-                                    <td>Ninguno</td>
-                                {% else %}
-                                    <td>{{ diario.idProfesor.getNombreCompleto() }}</td>
-                                {% endif %}
-                                <td>{{ diario.observaciones }}</td>
-                                <td>{{ diario.actitud }}</td>
-                                {% if diario.asiste == 0 %}
-                                    <td>Pendiente</td>
-                                {% else %}
-                                    <td>Ha asistido</td>
-                                {% endif %}
-                                <td><a href="{{ path('edit_diario', {'id': diario.id}) }}"><i
-                                                class="material-icons">edit</i></a></td>
-                            </tr>
-                        {% endfor %}
-                        </tbody>
-                    </table>
-                </div>
-            </form>
+                    </thead>
+                    <tbody>
+                    {% for diario in diarioData.diariosAula %}
+                        <tr>
+                            <td>{{ diario.fecha|date('d/m/Y') }}</td>
+                            <td>{{ diario.hora }}</td>
+                            <td>
+                                <a href="{{ path('verAlumno', {'id': diario.idSancion.idAlumno.id}) }}">{{ diario.idSancion.idAlumno.getNombreCompleto() }}</a>
+                            </td>
+                            {% if diario.idProfesor == null %}
+                                <td>Ninguno</td>
+                            {% else %}
+                                <td>{{ diario.idProfesor.getNombreCompleto() }}</td>
+                            {% endif %}
+                            <td>{{ diario.observaciones }}</td>
+                            <td>{{ diario.actitud }}</td>
+                            {% if diario.asiste == 0 %}
+                                <td>Pendiente</td>
+                            {% else %}
+                                <td>Ha asistido</td>
+                            {% endif %}
+                            <td>
+                                <a href="{{ path('edit_diario', {'id': diario.id}) }}">
+                                    <i class="material-icons">edit</i>
+                                </a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
         {% endif %}
     </div>
 {% endblock %}

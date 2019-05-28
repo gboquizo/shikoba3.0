@@ -19,8 +19,8 @@ class CrearSancionHelper
     const VALUE_COMUNICADO = 'Comunicada';
 
     const HORAS_CLASE = array(
-        '1' => '8:15 - 9:15',
-        '2' => '9:15 - 10:15',
+        '1' => '08:15 - 09:15',
+        '2' => '09:15 - 10:15',
         '3' => '10:15 - 11-15',
         '4' => '11:40 - 12:40',
         '5' => '12:40 - 13:40',
@@ -70,7 +70,8 @@ class CrearSancionHelper
      * @param Sanciones $sancion
      * @return mixed
      */
-    public function changeEstado(Request $request, Sanciones $sancion){
+    public function changeEstado(Request $request, Sanciones $sancion)
+    {
         if ($request->get('estadoSancion') != null) {
             $repositoryEstadoSanciones = $this->em->getRepository("AppBundle:EstadosSancion");
             $allEstados = $repositoryEstadoSanciones->findAll();
@@ -79,8 +80,7 @@ class CrearSancionHelper
                     $fecha = new \DateTime();
                     if ($valueEstado->getEstado() == self::VALUE_INICIADO) {
                         $sancion->setFechaComunicacion($fecha->format('d/m/Y'));
-                    }
-                    elseif ($valueEstado->getEstado() == self::VALUE_COMUNICADO) {
+                    } elseif ($valueEstado->getEstado() == self::VALUE_COMUNICADO) {
                         $sancion->setFechaConfirmacion($fecha->format('d/m/Y'));
                     }
                     if ($key < count($allEstados) - 1) {
