@@ -310,6 +310,8 @@ class PartesController extends Controller
 
     /**
      * @Route("/informePartesAlumno", name="partes_alumno_informe")
+     * @param Request $request the request to send.
+     * @return Response the page to redirect.
      */
     public function partesAlumnoInforme(Request $request)
     {
@@ -318,17 +320,9 @@ class PartesController extends Controller
         $repositoryPartes = $em->getRepository('AppBundle:Partes');
         $fechaI = $request->get('fechaI');
         $fechaF = $request->get('fechaF');
-        dump($fechaI);
-        dump($fechaF);
-
-
-        $fomateadaI = date("d/m/Y", strtotime($fechaI));
-        $fomateadaF = date("d/m/Y", strtotime($fechaF));
         $data = $repositoryPartes->getInformePartesAlumnos("$fechaI", "$fechaF");
-
-//        dump($data);
-//        die();
-
+        //$fomateadaI = date("d/m/Y", strtotime($fechaI));
+        //$fomateadaF = date("d/m/Y", strtotime($fechaF));
         return $this->render('convivencia/informes/partesAlumnoInforme.html.twig', array(
             'data' => $data
         ));
@@ -336,6 +330,8 @@ class PartesController extends Controller
 
     /**
      * @Route("/informePartesProfesor", name="partes_profesor_informe")
+     * @param Request $request the request to send.
+     * @return Response the page to redirect.
      */
     public function partesProfesorInforme(Request $request)
     {
@@ -344,9 +340,7 @@ class PartesController extends Controller
         $repositoryPartes = $em->getRepository("AppBundle:Partes");
         $fechaI = $request->get('fechaI');
         $fechaF = $request->get('fechaF');
-        $fomateadaI = date("d/m/Y", strtotime($fechaI));
-        $fomateadaF = date("d/m/Y", strtotime($fechaF));
-        $data = $repositoryPartes->getInformePartesProfesorado("$fomateadaI", "$fomateadaF");
+        $data = $repositoryPartes->getInformePartesProfesorado("$fechaI", "$fechaF");
 
         return $this->render('convivencia/informes/partesProfesorInforme.html.twig', array(
             'data' => $data
@@ -355,6 +349,8 @@ class PartesController extends Controller
 
     /**
      * @Route("/informePartesGrupo", name="partes_grupos_informe")
+     * @param Request $request the request to send.
+     * @return Response the page to redirect.
      */
     public function partesGruposInforme(Request $request)
     {
@@ -365,7 +361,7 @@ class PartesController extends Controller
         $fechaF = $request->get('fechaF');
         $fomateadaI = date("d/m/Y", strtotime($fechaI));
         $fomateadaF = date("d/m/Y", strtotime($fechaF));
-        $data = $repositoryPartes->getInformePartesGrupo("$fomateadaI", "$fomateadaF");
+        $data = $repositoryPartes->getInformePartesGrupo("$fechaI", "$fechaF");
 
         return $this->render('convivencia/informes/partesGruposInforme.html.twig', array(
             'data' => $data

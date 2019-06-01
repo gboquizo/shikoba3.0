@@ -229,6 +229,8 @@ class SancionController extends Controller
 
     /**
      * @Route("/informeSancionesAlumnosGrupo", name="sanciones_alumnosgrupos_informe")
+     * @param Request $request the request to send.
+     * @return \Symfony\Component\HttpFoundation\Response the page to redirect.
      */
     public function informeSancionesAlumnosGrupo(Request $request)
     {
@@ -237,9 +239,7 @@ class SancionController extends Controller
         $repositorySanciones = $em->getRepository("AppBundle:Sanciones");
         $fechaI = $request->get('fechaI');
         $fechaF = $request->get('fechaF');
-        $fomateadaI = date("d/m/Y", strtotime($fechaI));
-        $fomateadaF = date("d/m/Y", strtotime($fechaF));
-        $data = $repositorySanciones->getInformeSancionesAlumnos("$fomateadaI", "$fomateadaF");
+        $data = $repositorySanciones->getInformeSancionesAlumnos("$fechaI", "$fechaF");
 
         return $this->render('convivencia/informes/sancionesAlumnadoGrupoInforme.html.twig', array(
             'data' => $data
