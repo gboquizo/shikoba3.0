@@ -39,12 +39,13 @@
             </div>
         {% endif %}
         {% if data != null %}
-            <table class="responsive-table highlight tableData z-depth-1" data-order='[[ 0, "asc" ]]'
+            <table class="responsive-table highlight tableData z-depth-3" data-order='[[ 0, "asc" ]]'
                    data-page-length='10'
                    style="margin-bottom: 2%; margin-top: 0">
                 <thead>
                 <tr class="blue darken-3 white-text">
                     <th>Grupo</th>
+                    <th style="display: none;">Fecha</th>
                     <th>Nombre</th>
                     <th>Partes</th>
                 </tr>
@@ -53,6 +54,7 @@
                 {% for key, values in data %}
                     <tr>
                         <td>{{ values["Grupo"] }}</td>
+                        <td style="display: none;">{{ fecha }}</td>
                         <td>{{ values["Nombre"] }}</td>
                         <td>{{ values["Partes"] }}</td>
                     </tr>

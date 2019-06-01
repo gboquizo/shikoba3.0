@@ -200,10 +200,13 @@ $(document).ready(function () {
             date = date.replace(" ", "");
 
             if (!date) {
+                console.log(date)
                 return 0;
             }
 
             var year;
+            var month;
+            var day;
             var eu_date = date.split(/[\.\-\/]/);
 
             /*year (optional)*/
@@ -214,17 +217,34 @@ $(document).ready(function () {
                 year = 0;
             }
 
-            /*month*/
-            var month = eu_date[1];
-            if (month.length == 1) {
+            /*year (optional)*/
+            if (eu_date[1]) {
+                month = eu_date[1];
+            }
+            else {
+                month = 0;
+            }
+
+            /*year (optional)*/
+            if (eu_date[0]) {
+                day = eu_date[0];
+            }
+            else {
+                day = 0;
+            }
+
+           /* /!*month*!/
+            var month = 0;
+            month = eu_date[1];
+            if (month.length === 1) {
                 month = 0 + month;
             }
 
-            /*day*/
+            /!*day*!/
             var day = eu_date[0];
-            if (day.length == 1) {
+            if (day.length === 1) {
                 day = 0 + day;
-            }
+            }*/
 
             return (year + month + day) * 1;
         },
