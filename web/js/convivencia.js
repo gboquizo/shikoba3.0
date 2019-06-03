@@ -9,7 +9,7 @@ $(document).ready(function () {
     $.fn.dataTable.ext.buttons.reload = {
         text: '<i class="material-icons">autorenew</i>',
         titleAttr: 'Recargar',
-        action: function ( e, dt, node, config ) {
+        action: function (e, dt, node, config) {
             window.location.href = window.location.href
         }
     };
@@ -212,39 +212,36 @@ $(document).ready(function () {
             /*year (optional)*/
             if (eu_date[2]) {
                 year = eu_date[2];
-            }
-            else {
+            } else {
                 year = 0;
             }
 
             /*year (optional)*/
             if (eu_date[1]) {
                 month = eu_date[1];
-            }
-            else {
+            } else {
                 month = 0;
             }
 
             /*year (optional)*/
             if (eu_date[0]) {
                 day = eu_date[0];
-            }
-            else {
+            } else {
                 day = 0;
             }
 
-           /* /!*month*!/
-            var month = 0;
-            month = eu_date[1];
-            if (month.length === 1) {
-                month = 0 + month;
-            }
+            /* /!*month*!/
+             var month = 0;
+             month = eu_date[1];
+             if (month.length === 1) {
+                 month = 0 + month;
+             }
 
-            /!*day*!/
-            var day = eu_date[0];
-            if (day.length === 1) {
-                day = 0 + day;
-            }*/
+             /!*day*!/
+             var day = eu_date[0];
+             if (day.length === 1) {
+                 day = 0 + day;
+             }*/
 
             return (year + month + day) * 1;
         },
@@ -257,6 +254,8 @@ $(document).ready(function () {
             return ((a < b) ? 1 : ((a > b) ? -1 : 0));
         }
     });
+
+
     $('.tableData').DataTable({
         //css para cambiar el estilo al cargar la tabla
         "drawCallback": function (settings) {
@@ -323,7 +322,11 @@ $(document).ready(function () {
             zeroRecords: "No se encuentra ningun registro",
         },
         "aoColumnDefs": [
-            {"sType": "date-eu", "aTargets": [1]}
+
+            {"sType": "date-eu", "aTargets": [1]} ? {"sType": "string", "aTargets": [1]} : {
+                "sType": "string",
+                "aTargets": [1]
+            }
         ],
         //botones para exportacion
         dom: 'Bfrt<"prefooter"lip>',
@@ -336,7 +339,7 @@ $(document).ready(function () {
                 orientation: 'portrait',
                 title: 'Informes Shikoba',
                 pageSize: 'A3',
-                customize: function(doc) {
+                customize: function (doc) {
                     doc.defaultStyle.alignment = 'center'
                     doc.content[1].table.widths =
                         Array(doc.content[1].table.body[0].length + 1).join('*').split('');
@@ -358,7 +361,7 @@ $(document).ready(function () {
                 titleAttr: 'Imprimir'
             },
 
-                'reload'
+            'reload'
         ]
     });
 
@@ -427,7 +430,7 @@ $(document).ready(function () {
                 orientation: 'portrait',
                 title: 'Informes Shikoba',
                 pageSize: 'A3',
-                customize: function(doc) {
+                customize: function (doc) {
                     doc.defaultStyle.alignment = 'center'
                     doc.content[1].table.widths =
                         Array(doc.content[1].table.body[0].length + 1).join('*').split('');
@@ -463,4 +466,5 @@ $(document).ready(function () {
     if ($(window).width() < "991") {
         $('.altur').css("height", $('#DataTables_Table_0_filter').height());
     }
+
 });

@@ -16,7 +16,7 @@
         <link rel="stylesheet" href="{{ asset('css/tooltip/tooltipster.bundle.min.css') }}">
         <link rel="stylesheet" href="{{ asset('css/tooltip/tooltipster-sideTip-light.min.css') }}">
         <link rel="stylesheet" href="{{ asset('css/jquery-confirm.min.css') }}">
-        <link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.15/css/jquery.dataTables.css">
+        <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.18/datatables.min.css">
         <link rel="stylesheet" href="{{ asset('css/fileInput/component.css') }}">
         <link rel="stylesheet"
               href="https://cdnjs.cloudflare.com/ajax/libs/jquery-date-range-picker/0.14.4/daterangepicker.min.css">
@@ -48,7 +48,7 @@
                 src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
         <script src="{{ asset('js/jquery-confirm.min.js') }}"></script>
         <script type="text/javascript" charset="utf8"
-                src="https://cdn.datatables.net/1.10.15/js/jquery.dataTables.js"></script>
+                src="https://cdn.datatables.net/v/dt/dt-1.10.18/datatables.min.js"></script>
         <script type="text/javascript" src="{{ asset('js/fileInput/custom-file-input.js') }}"></script>
         <script type="text/javascript" src="{{ asset('js/moment.min.js') }}"></script>
         <script type="text/javascript"
@@ -121,13 +121,13 @@
         </div>
     </div>
 
-     <div class="containerLoader">
-         {#<div class="">#}
-             <div class="row" style="margin-bottom: -10px;display: none;">
-                 {# <div class="row" style="margin-bottom: -10px;">#}
-                {% block body %}{% endblock %}
-            </div>
+    <div class="containerLoader">
+        {#<div class="">#}
+        <div class="row" style="margin-bottom: -10px;display: none;">
+            {# <div class="row" style="margin-bottom: -10px;">#}
+            {% block body %}{% endblock %}
         </div>
+    </div>
 </main>
 <footer class="page-footer blue darken-3">
     <div class="footer-copyright">
