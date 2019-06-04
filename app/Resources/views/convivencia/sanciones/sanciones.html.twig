@@ -4,7 +4,7 @@
     {% include 'convivencia/navegacion.html.twig' %}
 
     <div class="">
-        <h3 class="center azul-prof fuente">Gestión Sanciones</h3>
+        <h3 class="center azul-prof fuente">Gestión sanciones</h3>
 
         <div class="col s12 l4 offset-l4 center">
             {% for flash_message in app.session.flashBag.get('sancion') %}
@@ -59,7 +59,7 @@
                 </div>
             </div>
             <div class="row">
-                <table class="responsive-table highlight tableData z-depth-3" data-order='[[ 1, "desc" ]]'
+                <table class="tableDataMedidas responsive-table highlight z-depth-3" data-order='[[ 1, "desc" ]]'
                        style="margin-bottom: 1%" data-page-length='10'>
                     <thead>
                     <tr class="blue darken-3 white-text">
