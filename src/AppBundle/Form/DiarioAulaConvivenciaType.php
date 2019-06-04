@@ -16,28 +16,32 @@ class DiarioAulaConvivenciaType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $this->traitChoices = $options['compound'];
         $builder
             ->add('idProfesor', EntityType::class, array(
-                'label' => 'Profesor',
+                'label' => 'Profesor/a',
+                'placeholder' => '',
                 'class' => 'AppBundle:Profesores',
+                'choices' => $this->traitChoices[1],
                 'choice_label' => function ($profesor) {
                     return $profesor->getNombreCompleto();
                 },
-                'attr' => array(
-                    'class' => 'w3-select w3-border w3-light-grey chosen-select',
-                    'data-placeholder' => 'Selecciona un profesor...',
+                'attr' => array('class' => 'chosen-select',
+                    'data-placeholder' => 'Seleccione profesorado...',
                 ),
-                'label_attr' => array('class' => 'w3-text-teal')
+                'label_attr' => array('class' => ''),
+                'empty_data' => null
             ))
             ->add('asiste', ChoiceType::class, array(
                 'choices' => array(
                     'Pendiente' => '0',
                     'Ha asistido' => '1',
                 ),
-                'attr' => array(
-                    'class' => 'w3-select w3-border w3-light-grey chosen-select',
+                'attr' => array('class' => 'chosen-select',
+                    'data-placeholder' => 'Seleccione asistencia...',
                 ),
-                'label_attr' => array('class' => 'w3-text-teal')
+                'label_attr' => array('class' => ''),
+                'empty_data' => null
             ))
             ->add('actitud', ChoiceType::class, array(
                 'choices' => array(
@@ -47,9 +51,9 @@ class DiarioAulaConvivenciaType extends AbstractType
                     'Negativa - C' => 'C',
                 ),
                 'attr' => array(
-                    'class' => '',
+                    'class' => '','data-placeholder' => 'Seleccione actitud...',
                 ),
-                'empty_data' => null
+                'empty_data' => null,
             ))
             ->add('trabajo', ChoiceType::class, array(
                 'choices' => array(
@@ -59,9 +63,9 @@ class DiarioAulaConvivenciaType extends AbstractType
                     'Negativo - C' => 'C',
                 ),
                 'attr' => array(
-                    'class' => 'w3-select w3-border w3-light-grey chosen-select',
+                    'class' => 'chosen-select','data-placeholder' => 'Seleccione trabajo...',
                 ),
-                'empty_data' => null
+                'empty_data' => null,
             ))
             ->add('observaciones', TextType::class, array(
                 'required' =>false,
