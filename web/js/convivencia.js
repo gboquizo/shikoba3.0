@@ -200,7 +200,6 @@ $(document).ready(function () {
             date = date.replace(" ", "");
 
             if (!date) {
-                console.log(date)
                 return 0;
             }
 
@@ -321,13 +320,6 @@ $(document).ready(function () {
             infoFiltered: "(filtrado de _MAX_ en total)",
             zeroRecords: "No se encuentra ningun registro",
         },
-        "aoColumnDefs": [
-
-            {"sType": "date-eu", "aTargets": [1]} ? {"sType": "string", "aTargets": [1]} : {
-                "sType": "string",
-                "aTargets": [1]
-            }
-        ],
         //botones para exportacion
         dom: 'Bfrt<"prefooter"lip>',
         buttons: [
@@ -365,7 +357,17 @@ $(document).ready(function () {
         ]
     });
 
-    var table = $('.tableDataCarnets').DataTable({
+    let tableDataCarnets = $('.tableDataCarnets').DataTable({
+        "aoColumnDefs": [
+            {
+                "targets": [1],
+                "sType": "date-eu",
+                "render": function (data) {
+                    return data;
+
+                }
+            }
+        ],
         //css para cambiar el estilo al cargar la tabla
         "drawCallback": function (settings) {
             $(".dt-button").addClass("btn btn-floating blue darken-3");
@@ -388,6 +390,8 @@ $(document).ready(function () {
                 $("#DataTables_Table_0_wrapper>div:first-child").addClass("right l3");
                 $("#DataTables_Table_0_wrapper>div:first-child").css("text-align", "left");
                 $("#DataTables_Table_0_wrapper>div:first-child").css("margin-top", "2%");
+                $("#DataTables_Table_0_filter").css("text-align", "center");
+
                 $("#nuevo").addClass("center");
 
             }
@@ -451,20 +455,239 @@ $(document).ready(function () {
                 text: '<i class="material-icons">print</i>',
                 titleAttr: 'Imprimir'
             },
-            'reload'
-        ]
-    }).search(
-        $('.dataTables_filter input').val(),
-        true,
-        false
-    ).draw();
+        ],
+    });
+
+    let tableDataMedidas = $('.tableDataMedidas').DataTable({
+            "aoColumnDefs": [
+                {
+                    "targets": [1, 3, 4],
+                    "sType": "date-eu",
+                    "render": function (data) {
+                        return data;
+
+                    }
+                }
+            ],
+            "drawCallback": function (settings) {
+                $(".dt-button").addClass("btn btn-floating blue darken-3");
+                $("#DataTables_Table_0_wrapper>div:first-child").addClass("col s12 m4 center");
+                $(".dt-button").removeClass("dt-button");
+                //botones de exortar en tablas
+                $("#DataTables_Table_0_wrapper>.dt-buttons").after("<div id='nuevo' class='col s12 m4 l3'></div>");
+                $('.dt-buttons').css("margin-right", "2%");
+                //el label aparece dos veces por lo que borro uno cada vez que se añade
+                $("#DataTables_Table_0_wrapper>div>.remo").remove();
+                $("#DataTables_Table_0_wrapper>div>.buttons-pdf").before("<label style='margin-right: 3%;' class='remo'>Exportar</label>");
+                $('.dt-buttons').removeClass("dt-buttons");
+                if ($(window).width() > "600" && $(window).width() < "990") {
+                    $("#DataTables_Table_0_wrapper>div:first-child").addClass("right offset-m8");
+                    $("#DataTables_Table_0_wrapper>div:first-child").removeClass("center");
+                    //esta condicion sirve para la ventana de partes
+                    if ($("#parte").length > 0) {
+                        $("#DataTables_Table_0_wrapper>div.offset-m8").before("<div id='botonnuevo' class='col m3 left'></div>");
+                        $("#DataTables_Table_0_wrapper>div.offset-m8").addClass("offset-m4");
+                        $("#DataTables_Table_0_wrapper>div.offset-m8").removeClass("offset-m8");
+                        $("#parte").appendTo("#botonnuevo");
+                    }
+
+                }
+                if ($(window).width() > "991") {
+                    $("#DataTables_Table_0_wrapper>div:first-child").removeClass("center");
+                    $("#DataTables_Table_0_wrapper>div:first-child").addClass("right l3");
+                    $("#DataTables_Table_0_wrapper>div:first-child").css("text-align", "left");
+                    $("#DataTables_Table_0_wrapper>div:first-child").css("margin-top", "2%");
+                    $("#nuevo").addClass("center");
+                    //esta condicion sirve para la ventana de partes
+                    if ($("#parte").length > 0) {
+                        $("#botonbus button").css("left", "-5%");
+                        $("#nuevo").addClass("l4");
+                        $("#nuevo").removeClass("l3");
+
+                    }
+
+                }
+                $("#aqui").appendTo("#nuevo");
+                $("#aqui2").appendTo("#nuevo");
+                $(".paginate_button.current").addClass("btn  blue darken-4 waves-effect waves-light z-depth-3 pagi");
+                $(".paginate_button").addClass("btn  blue darken-2 waves-effect waves-light z-depth-3 pagi");
+                $(".paginate_button.current").removeClass("paginate_button current");
+                $(".paginate_button").removeClass("paginate_button");
+                //muestro los select de las tablas
+                $("#DataTables_Table_0_length select").css("display", "flex");
+            },
+            "lengthMenu": [[5, 10, 20, 30, -1], [5, 10, 20, 30, "Todos"]],
+            language: {
+                search: "Busca en la tabla ",
+                paginate: {
+                    first: "Primero",
+                    previous: "<i class='material-icons pagi'>chevron_left</i>",
+                    next: "<i class='material-icons pagi'>chevron_right</i>",
+                    last: "Último"
+                },
+                lengthMenu: "Mostrar _MENU_",
+                emptyTable: "No hay registros en la tabla",
+                info: "Mostrando _END_ registros de _TOTAL_ en total",
+                infoEmpty: "No hay resultados",
+                infoFiltered: "(filtrado de _MAX_ en total)",
+                zeroRecords: "No se encuentra ningun registro",
+            },
+            //botones para exportacion
+            dom: 'Bfrt<"prefooter"lip>',
+            buttons: [
+
+                {
+                    extend: 'pdfHtml5',
+                    text: '<i class="material-icons">picture_as_pdf</i>',
+                    titleAttr: 'PDF',
+                    orientation: 'portrait',
+                    title: 'Informes Shikoba',
+                    pageSize: 'A3',
+                    customize: function (doc) {
+                        doc.defaultStyle.alignment = 'center'
+                        doc.content[1].table.widths =
+                            Array(doc.content[1].table.body[0].length + 1).join('*').split('');
+                    }
+                },
+                {
+                    extend: 'excelHtml5',
+                    text: '<i class="excel"></i>',
+                    titleAttr: 'Excel'
+                },
+                {
+                    extend: 'csvHtml5',
+                    text: '<i class="csv"></i>',
+                    titleAttr: 'CSV'
+                },
+                {
+                    extend: 'print',
+                    text: '<i class="material-icons">print</i>',
+                    titleAttr: 'Imprimir'
+                },
+
+            ],
+        });
+    let tableDataPartes = $('.tableDataPartes').DataTable({
+        "aoColumnDefs": [
+            {
+                "targets": [1, 3, 4],
+                "sType": "date-eu",
+                "render": function (data) {
+                    return data;
+
+                }
+            }
+        ],
+        "drawCallback": function (settings) {
+            $(".dt-button").addClass("btn btn-floating blue darken-3");
+            $("#DataTables_Table_0_wrapper>div:first-child").addClass("col s12 m4 center");
+            $(".dt-button").removeClass("dt-button");
+            //botones de exortar en tablas
+            $("#DataTables_Table_0_wrapper>.dt-buttons").after("<div id='nuevo' class='col s12 m4 l3'></div>");
+            $('.dt-buttons').css("margin-right", "2%");
+            //el label aparece dos veces por lo que borro uno cada vez que se añade
+            $("#DataTables_Table_0_wrapper>div>.remo").remove();
+            $("#DataTables_Table_0_wrapper>div>.buttons-pdf").before("<label style='margin-right: 3%;' class='remo'>Exportar</label>");
+            $('.dt-buttons').removeClass("dt-buttons");
+            if ($(window).width() > "600" && $(window).width() < "990") {
+                $("#DataTables_Table_0_wrapper>div:first-child").addClass("right offset-m8");
+                $("#DataTables_Table_0_wrapper>div:first-child").removeClass("center");
+                //esta condicion sirve para la ventana de partes
+                if ($("#parte").length > 0) {
+                    $("#DataTables_Table_0_wrapper>div.offset-m8").before("<div id='botonnuevo' class='col m3 left'></div>");
+                    $("#DataTables_Table_0_wrapper>div.offset-m8").addClass("offset-m4");
+                    $("#DataTables_Table_0_wrapper>div.offset-m8").removeClass("offset-m8");
+                    $("#parte").appendTo("#botonnuevo");
+                }
+
+            }
+            if ($(window).width() > "991") {
+                $("#DataTables_Table_0_wrapper>div:first-child").removeClass("center");
+                $("#DataTables_Table_0_wrapper>div:first-child").addClass("right l3");
+                $("#DataTables_Table_0_wrapper>div:first-child").css("text-align", "left");
+                $("#DataTables_Table_0_wrapper>div:first-child").css("margin-top", "2%");
+                $("#nuevo").addClass("center");
+                //esta condicion sirve para la ventana de partes
+                if ($("#parte").length > 0) {
+                    $("#botonbus button").css("left", "-5%");
+                    $("#nuevo").addClass("l4");
+                    $("#nuevo").removeClass("l3");
+
+                }
+
+            }
+            $("#aqui").appendTo("#nuevo");
+            $("#aqui2").appendTo("#nuevo");
+            $(".paginate_button.current").addClass("btn  blue darken-4 waves-effect waves-light z-depth-3 pagi");
+            $(".paginate_button").addClass("btn  blue darken-2 waves-effect waves-light z-depth-3 pagi");
+            $(".paginate_button.current").removeClass("paginate_button current");
+            $(".paginate_button").removeClass("paginate_button");
+            //muestro los select de las tablas
+            $("#DataTables_Table_0_length select").css("display", "flex");
+        },
+        "lengthMenu": [[5, 10, 20, 30, -1], [5, 10, 20, 30, "Todos"]],
+        language: {
+            search: "Busca en la tabla ",
+            paginate: {
+                first: "Primero",
+                previous: "<i class='material-icons pagi'>chevron_left</i>",
+                next: "<i class='material-icons pagi'>chevron_right</i>",
+                last: "Último"
+            },
+            lengthMenu: "Mostrar _MENU_",
+            emptyTable: "No hay registros en la tabla",
+            info: "Mostrando _END_ registros de _TOTAL_ en total",
+            infoEmpty: "No hay resultados",
+            infoFiltered: "(filtrado de _MAX_ en total)",
+            zeroRecords: "No se encuentra ningun registro",
+        },
+        //botones para exportacion
+        dom: 'Bfrt<"prefooter"lip>',
+        buttons: [
+
+            {
+                extend: 'pdfHtml5',
+                text: '<i class="material-icons">picture_as_pdf</i>',
+                titleAttr: 'PDF',
+                orientation: 'portrait',
+                title: 'Informes Shikoba',
+                pageSize: 'A3',
+                customize: function (doc) {
+                    doc.defaultStyle.alignment = 'center'
+                    doc.content[1].table.widths =
+                        Array(doc.content[1].table.body[0].length + 1).join('*').split('');
+                }
+            },
+            {
+                extend: 'excelHtml5',
+                text: '<i class="excel"></i>',
+                titleAttr: 'Excel'
+            },
+            {
+                extend: 'csvHtml5',
+                text: '<i class="csv"></i>',
+                titleAttr: 'CSV'
+            },
+            {
+                extend: 'print',
+                text: '<i class="material-icons">print</i>',
+                titleAttr: 'Imprimir'
+            },
+
+        ],
+    });
+    paint(tableDataCarnets);
+    paint(tableDataPartes);
+    paint(tableDataMedidas);
+});
+
+function paint() {
     //estilos para los botones encima de las tablas
     $('.dataTables_wrapper input').addClass("marginBottom");
-    $('.dataTables_filter').css("text-align", "left");
+    $('.dataTables_filter').css("text-align", "center");
     $('.dt-buttons').addClass("right col s4 m6 l2 altur");
     $('.dt-buttons').css("margin-top", "2%");
     if ($(window).width() < "991") {
         $('.altur').css("height", $('#DataTables_Table_0_filter').height());
     }
-
-});
+};
