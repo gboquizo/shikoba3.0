@@ -41,6 +41,7 @@ class DiarioAulaConvivenciaType extends AbstractType
             ))
             ->add('actitud', ChoiceType::class, array(
                 'choices' => array(
+                    'Actitud sin evaluar' => null,
                     'Positiva - A' => 'A',
                     'Normal - B' => 'B',
                     'Negativa - C' => 'C',
@@ -48,6 +49,19 @@ class DiarioAulaConvivenciaType extends AbstractType
                 'attr' => array(
                     'class' => '',
                 ),
+                'empty_data' => null
+            ))
+            ->add('trabajo', ChoiceType::class, array(
+                'choices' => array(
+                    'Trabajo sin evaluar' => null,
+                    'Positivo - A' => 'A',
+                    'Normal - B' => 'B',
+                    'Negativo - C' => 'C',
+                ),
+                'attr' => array(
+                    'class' => 'w3-select w3-border w3-light-grey chosen-select',
+                ),
+                'empty_data' => null
             ))
             ->add('observaciones', TextType::class, array(
                 'required' =>false,
