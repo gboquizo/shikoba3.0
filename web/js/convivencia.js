@@ -254,7 +254,6 @@ $(document).ready(function () {
         }
     });
 
-
     $('.tableData').DataTable({
         //css para cambiar el estilo al cargar la tabla
         "drawCallback": function (settings) {
@@ -358,16 +357,6 @@ $(document).ready(function () {
     });
 
     let tableDataCarnets = $('.tableDataCarnets').DataTable({
-        "aoColumnDefs": [
-            {
-                "targets": [1],
-                "sType": "date-eu",
-                "render": function (data) {
-                    return data;
-
-                }
-            }
-        ],
         //css para cambiar el estilo al cargar la tabla
         "drawCallback": function (settings) {
             $(".dt-button").addClass("btn btn-floating blue darken-3");
@@ -570,7 +559,7 @@ $(document).ready(function () {
     let tableDataPartes = $('.tableDataPartes').DataTable({
         "aoColumnDefs": [
             {
-                "targets": [1, 3, 4],
+                "targets": [1],
                 "sType": "date-eu",
                 "render": function (data) {
                     return data;
