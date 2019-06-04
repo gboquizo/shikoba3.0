@@ -301,7 +301,7 @@ class ConvivenciaController extends Controller
      * @Security("has_role('ROLE_ADMIN')")
      * @Method({"GET", "POST"})
      */
-    public function turoresAction(Request $request)
+    public function tutoresAction(Request $request)
     {
         if (
             !in_array("ROLE_ADMIN", $this->getUser()->getRoles()) &&
@@ -450,5 +450,4 @@ class ConvivenciaController extends Controller
             return $this->redirectToRoute('login');
         }
     }
-
 }

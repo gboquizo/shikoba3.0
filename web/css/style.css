@@ -382,3 +382,25 @@ th {
     margin-left: 20px;
     margin-right: 10px;
 }
+
+.flash{
+    position: relative;
+    left: 0;
+    top: 0;
+    transform: translate(-30%,-10%);
+    opacity: 0;
+    animation: opacityAnimation 5s;
+}
+@keyframes opacityAnimation {
+    0%{
+        opacity: 1;
+    }
+    80%{
+        opacity: 1;
+    }
+    100%{
+        opacity: 0;
+    }
+
+
+}

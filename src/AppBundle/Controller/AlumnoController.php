@@ -408,11 +408,17 @@ class AlumnoController extends Controller
                 $em->persist($alumno);
                 $em->flush();
 
-                $this->addFlash("alumno", "Se ha modificado correctamente");
+                $this->addFlash("alumno", "Alumno/a modificado/a correctamente");
             } catch (\Exception $e) {
                 $this->addFlash("alumnoError", $e);
             }
-            return $this->redirectToRoute("show_alumnos");
+            if (in_array("ROLE_ADMIN", $this->getUser()->getRoles()) ||
+                in_array("ROLE_CONVIVENCIA", $this->getUser()->getRoles())
+            ) {
+                return $this->redirectToRoute("show_alumnos");
+            } else {
+                return $this->redirectToRoute("show_alumnosgrupo");
+            }
         }
 
         return $this->render('convivencia/alumno/modificarAlumno.html.twig', array(

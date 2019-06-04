@@ -49,6 +49,13 @@ class DiarioAulaConvivencia
      */
     private $actitud;
 
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="trabajo", type="string", length=255, columnDefinition="enum('A', 'B', 'C')", nullable=true)
+     */
+    private $trabajo;
+
 
     /**
      * @var int
@@ -190,6 +197,30 @@ class DiarioAulaConvivencia
     public function getActitud()
     {
         return $this->actitud;
+    }
+
+    /**
+     * Set trabajo
+     *
+     * @param string $trabajo
+     *
+     * @return DiarioAulaConvivencia
+     */
+    public function setTrabajo($trabajo)
+    {
+        $this->trabajo = $trabajo;
+
+        return $this;
+    }
+
+    /**
+     * Get trabajo
+     *
+     * @return string
+     */
+    public function getTrabajo()
+    {
+        return $this->trabajo;
     }
 
     /**

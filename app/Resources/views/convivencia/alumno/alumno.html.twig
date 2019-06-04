@@ -1,10 +1,12 @@
 {% extends 'base2.html.twig' %}
 {% block body %}
     {% include 'convivencia/navegacion.html.twig' %}
-    <script>(function (e, t, n) {
+    <script>
+        (function (e, t, n) {
             var r = e.querySelectorAll("html")[0];
             r.className = r.className.replace(/(^|\s)no-js(\s|$)/, "$1js$2")
-        })(document, window, 0);</script>
+        })(document, window, 0);
+    </script>
     <div class="">
         <h3 class="center azul-prof fuente">{{ alumnoData.alumno.getNombreCompleto() }}</h3>
         <h4 class="center fuente" id="punto">Puntos: <span
@@ -76,7 +78,9 @@
                             <p style="text-align:center">Adem&aacute;s aqu&iacute; insertaremos nuevas noticias personalizadas
                                 para t&iacute;</p>
 
-                            <p style="text-align:center"><img alt="" src="https://pbs.twimg.com/profile_images/821672724342964226/6r-zRlAe.jpg" style="height:100px; width:100px" /><img alt="" src="http://cpd.iesgrancapitan.org:9117/img/logo2.svg" style="border-style:solid; border-width:0px; height:92px; width:146px" /></p>
+                            <p style="text-align:center">
+                                <img alt="" src="https://pbs.twimg.com/profile_images/821672724342964226/6r-zRlAe.jpg" style="height:100px; width:100px" />
+                                <img alt="" src="{{ asset('img/logo2.svg') }}" style="border-style:solid; border-width:0px; height:92px; width:146px" /></p>
 
                         {% else %}
                             {{ noticias.noticia_texto | raw }}
@@ -91,7 +95,8 @@
                     <p style="text-align:center">Adem&aacute;s aqu&iacute; insertaremos nuevas noticias personalizadas
                         para t&iacute;</p>
 
-                    <p style="text-align:center"><img alt="" src="https://pbs.twimg.com/profile_images/821672724342964226/6r-zRlAe.jpg" style="height:100px; width:100px" /><img alt="" src="http://cpd.iesgrancapitan.org:9117/img/logo2.svg" style="border-style:solid; border-width:0px; height:92px; width:146px" /></p>
+                    <p style="text-align:center"><img alt="" src="https://pbs.twimg.com/profile_images/821672724342964226/6r-zRlAe.jpg" style="height:100px; width:100px" />
+                        <img alt="" src="{{ asset('img/logo2.svg') }}" style="border-style:solid; border-width:0px; height:92px; width:146px" /></p>
 
                 {% endif %}
 
@@ -162,7 +167,6 @@
                             'rgba(255, 206, 86, 0.5)'
                         ],
                     }],
-
 
                     labels: [
                         'Partes',
@@ -286,7 +290,5 @@
             </div>
         </div>
     </div>
-
-
     <script src="{{ asset('js/fileInput/custom-file-input.js') }}"></script>
 {% endblock %}
