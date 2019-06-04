@@ -37,9 +37,9 @@
         padding: 0.5%;
     }
 
-    #flex-container{
-        display:flex;
-        border: 1px solid ;
+    #flex-container {
+        display: flex;
+        border: 1px solid;
     }
 </style>
 <div class="container">
@@ -82,9 +82,12 @@
                 {{ partes.idProfesor.nombre ~ " " ~ partes.idProfesor.apellido1 ~ " " ~ partes.idProfesor.apellido2 }}
             </div>
             <div class="caja" style="width:50%">
-                TUTOR DEL GRUPO DEL
-                ALUMNO<br>
-                {{ partes.idAlumno.idCurso.idTutor.nombre ~ " " ~ partes.idAlumno.idCurso.idTutor.apellido1 ~ " " ~ partes.idAlumno.idCurso.idTutor.apellido2 }}
+                {% if  partes.idAlumno.idCurso.idTutor is null %}
+                    {{ "NO EXISTE TUTOR ASIGNADO AL GRUPO" }}<br>
+                {% else %}
+                    {{ "TUTOR DEL GRUPO DEL ALUMNO" }}<br>
+                    {{ partes.idAlumno.idCurso.idTutor.nombre ?? "" ~ " " ~ partes.idAlumno.idCurso.idTutor.apellido1 ?? '' ~ " " ~ partes.idAlumno.idCurso.idTutor.apellido2 ?? '' }}
+                {% endif %}
             </div>
         </div>
         <div class="back caja" class="caja" style="border: 1px solid">
