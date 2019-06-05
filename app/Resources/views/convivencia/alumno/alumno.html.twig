@@ -69,18 +69,22 @@
                 {% if noticia is not empty %}
                     {% for noticias in noticia %}
                         {% if noticias.noticia_texto is null or
-                        noticias.fechaInicio|date('d/m/Y H:i:s') >  "now"|date('d/m/Y H:i:s') or
-                        noticias.fechaFinal|date('d/m/Y H:i:s') <  "now"|date('d/m/Y H:i:s') %}
-                            <h3 style="text-align:center">Bienvenid@s a la nueva interfaz de <strong>SHIKOBA</strong></h3>
-                            <p style="text-align:center">Aqu&iacute; podr&aacute;s disfrutar de una nueva experiencia gracias
+                            noticias.fechaInicio|date('d/m/Y H:i:s') >  "now"|date('d/m/Y H:i:s') or
+                            noticias.fechaFinal|date('d/m/Y H:i:s') <  "now"|date('d/m/Y H:i:s') %}
+                            <h3 style="text-align:center">Bienvenid@s a la nueva interfaz de <strong>SHIKOBA</strong>
+                            </h3>
+                            <p style="text-align:center">Aqu&iacute; podr&aacute;s disfrutar de una nueva experiencia
+                                gracias
                                 a su nuevo dise&ntilde;o</p>
 
-                            <p style="text-align:center">Adem&aacute;s aqu&iacute; insertaremos nuevas noticias personalizadas
+                            <p style="text-align:center">Adem&aacute;s aqu&iacute; insertaremos nuevas noticias
+                                personalizadas
                                 para t&iacute;</p>
 
                             <p style="text-align:center">
-                                <img alt="" src="https://pbs.twimg.com/profile_images/821672724342964226/6r-zRlAe.jpg" style="height:100px; width:100px" />
-                                <img alt="" src="{{ asset('img/logo2.svg') }}" style="border-style:solid; border-width:0px; height:92px; width:146px" /></p>
+                                <img alt="" src="{{ asset('img/logo.jpg') }}" style="height:100px; width:100px"/>
+                                <img alt="" src="{{ asset('img/logo2.svg') }}" style="border-style:solid; border-width:0px; height:92px; width:146px"/>
+                            </p>
 
                         {% else %}
                             {{ noticias.noticia_texto | raw }}
@@ -95,8 +99,10 @@
                     <p style="text-align:center">Adem&aacute;s aqu&iacute; insertaremos nuevas noticias personalizadas
                         para t&iacute;</p>
 
-                    <p style="text-align:center"><img alt="" src="https://pbs.twimg.com/profile_images/821672724342964226/6r-zRlAe.jpg" style="height:100px; width:100px" />
-                        <img alt="" src="{{ asset('img/logo2.svg') }}" style="border-style:solid; border-width:0px; height:92px; width:146px" /></p>
+                    <p style="text-align:center">
+                        <img alt="" src="{{ asset('img/logo.jpg') }}" style="height:100px; width:100px"/>
+                        <img alt="" src="{{ asset('img/logo2.svg') }}" style="border-style:solid; border-width:0px; height:92px; width:146px"/>
+                    </p>
 
                 {% endif %}
 
