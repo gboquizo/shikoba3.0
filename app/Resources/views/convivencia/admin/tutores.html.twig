@@ -4,7 +4,7 @@
     {% include 'convivencia/navegacion.html.twig' %}
 
     <div class="">
-        <h3 class="center azul-prof fuente">Gestión Tutores</h3>
+        <h3 class="center azul-prof fuente">Gestión tutores</h3>
 
         <form action="">
             <div class="row" id="busq">
@@ -42,7 +42,7 @@
                             <td>{{tutor.grupo }}</td>
                             <td> <a class="confirm paddingRightLeft "
                                     href="{{ path('borrarTutor', {'grupo': tutor.grupo}) }}"
-                                    data-title="Eliminar Parte"><i class="material-icons ">delete</i></a></td>
+                                    data-title="Eliminar tutor"><i class="material-icons ">delete</i></a></td>
                         </tr>
                     {% endfor %}
                     </tbody>
