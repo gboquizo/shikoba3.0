@@ -320,6 +320,30 @@ class ConvivenciaController extends Controller
     }
 
     /**
+     * @Route("/admin/tutores/borrarTutor,{grupo}", name="borrarTutor")
+     * @Security("has_role('ROLE_ADMIN')")
+     * @Method({"GET", "POST"})
+     */
+    public function borrarTutorAction(Request $request,$grupo=null)
+    {
+        if (
+            !in_array("ROLE_ADMIN", $this->getUser()->getRoles()) &&
+            !in_array("ROLE_CONVIVENCIA", $this->getUser()->getRoles()) &&
+            !in_array("ROLE_PROFESOR", $this->getUser()->getRoles())
+        )
+            return $this->redirectToRoute("index");
+
+        $em = $this->getDoctrine()->getManager();
+        $repositoryCursos = $em->getRepository('AppBundle:Cursos');
+        $repositoryCursos->borrarTutores($grupo);
+        $tutores=$repositoryCursos->verTutores();
+
+        return $this->render('convivencia/admin/tutores.html.twig', array(
+            'tutores'=>$tutores
+        ));
+    }
+
+    /**
      * @Route("/admin/importProfesorGrupo", name="admin_import_profesorGrupo")
      * @Security("has_role('ROLE_ADMIN')")
      * @Method({"GET", "POST"})
@@ -343,7 +367,12 @@ class ConvivenciaController extends Controller
             $grupo = $data['grupo']->getGrupo();
 
             $repositoryCursos = $em->getRepository('AppBundle:Cursos');
-            $repositoryCursos->updateProfesorCurso($profesor, $grupo);
+
+            $tutor=$repositoryCursos->consultarGrupoTutor($profesor, $grupo);
+
+            if ($tutor==null) {
+                $repositoryCursos->updateProfesorCurso($profesor, $grupo);
+            }
 
             $em->flush();
             return $this->redirectToRoute('admin_tutores');

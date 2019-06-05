@@ -26,9 +26,9 @@ class CursosRepository extends \Doctrine\ORM\EntityRepository
     }
 
     /**
-     * Función que devuelve los cursos agrupados por curso
-     * @return array
-     */
+ * Función que devuelve los cursos agrupados por curso
+ * @return array
+ */
     public function updateProfesorCurso($idprofesor,$grupo){
         $query = $this->getEntityManager()->createQuery(
             'UPDATE AppBundle\Entity\cursos C set C.idTutor =:idprofesor where C.grupo = :grupo');
@@ -37,6 +37,31 @@ class CursosRepository extends \Doctrine\ORM\EntityRepository
         $query->setParameter('grupo', $grupo);
         return $query->getResult();
     }
+
+    /**
+     * Función que devuelve los cursos agrupados por curso
+     * @return array
+     */
+    public function consultarGrupoTutor($idprofesor,$grupo){
+        $query = $this->getEntityManager()->createQuery(
+            'SELECT C.curso FROM AppBundle\Entity\cursos C WHERE C.idTutor=:idprofesor ');
+
+        $query->setParameter('idprofesor', $idprofesor);
+        return $query->getResult();
+    }
+
+    /**
+     * Función que borrar los tutores de un curso
+     * @return array
+     */
+    public function borrarTutores($grupo){
+        $query = $this->getEntityManager()->createQuery(
+            'UPDATE AppBundle\Entity\cursos C set C.idTutor =null where C.grupo = :grupo');
+
+        $query->setParameter('grupo', $grupo);
+        return $query->getResult();
+    }
+
     /**
      * Función que devuelve los cursos agrupados por curso
      * @return array
