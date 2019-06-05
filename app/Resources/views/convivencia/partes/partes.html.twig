@@ -78,13 +78,24 @@
                     </thead>
                     <tbody>
                     {% for parte in partes %}
-                        {% if parte.idTipo.tipo == 'Grave' %}
+                        {% if parte.puntos >= 10 %}
+                            {% set tipo = 'Muy Grave' %}
+                            {% set colorClass = 'red-text' %}
+                        {% elseif parte.puntos < 10 and parte.puntos > 5 %}
+                            {% set tipo = 'Grave' %}
+                            {% set colorClass = 'orange-text' %}
+                        {% else %}
+                            {% set tipo = 'Leve' %}
+                            {% set colorClass = 'amber-text' %}
+                        {% endif %}
+
+                      {#  {% if parte.idTipo.tipo == 'Grave' %}
                             {% set colorClass = 'orange-text' %}
                         {% elseif parte.idTipo.tipo  == 'Leve' %}
                             {% set colorClass = 'amber-text' %}
                         {% else %}
                             {% set colorClass = 'red-text' %}
-                        {% endif %}
+                        {% endif %}#}
                         {% if parte.idEstado.estado == 'Caducado' %}
                             {% set colorClass = 'grey-text' %}
                         {% endif %}
@@ -105,7 +116,8 @@
                             <td>
                                 {{ parte.idProfesor.getNombreCompleto() }}
                             </td>
-                            <td class="{{ colorClass }}">{{ parte.idTipo.tipo }}</td>
+                        {#    <td class="{{ colorClass }}">{{ parte.idTipo.tipo }}</td>#}
+                            <td class="{{ colorClass }}">{{ tipo }}</td>
                             <td>{{ parte.puntos }}</td>
                             <td>{{ parte.idEstado.estado }}</td>
                             {% if (is_granted('ROLE_ADMIN') == false) and (is_granted('ROLE_PROFESOR')) %}
