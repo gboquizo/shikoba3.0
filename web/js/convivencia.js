@@ -328,12 +328,15 @@ $(document).ready(function () {
                 text: '<i class="material-icons">picture_as_pdf</i>',
                 titleAttr: 'PDF',
                 orientation: 'portrait',
-                title: 'Informes Shikoba',
+                title: 'Informes Shikoba: ' +  $('.tableData').closest('body').find('h3').text(),
                 pageSize: 'A3',
                 customize: function (doc) {
                     doc.defaultStyle.alignment = 'center'
                     doc.content[1].table.widths =
                         Array(doc.content[1].table.body[0].length + 1).join('*').split('');
+                },
+                exportOptions: {
+                    columns: "thead th:not(.noExport)"
                 }
             },
             {
@@ -421,12 +424,15 @@ $(document).ready(function () {
                 text: '<i class="material-icons">picture_as_pdf</i>',
                 titleAttr: 'PDF',
                 orientation: 'portrait',
-                title: 'Informes Shikoba',
+                title: 'Informes Shikoba: ' +  $('.tableDataCarnets').closest('body').find('h3').text(),
                 pageSize: 'A3',
                 customize: function (doc) {
                     doc.defaultStyle.alignment = 'center'
                     doc.content[1].table.widths =
                         Array(doc.content[1].table.body[0].length + 1).join('*').split('');
+                },
+                exportOptions: {
+                    columns: "thead th:not(.noExport)"
                 }
             },
             {
@@ -530,12 +536,15 @@ $(document).ready(function () {
                 text: '<i class="material-icons">picture_as_pdf</i>',
                 titleAttr: 'PDF',
                 orientation: 'portrait',
-                title: 'Informes Shikoba',
+                title: 'Informes Shikoba: ' +  $('.tableDataMedidas').closest('body').find('h3').text(),
                 pageSize: 'A3',
                 customize: function (doc) {
                     doc.defaultStyle.alignment = 'center'
                     doc.content[1].table.widths =
                         Array(doc.content[1].table.body[0].length + 1).join('*').split('');
+                },
+                exportOptions: {
+                    columns: "thead th:not(.noExport)"
                 }
             },
             {
@@ -640,12 +649,15 @@ $(document).ready(function () {
                 text: '<i class="material-icons">picture_as_pdf</i>',
                 titleAttr: 'PDF',
                 orientation: 'portrait',
-                title: 'Informes Shikoba',
+                title: 'Informes Shikoba: ' +  $('.tableDataPartes').closest('body').find('h3').text(),
                 pageSize: 'A3',
                 customize: function (doc) {
                     doc.defaultStyle.alignment = 'center'
                     doc.content[1].table.widths =
                         Array(doc.content[1].table.body[0].length + 1).join('*').split('');
+                },
+                exportOptions: {
+                    columns: "thead th:not(.noExport)"
                 }
             },
             {
