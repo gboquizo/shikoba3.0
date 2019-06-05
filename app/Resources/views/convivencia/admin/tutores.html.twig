@@ -31,6 +31,8 @@
                     <tr class="blue darken-3 white-text">
                         <th>Profesor</th>
                         <th>Grupo</th>
+                        <th>Acciones</th>
+
                     </tr>
                     </thead>
                     <tbody>
@@ -38,6 +40,9 @@
                         <tr>
                             <td>{{tutor.nombre}} {{tutor.apellido1}} {{tutor.apellido2}}</td>
                             <td>{{tutor.grupo }}</td>
+                            <td> <a class="confirm paddingRightLeft "
+                                    href="{{ path('borrarTutor', {'grupo': tutor.grupo}) }}"
+                                    data-title="Eliminar Parte"><i class="material-icons ">delete</i></a></td>
                         </tr>
                     {% endfor %}
                     </tbody>
