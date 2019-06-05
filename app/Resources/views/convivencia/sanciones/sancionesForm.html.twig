@@ -4,7 +4,7 @@
     {% include 'convivencia/navegacion.html.twig' %}
 
     <div class="">
-        <h3 class="center azul-prof fuente">Formulario Sanciones</h3>
+        <h3 class="center azul-prof fuente">Formulario sanciones</h3>
 
         <form method="post" class="" name="formBusqueda">
             <div class="col s12 center">
@@ -75,7 +75,7 @@
                        value="{{ sancion.fechaFinal|date('d/m/Y') }}" required>
             </div>
             <div class="input-field col s12 m6">
-                {{ form_row(form.fechaComunicacion) }}
+                {{ form_row(form.fechaComunicacion, {value : sancion.fechaComunicacion|date("d/m/Y")}) }}
             </div>
             <div class="input-field col s12 m6">
                 {{ form_row(form.fechaConfirmacion) }}
