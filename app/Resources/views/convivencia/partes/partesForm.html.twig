@@ -82,7 +82,7 @@
             </div>
         {% endif %}
         {% if app.request.get('idParte') is null %}
-            <div class="col s12 m12" style="text-align:center">
+            <div class="col s12 m12" style="text-align:center; margin-left: 66px">
                 <input type="checkbox" id="envioSMS" name="envioSMS"/>
                 <label for="envioSMS">Enviar SMS</label>
             </div>
@@ -123,7 +123,7 @@
             <input type="text" id="HoraLlegadaJefatura" name="HoraLlegadaJefatura" class="timepicker"
                    required>
         </div>
-        <div class="" id="formu">
+        <div class="" id="formu" style="display:none">
             {{ form_widget(form) }}
         </div>
         <div class="col s12 center" style="margin-bottom: 1%">
