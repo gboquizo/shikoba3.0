@@ -12,42 +12,29 @@
                         class="material-icons right" style="margin-top: -2%;">add</i></a>
         </div>
 
-        <div class="row" style="margin-top: 2%">
-            <table id="tablaNoticias" class="responsive-table highlight z-depth-3" data-order='[[ 1, "desc" ]]'
-                   style="margin-bottom: 1%">
-                <thead>
-                <tr class="blue darken-3 white-text">
-                    <th>id</th>
-                    <th id="noticiath">Noticia</th>
-                    <th>Fecha</th>
-                    <th>Fecha Inicio</th>
-                    <th>Fecha Finalización</th>
-                    <th>Grupo</th>
-                    <th>Puntos</th>
-                    <th>Acciones</th>
-                </tr>
-                </thead>
-                <tbody>
-                {% for noticia in noticias %}
-                    <tr>
-                        <td>{{ noticia.id }}</td>
-                        <td id="noticiatd">{{ noticia.noticia_texto|raw }}</td>
-                        <td>{{ noticia.fecha|date("d/m/Y") }}</td>
-                        <td>{{ noticia.fechaInicio|date("d/m/Y") }}</td>
-                        <td>{{ noticia.fechaFinal|date("d/m/Y") }}</td>
-                        <td>{{ noticia.idCurso.grupo }}</td>
-                        <td>{{ noticia.puntos }}</td>
+        <div class="row" style="padding: 6%">
+            {% for noticia in noticias %}
+                <div style="border: 1px solid; margin-bottom: 20px">
+                    <div style="display: flex;justify-content: flex-end; ">
+                        <p style="margin: 5px">{{ noticia.fechaInicio|date("d/m/Y") }}</p>
+                        <p style="margin: 5px">{{ noticia.fechaFinal|date("d/m/Y") }}</p>
+                    </div>
+                    <div style="padding: 2%">
+                        <p id="noticiatd">{{ noticia.noticia_texto|raw }}</p>
+                    </div>
+                    <div style="display: flex; justify-content: flex-end">
+                        <p style="margin: 5px">{{ noticia.idCurso.grupo }}</p>
+                        <p style="margin: 5px">{{ noticia.puntos }}</p>
                         {% if is_granted('ROLE_CONVIVENCIA') %}
-                            <td>
+                            <p style="margin: 5px">
                                 <a class="confirm paddingRightLeft "
                                    href="{{ path('borrar_noticia', {'id': noticia.id}) }}"
                                    data-title="Eliminar Noticia"><i class="material-icons ">delete</i></a>
-                            </td>
+                            </p>
                         {% endif %}
-                    </tr>
-                {% endfor %}
-                </tbody>
-            </table>
+                    </div>
+                </div>
+            {% endfor %}
         </div>
     </div>
 {% endblock %}
