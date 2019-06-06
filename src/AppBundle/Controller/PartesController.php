@@ -118,28 +118,33 @@ class PartesController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $fechaParte = \DateTime::createFromFormat('d/m/Y', $request->get('fecha'));
-            $parte->setFecha($fechaParte);
-            $em->persist($parte);
-            $em->flush();
+            if ($parte->getDescripcion() == null || $parte->getIdAlumno() == null || $parte->getIdProfesor() == null||$parte->getPuntos() == null) {
+                return $this->redirectToRoute("nuevoParte");
+            } else {
 
-            //Comprobacion del checkbox de envio del sms
-            if ( $request->get('envioSMS') != null ) {
-              $telefonos = array();
+                $fechaParte = \DateTime::createFromFormat('d/m/Y', $request->get('fecha'));
+                $parte->setFecha($fechaParte);
+                $em->persist($parte);
+                $em->flush();
 
-              //Compruebo si esta activo el envio de sms a cada tutor y agrego su telefono
-              if ( $parte->getIdAlumno()->getMsgTL1() ) {
-                $telefonos[] = $parte->getIdAlumno()->getTelefonoTL1();
-              }
-              if ( $parte->getIdAlumno()->getMsgTL2() ) {
-                $telefonos[] = $parte->getIdAlumno()->getTelefonoTL2();
-              }
+                //Comprobacion del checkbox de envio del sms
+                if ($request->get('envioSMS') != null) {
+                    $telefonos = array();
 
-              $smsHelper->sendSms( $telefonos, $parte->getIdAlumno()->getNombreCompleto() . '. ' . $parte->getDescripcion() );
+                    //Compruebo si esta activo el envio de sms a cada tutor y agrego su telefono
+                    if ($parte->getIdAlumno()->getMsgTL1()) {
+                        $telefonos[] = $parte->getIdAlumno()->getTelefonoTL1();
+                    }
+                    if ($parte->getIdAlumno()->getMsgTL2()) {
+                        $telefonos[] = $parte->getIdAlumno()->getTelefonoTL2();
+                    }
+
+                    $smsHelper->sendSms($telefonos, $parte->getIdAlumno()->getNombreCompleto() . '. ' . $parte->getDescripcion());
+                }
+
+                $parteHelper->createSancionFromRequest($request, $parte);
+                return $this->redirectToRoute("gestion_partes");
             }
-
-            $parteHelper->createSancionFromRequest($request, $parte);
-            return $this->redirectToRoute("gestion_partes");
         }
 
         $accion = $repositoryAccionPartes->findOneByEstado($parte->getIdEstado());
@@ -155,6 +160,8 @@ class PartesController extends Controller
             'conductas' => $conductas
         ));
     }
+
+
     /**
      * @Route("/imprimirParte", name="printParte")
      * @Method({"GET", "POST"})
@@ -165,21 +172,21 @@ class PartesController extends Controller
         $parteHelper = $this->get('app.partesHelper');
         $parte = $parteHelper->getParteFromRequest($request);
 
-        $html= $this->renderView('convivencia/partes/imprimirParte.html.twig', array(
+        $html = $this->renderView('convivencia/partes/imprimirParte.html.twig', array(
             'partes' => $parte,
         ));
         $snappy = $this->get('knp_snappy.pdf');
         $snappy->setOption('no-outline', true);
-        $snappy->setOption('page-size','LETTER');
+        $snappy->setOption('page-size', 'LETTER');
         $snappy->setOption('encoding', 'UTF-8');
-        $titulo = $parte->getIdAlumno()->getApellido1().$parte->getIdAlumno()->getApellido2().$parte->getIdAlumno()->getNombre();
-        $filename = 'Parte'.$titulo;
+        $titulo = $parte->getIdAlumno()->getApellido1() . $parte->getIdAlumno()->getApellido2() . $parte->getIdAlumno()->getNombre();
+        $filename = 'Parte' . $titulo;
         return new Response(
             $snappy->getOutputFromHtml($html),
             200,
             array(
-                'Content-Type'          => 'application/pdf;',
-                'Content-Disposition'   => 'inline; filename="'.$filename.'.pdf"'
+                'Content-Type' => 'application/pdf;',
+                'Content-Disposition' => 'inline; filename="' . $filename . '.pdf"'
             )
         );
     }
@@ -231,22 +238,19 @@ class PartesController extends Controller
             $repositoryCursos = $em->getRepository('AppBundle:Cursos');
             /** @var ProfesoresRepository $repositoryProfesores */
             $repositoryProfesores = $em->getRepository('AppBundle:Profesores');
-            if($alumnosSeleccionados == "Todos"){
+            if ($alumnosSeleccionados == "Todos") {
                 $alumnos = $repositoryAlumnos->findAll();
-            }
-            else{
+            } else {
                 $alumnos = $repositoryAlumnos->findById($alumnosSeleccionados);
             }
-            if($cursoSeleccionado == "Todos"){
-            	$curso = $repositoryCursos->findAll();
+            if ($cursoSeleccionado == "Todos") {
+                $curso = $repositoryCursos->findAll();
+            } else {
+                $curso = $repositoryCursos->findById($cursoSeleccionado);
             }
-            else{
-            	$curso = $repositoryCursos->findById($cursoSeleccionado);
-            }
-            if($profesoresSeleccionados == "Todos"){
+            if ($profesoresSeleccionados == "Todos") {
                 $profesores = $repositoryProfesores->findAll();
-            }
-            else{
+            } else {
                 $profesores = $repositoryProfesores->findById($profesoresSeleccionados);
             }
             /** @var PartesRepository $repositoryPartes */
@@ -354,7 +358,7 @@ class PartesController extends Controller
      */
     public function partesGruposInforme(Request $request)
     {
-     $em = $this->getDoctrine()->getManager();
+        $em = $this->getDoctrine()->getManager();
         /** @var PartesRepository $repositoryPartes */
         $repositoryPartes = $em->getRepository("AppBundle:Partes");
         $fechaI = $request->get('fechaI');
