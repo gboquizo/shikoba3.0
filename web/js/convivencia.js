@@ -329,12 +329,13 @@ $(document).ready(function () {
                 extend: 'pdfHtml5',
                 text: '<i class="material-icons">picture_as_pdf</i>',
                 titleAttr: 'PDF',
+                filename:'Informes Shikoba: ' + $('.tableData').closest('body').find('h3').text(),
                 orientation: 'portrait',
-                title: 'Informes Shikoba: ' + $('.tableData').closest('body').find('h3').text(),
+                title: 'Shikoba -Sawabona: tabla de ' + ($('.tableData').closest('body').find('h3').text()).toLocaleLowerCase() + '.',
                 pageSize: 'A3',
                 customize: function(doc) {
-                    let docc = doc
-                    customizeHeader(docc, $('.tableData'))
+                    let customDoc = doc
+                    customizeHeader(customDoc, $('.tableData'))
                 },
                 exportOptions: {
                     columns: "thead th:not(.noExport)",
@@ -347,7 +348,8 @@ $(document).ready(function () {
                 extend: 'excelHtml5',
                 text: '<i class="excel"></i>',
                 titleAttr: 'Excel',
-                title: 'Informes Shikoba: ' + $('.tableData').closest('body').find('h3').text(),
+                filename:'Informes Shikoba: ' + $('.tableData').closest('body').find('h3').text(),
+                title: 'Shikoba -Sawabona: tabla de ' + ($('.tableData').closest('body').find('h3').text()).toLocaleLowerCase() + '.',
                 exportOptions: {
                     columns: "thead th:not(.noExport)"
                 }
@@ -356,7 +358,8 @@ $(document).ready(function () {
                 extend: 'csvHtml5',
                 text: '<i class="csv"></i>',
                 titleAttr: 'CSV',
-                title: 'Informes Shikoba: ' + $('.tableData').closest('body').find('h3').text(),
+                filename:'Informes Shikoba: ' + $('.tableData').closest('body').find('h3').text(),
+                title: 'Shikoba -Sawabona: tabla de ' + ($('.tableData').closest('body').find('h3').text()).toLocaleLowerCase() + '.',
                 exportOptions: {
                     columns: "thead th:not(.noExport)"
                 }
@@ -365,7 +368,8 @@ $(document).ready(function () {
                 extend: 'print',
                 text: '<i class="material-icons">print</i>',
                 titleAttr: 'Imprimir',
-                title: 'Informes Shikoba: ' + $('.tableData').closest('body').find('h3').text(),
+                filename:'Informes Shikoba: ' + $('.tableData').closest('body').find('h3').text(),
+                title: 'Shikoba -Sawabona: tabla de ' + ($('.tableData').closest('body').find('h3').text()).toLocaleLowerCase() + '.',
                 exportOptions: {
                     columns: "thead th:not(.noExport)"
                 }
@@ -439,12 +443,13 @@ $(document).ready(function () {
                 extend: 'pdfHtml5',
                 text: '<i class="material-icons">picture_as_pdf</i>',
                 titleAttr: 'PDF',
+                filename:'Informes Shikoba: ' + $('.tableDataCarnets').closest('body').find('h3').text(),
                 orientation: 'portrait',
-                title: 'Informes Shikoba: ' + $('.tableDataCarnets').closest('body').find('h3').text(),
+                title: 'Shikoba -Sawabona: tabla de ' + ($('.tableDataCarnets').closest('body').find('h3').text()).toLocaleLowerCase() + '.',
                 pageSize: 'A3',
                 customize: function(doc) {
-                    let docc = doc
-                    customizeHeader(docc, $('.tableDataCarnets'))
+                    let customDoc = doc
+                    customizeHeader(customDoc, $('.tableDataCarnets'))
                 },
                 exportOptions: {
                     columns: "thead th:not(.noExport)",
@@ -457,7 +462,8 @@ $(document).ready(function () {
                 extend: 'excelHtml5',
                 text: '<i class="excel"></i>',
                 titleAttr: 'Excel',
-                title: 'Informes Shikoba: ' + $('.tableDataCarnets').closest('body').find('h3').text(),
+                filename:'Informes Shikoba: ' + $('.tableDataCarnets').closest('body').find('h3').text(),
+                title: 'Shikoba -Sawabona: tabla de ' + ($('.tableDataCarnets').closest('body').find('h3').text()).toLocaleLowerCase() + '.',
                 exportOptions: {
                     columns: "thead th:not(.noExport)"
                 }
@@ -466,7 +472,8 @@ $(document).ready(function () {
                 extend: 'csvHtml5',
                 text: '<i class="csv"></i>',
                 titleAttr: 'CSV',
-                title: 'Informes Shikoba: ' + $('.tableDataCarnets').closest('body').find('h3').text(),
+                filename:'Informes Shikoba: ' + $('.tableDataCarnets').closest('body').find('h3').text(),
+                title: 'Shikoba -Sawabona: tabla de ' + ($('.tableDataCarnets').closest('body').find('h3').text()).toLocaleLowerCase() + '.',
                 exportOptions: {
                     columns: "thead th:not(.noExport)"
                 }
@@ -475,7 +482,8 @@ $(document).ready(function () {
                 extend: 'print',
                 text: '<i class="material-icons">print</i>',
                 titleAttr: 'Imprimir',
-                title: 'Informes Shikoba: ' + $('.tableDataCarnets').closest('body').find('h3').text(),
+                filename:'Informes Shikoba: ' + $('.tableDataCarnets').closest('body').find('h3').text(),
+                title: 'Shikoba -Sawabona: tabla de ' + ($('.tableDataCarnets').closest('body').find('h3').text()).toLocaleLowerCase() + '.',
                 exportOptions: {
                     columns: "thead th:not(.noExport)"
                 }
@@ -566,12 +574,13 @@ $(document).ready(function () {
                 extend: 'pdfHtml5',
                 text: '<i class="material-icons">picture_as_pdf</i>',
                 titleAttr: 'PDF',
+                filename:'Informes Shikoba: ' + $('.tableDataMedidas').closest('body').find('h3').text(),
                 orientation: 'portrait',
-                title: 'Informes Shikoba: ' + $('.tableDataMedidas').closest('body').find('h3').text(),
+                title: 'Shikoba -Sawabona: tabla de ' + ($('.tableDataMedidas').closest('body').find('h3').text()).toLocaleLowerCase() + '.',
                 pageSize: 'A3',
                 customize: function(doc) {
-                    let docc = doc
-                    customizeHeader(docc, $('.tableDataMedidas'))
+                    let customDoc = doc
+                    customizeHeader(customDoc, $('.tableDataMedidas'))
                 },
                 exportOptions: {
                     columns: "thead th:not(.noExport)",
@@ -585,7 +594,8 @@ $(document).ready(function () {
                 extend: 'excelHtml5',
                 text: '<i class="excel"></i>',
                 titleAttr: 'Excel',
-                title: 'Informes Shikoba: ' + $('.tableDataMedidas').closest('body').find('h3').text(),
+                filename:'Informes Shikoba: ' + $('.tableDataMedidas').closest('body').find('h3').text(),
+                title: 'Shikoba -Sawabona: tabla de ' + ($('.tableDataMedidas').closest('body').find('h3').text()).toLocaleLowerCase() + '.',
                 exportOptions: {
                     columns: "thead th:not(.noExport)"
                 }
@@ -594,7 +604,8 @@ $(document).ready(function () {
                 extend: 'csvHtml5',
                 text: '<i class="csv"></i>',
                 titleAttr: 'CSV',
-                title: 'Informes Shikoba: ' + $('.tableDataMedidas').closest('body').find('h3').text(),
+                filename:'Informes Shikoba: ' + $('.tableDataMedidas').closest('body').find('h3').text(),
+                title: 'Shikoba -Sawabona: tabla de ' + ($('.tableDataMedidas').closest('body').find('h3').text()).toLocaleLowerCase() + '.',
                 exportOptions: {
                     columns: "thead th:not(.noExport)"
                 }
@@ -603,7 +614,8 @@ $(document).ready(function () {
                 extend: 'print',
                 text: '<i class="material-icons">print</i>',
                 titleAttr: 'Imprimir',
-                title: 'Informes Shikoba: ' + $('.tableDataMedidas').closest('body').find('h3').text(),
+                filename:'Informes Shikoba: ' + $('.tableDataMedidas').closest('body').find('h3').text(),
+                title: 'Shikoba -Sawabona: tabla de ' + ($('.tableDataMedidas').closest('body').find('h3').text()).toLocaleLowerCase() + '.',
                 exportOptions: {
                     columns: "thead th:not(.noExport)"
                 }
@@ -693,13 +705,14 @@ $(document).ready(function () {
             {
                 extend: 'pdfHtml5',
                 text: '<i class="material-icons">picture_as_pdf</i>',
+                filename:'Informes Shikoba: ' + $('.tableDataPartes').closest('body').find('h3').text(),
                 titleAttr: 'PDF',
                 orientation: 'portrait',
-                title: 'Informes Shikoba: ' + $('.tableDataPartes').closest('body').find('h3').text(),
+                title: 'Shikoba -Sawabona: tabla de ' + ($('.tableDataPartes').closest('body').find('h3').text()).toLocaleLowerCase() + '.',
                 pageSize: 'A3',
                 customize: function(doc) {
-                    let docc = doc
-                    customizeHeader(docc, $('.tableDataPartes'))
+                    let customDoc = doc
+                    customizeHeader(customDoc, $('.tableDataPartes'))
                 },
                 exportOptions: {
                     columns: "thead th:not(.noExport)",
@@ -711,8 +724,9 @@ $(document).ready(function () {
             {
                 extend: 'excelHtml5',
                 text: '<i class="excel"></i>',
+                filename:'Informes Shikoba: ' + $('.tableDataPartes').closest('body').find('h3').text(),
                 titleAttr: 'Excel',
-                title: 'Informes Shikoba: ' + $('.tableDataPartes').closest('body').find('h3').text(),
+                title: 'Shikoba -Sawabona: tabla de ' + ($('.tableDataPartes').closest('body').find('h3').text()).toLocaleLowerCase() + '.',
                 exportOptions: {
                     columns: "thead th:not(.noExport)"
                 }
@@ -720,8 +734,9 @@ $(document).ready(function () {
             {
                 extend: 'csvHtml5',
                 text: '<i class="csv"></i>',
+                filename:'Informes Shikoba: ' + $('.tableDataPartes').closest('body').find('h3').text(),
                 titleAttr: 'CSV',
-                title: 'Informes Shikoba: ' + $('.tableDataPartes').closest('body').find('h3').text(),
+                title: 'Shikoba -Sawabona: tabla de ' + ($('.tableDataPartes').closest('body').find('h3').text()).toLocaleLowerCase() + '.',
                 exportOptions: {
                     columns: "thead th:not(.noExport)"
                 }
@@ -729,8 +744,9 @@ $(document).ready(function () {
             {
                 extend: 'print',
                 text: '<i class="material-icons">print</i>',
+                filename:'Informes Shikoba: ' + $('.tableDataPartes').closest('body').find('h3').text(),
                 titleAttr: 'Imprimir',
-                title: 'Informes Shikoba: ' + $('.tableDataPartes').closest('body').find('h3').text(),
+                title: 'Shikoba -Sawabona: tabla de ' + ($('.tableDataPartes').closest('body').find('h3').text()).toLocaleLowerCase() + '.',
                 exportOptions: {
                     columns: "thead th:not(.noExport)"
                 }
@@ -814,13 +830,13 @@ let paint = function() {
 
 /**
  * Let the customization of header, footer, and other features in pdfhtml5's export
- * @param docc doc where the customization is applied
+ * @param customDoc doc where the customization is applied
  * @param classs selector jQuery where the class works, a class.
  */
-let customizeHeader = function(docc,classs) {
-    docc.defaultStyle.alignment = 'center'
-    docc.content[1].table.widths =
-        Array(docc.content[1].table.body[0].length + 1).join('*').split('');
+let customizeHeader = function(customDoc,classs) {
+    customDoc.defaultStyle.alignment = 'center'
+    customDoc.content[1].table.widths =
+        Array(customDoc.content[1].table.body[0].length + 1).join('*').split('');
 
     //Prepare header and footer
 
@@ -836,20 +852,20 @@ let customizeHeader = function(docc,classs) {
     // Set page margins [left,top,right,bottom] or [horizontal,vertical]
     // or one number for equal spread
     // It's important to create enough space at the top for a header !!!
-    docc.pageMargins = [20, 120, 20, 40];
+    customDoc.pageMargins = [20, 120, 20, 40];
 
     // Set the font size fot the entire document
-    docc.defaultStyle.fontSize = 12;
+    customDoc.defaultStyle.fontSize = 12;
 
     // Set the fontsize for the table header
-    docc.styles.tableHeader.fontSize = 12;
+    customDoc.styles.tableHeader.fontSize = 12;
 
     // Create a header object with 3 columns
     // Left side: Logo
     // Middle: brandname
     // Right side: A document title
 
-    docc['header'] = (function () {
+    customDoc['header'] = (function () {
         return {
             columns: [
                 {
@@ -863,23 +879,23 @@ let customizeHeader = function(docc,classs) {
                     italics: true,
                     text: 'Informe Shikoba: ',
                     fontSize: 24,
-                    fit: [100, 100],
-                    margin: [0, 25]
+                    fit: [50, 50],
+                    margin: [0, 25,0,0],
                 },
                 {
                     alignment: 'middle',
                     italics: true,
                     text: classs.closest('body').find('h3').text(),
                     fontSize: 24,
-                    fit: [100, 100],
-                    margin: [0, 25]
+                    fit: [300, 300],
+                    margin: [-80, 25,0,0]
                 },
-                {
+               /* {
                     alignment: 'right',
                     fontSize: 14,
                     text: '',
-                    margin: [0, 30]
-                }
+                    margin: [25, 30]
+                }*/
             ],
             margin: 20
         }
@@ -888,7 +904,7 @@ let customizeHeader = function(docc,classs) {
     // Create a footer object with 2 columns
     // Left side: report creation date
     // Right side: current page and total pages
-    docc['footer'] = (function (page, pages) {
+    customDoc['footer'] = (function (page, pages) {
         return {
             columns: [
                 {
