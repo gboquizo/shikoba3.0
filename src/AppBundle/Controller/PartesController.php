@@ -118,15 +118,15 @@ class PartesController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            if ($parte->getDescripcion() == null || $parte->getIdAlumno() == null || $parte->getIdProfesor() == null||$parte->getPuntos() == null) {
-                return $this->redirectToRoute("nuevoParte");
-            } else {
-
                 $fechaParte = \DateTime::createFromFormat('d/m/Y', $request->get('fecha'));
                 $parte->setFecha($fechaParte);
+           if ($parte->getDescripcion() == null || $parte->getIdAlumno() == null
+                || $parte->getIdProfesor() == null || $parte->getIdConducta()->isEmpty()) {
+               $this->addFlash("parteError", "Error al generar el parte");
+               return $this->redirectToRoute("nuevoParte");
+            } else {
                 $em->persist($parte);
                 $em->flush();
-
                 //Comprobacion del checkbox de envio del sms
                 if ($request->get('envioSMS') != null) {
                     $telefonos = array();
@@ -143,6 +143,8 @@ class PartesController extends Controller
                 }
 
                 $parteHelper->createSancionFromRequest($request, $parte);
+
+                $this->addFlash("parte", "Parte asignado correctamente");
                 return $this->redirectToRoute("gestion_partes");
             }
         }

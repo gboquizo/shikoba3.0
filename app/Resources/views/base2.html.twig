@@ -56,56 +56,56 @@
 
     {% endblock %}
     <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}"/>
+    <!--Import jQuery before materialize.js-->
+    <!-- Actualizado a la versión 3.4.1 -->
+    <script type="text/javascript" src="{{ asset('js/jquery-3.4.1.min.js') }}"></script>
+    <!-- Actualizado a la versión 1.0.0 -->
+    <script type="text/javascript" src="{{ asset('js/materialize.min.js') }}"></script>
+
+    <!-- Actualizado a la versión 1.8.7 -->
+    <script type="text/javascript" src="{{ asset('js/chosen/chosen.jquery.min.js') }}"></script>
+
+    <!-- En versiones estables -->
+    <script type="text/javascript" src="{{ asset('js/datepicker/jquery-ui.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/iCheck/icheck.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/tooltip/tooltipster.bundle.min.js') }}"></script>
+
+    <!-- Actualizado a la versión 2.8.0 -->
+    <script type="text/javascript" src="{{ asset('js/chart.min.js') }}"></script>
+
+    <!-- Actualizado a la versión 3.3.4 -->
+    <script src="{{ asset('js/jquery-confirm.min.js') }}"></script>
+
+    <!-- Actualizado a la versión 1.10.18 -->
+    <script type="text/javascript" charset="utf8" src="{{ asset('js/datatables/datatables.min.js') }}"></script>
+
+    <!-- En versión estable -->
+    <script type="text/javascript" src="{{ asset('js/fileInput/custom-file-input.js') }}"></script>
+
+    <!-- Actualizado a la versión 2.24.0 -->
+    <script type="text/javascript" src="{{ asset('js/moment.min.js') }}"></script>
+
+    <!-- Genera un error en consola, revisar. -->
+    <script type="text/javascript" src="{{ asset('js/datepickerrang.js') }}"></script>
+
+    <!-- Actualizado a la versión 0.20.0 -->
+    <script type="text/javascript" src="{{ asset('js/datepicker/jquery.daterangepicker.min.js') }}"></script>
+
+    <!-- Scripts personalizados para datatables y otras funcionalidades. -->
+    <script type="text/javascript" src="{{ asset('js/script.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/convivencia.js') }}"></script>
+
+    <!-- Actualizado a la versión 1.10.18 -->
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/datatables/datatables-downloads.min.css') }}"/>
+
+    <!-- Actualizado a la versión estable 0.1.56 -->
+    <script type="text/javascript" src="{{ asset('js/pdfmake.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/vfs_fonts.js') }}"></script>
+
+    <!-- Actualizado a la versión 1.10.18 -->
+    <script type="text/javascript" src="{{ asset('js/datatables/datatables-downloads.min.js') }}"></script>
     {% block javascripts %}
 
-        <!--Import jQuery before materialize.js-->
-        <!-- Actualizado a la versión 3.4.1 -->
-        <script type="text/javascript" src="{{ asset('js/jquery-3.4.1.min.js') }}"></script>
-        <!-- Actualizado a la versión 1.0.0 -->
-        <script type="text/javascript" src="{{ asset('js/materialize.min.js') }}"></script>
-
-        <!-- Actualizado a la versión 1.8.7 -->
-        <script type="text/javascript" src="{{ asset('js/chosen/chosen.jquery.min.js') }}"></script>
-
-        <!-- En versiones estables -->
-        <script type="text/javascript" src="{{ asset('js/datepicker/jquery-ui.min.js') }}"></script>
-        <script type="text/javascript" src="{{ asset('js/iCheck/icheck.min.js') }}"></script>
-        <script type="text/javascript" src="{{ asset('js/tooltip/tooltipster.bundle.min.js') }}"></script>
-
-        <!-- Actualizado a la versión 2.8.0 -->
-        <script type="text/javascript" src="{{ asset('js/chart.min.js') }}"></script>
-
-        <!-- Actualizado a la versión 3.3.4 -->
-        <script src="{{ asset('js/jquery-confirm.min.js') }}"></script>
-
-        <!-- Actualizado a la versión 1.10.18 -->
-        <script type="text/javascript" charset="utf8" src="{{ asset('js/datatables/datatables.min.js') }}"></script>
-
-        <!-- En versión estable -->
-        <script type="text/javascript" src="{{ asset('js/fileInput/custom-file-input.js') }}"></script>
-
-        <!-- Actualizado a la versión 2.24.0 -->
-        <script type="text/javascript" src="{{ asset('js/moment.min.js') }}"></script>
-
-        <!-- Genera un error en consola, revisar. -->
-        <script type="text/javascript" src="{{ asset('js/datepickerrang.js') }}"></script>
-
-        <!-- Actualizado a la versión 0.20.0 -->
-        <script type="text/javascript" src="{{ asset('js/datepicker/jquery.daterangepicker.min.js') }}"></script>
-
-        <!-- Scripts personalizados para datatables y otras funcionalidades. -->
-        <script type="text/javascript" src="{{ asset('js/script.js') }}"></script>
-        <script type="text/javascript" src="{{ asset('js/convivencia.js') }}"></script>
-
-        <!-- Actualizado a la versión 1.10.18 -->
-        <link rel="stylesheet" type="text/css" href="{{ asset('css/datatables/datatables-downloads.min.css') }}"/>
-
-        <!-- Actualizado a la versión estable 0.1.56 -->
-        <script type="text/javascript" src="{{ asset('js/pdfmake.min.js') }}"></script>
-        <script type="text/javascript" src="{{ asset('js/vfs_fonts.js') }}"></script>
-
-        <!-- Actualizado a la versión 1.10.18 -->
-        <script type="text/javascript" src="{{ asset('js/datatables/datatables-downloads.min.js') }}"></script>
     {% endblock %}
 </head>
 <body class="daterange">

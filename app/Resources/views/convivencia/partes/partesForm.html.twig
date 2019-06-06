@@ -2,10 +2,33 @@
 
 {% block body %}
     {% include 'convivencia/navegacion.html.twig' %}
-
+    {% block javascripts %}
+        <script>
+            $(function() {
+                let submitButton = $('#submitButton');
+                console.log(submitButton)
+                $(submitButton).click(function(e) {
+                    e.preventDefault();
+                    submitButton.attr("href", "javascript:$('#parteForm').submit()")
+                });
+            });
+        </script>
+    {% endblock %}
     <div class="">
         <h3 class="center azul-prof fuente">Formulario Partes</h3>
+        <div class="col s12 l6 offset-l3 center">
+            {% for flash_message in app.session.flashBag.get('partes') %}
+                <div class="card-panel green white-text" style="position: relative;">
+                    <span class="spancaja">{{ flash_message }} </span><i class="material-icons spanico">done</i>
+                </div>
+            {% endfor %}
 
+            {% for flash_message in app.session.flashBag.get('parteError') %}
+                <div class="card-panel red white-text" style="position: relative;">
+                    <span class="spancaja">{{ flash_message }}</span> <i class="material-icons spanico">clear</i>
+                </div>
+            {% endfor %}
+        </div>
         <form method="post" class="" name="formBusqueda">
             <div class="col s12 center center-align">
                 <div class="divider1" id="botonbus">
@@ -148,8 +171,8 @@
             <a href="{{ path('gestion_partes') }}" data-title="Cancelar"
                class="z-depth-3 btn blue darken-3 waves-effect waves-light botonSubmit confirm" style="margin-bottom: 1%">Cancelar<i
                         class="material-icons left">undo</i></a>
-             <a href="javascript:document.getElementById('parteForm').submit()" data-title="Asignar parte" class="z-depth-3 btn blue darken-3 waves-effect waves-light botonSubmit confirm"
-               style="margin-bottom: 1%" name="registrarse">Enviar <i class="material-icons right">send</i></a>
+             <a id="submitButton" href="" data-title="Asignar parte" class="z-depth-3 btn blue darken-3 waves-effect waves-light botonSubmit confirm"
+               style="margin-bottom: 1%" name="submit">Enviar <i class="material-icons right">send</i></a>
             </div>
             {{ form_end(form) }}
         </div>

@@ -73,7 +73,8 @@ class ParteFormType extends AbstractType
             ->add('Descripcion', TextareaType::class, array(
                 'label' => 'Descripción',
                 'attr' => array('class' => 'materialize-textarea minTextArea'),
-                'label_attr' => array('class' => '')
+                'label_attr' => array('class' => ''),
+                'required'=> true
             ))
             ->add('Tareas', TextareaType::class, array(
                 'label' => 'Tareas',
