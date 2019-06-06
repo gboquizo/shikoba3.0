@@ -1,12 +1,19 @@
 /**
  * Created by maze on 14/06/17.
  */
-$(document).ready(function () {
+$(document).ready(function (e) {
     //Date Range Picker
-
-    $('.daterange').dateRangePicker({
-        //format: 'DD/MM/Y',
-        //language: 'es',
-        //separator: ' a '
-    });
+    if(e !== undefined) {
+        e = e || document.event
+        e.cancelBubble = true;
+        if (e.stopPropagation) e.stopPropagation();
+        return
+    } else {
+        e = e || document.event
+        $('.daterange').dateRangePicker(e, {
+            format: 'DD/MM/Y',
+            language: 'es',
+            separator: ' a ',
+        });
+    }
 });
