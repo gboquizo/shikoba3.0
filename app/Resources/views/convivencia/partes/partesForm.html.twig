@@ -148,9 +148,8 @@
             <a href="{{ path('gestion_partes') }}" data-title="Cancelar"
                class="z-depth-3 btn blue darken-3 waves-effect waves-light botonSubmit confirm" style="margin-bottom: 1%">Cancelar<i
                         class="material-icons left">undo</i></a>
-            <button class="btn z-depth-3 blue darken-4 waves-effect waves-light" type="submit" style="margin-bottom: 1%"
-                    name="registrarse"
-                    value="Enviar">Enviar <i class="material-icons right">send</i></button>
+             <a href="javascript:document.getElementById('parteForm').submit()" data-title="Asignar parte" class="z-depth-3 btn blue darken-3 waves-effect waves-light botonSubmit confirm"
+               style="margin-bottom: 1%" name="registrarse">Enviar <i class="material-icons right">send</i></a>
             </div>
             {{ form_end(form) }}
         </div>
