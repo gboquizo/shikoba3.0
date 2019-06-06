@@ -5,8 +5,8 @@ $(document).ready(function () {
     //Date Range Picker
 
     $('.daterange').dateRangePicker({
-        format: 'DD/MM/Y',
-        language: 'es',
-        separator: ' a '
+        //format: 'DD/MM/Y',
+        //language: 'es',
+        //separator: ' a '
     });
 });

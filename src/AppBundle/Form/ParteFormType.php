@@ -34,6 +34,7 @@ class ParteFormType extends AbstractType
                 'attr' => array(
                     'class' => 'chosen-select',
                     'data-placeholder' => 'Seleccione alumnado...',
+                    'required' => 'true',
                 ),
                 'label_attr' => array('class' => ''),
                 'empty_data' => null
