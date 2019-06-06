@@ -1,9 +1,7 @@
 /**
  * Created by Josema on 04/10/2017.
+ * Updated by gboquizo on 04-06/2019
  */
-
-
-
 $(document).ready(function () {
 
     moment.locale('es');
