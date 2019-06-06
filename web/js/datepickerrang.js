@@ -7,7 +7,7 @@ $(document).ready(function (e) {
         e = e || document.event
         e.cancelBubble = true;
         if (e.stopPropagation) e.stopPropagation();
-        return
+        return false
     } else {
         e = e || document.event
         $('.daterange').dateRangePicker(e, {
