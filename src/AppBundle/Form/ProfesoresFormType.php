@@ -38,7 +38,7 @@ class ProfesoresFormType extends AbstractType
             'class' => 'AppBundle:Cursos',
             'choices' => $this->traitChoices[1],
             'choice_label' => function ($curso) {
-                return $curso->getGrupo();
+                return $curso->getConsulta();
             },
             'attr' => array('class' => 'chosen-select',
                 'data-placeholder' => 'Seleccione curso...',

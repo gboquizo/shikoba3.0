@@ -121,4 +121,15 @@ class CursosRepository extends \Doctrine\ORM\EntityRepository
         );
         return $qb->getResult();
     }
+
+    /**
+     *
+     * @return
+     */
+    public function cursosSinTutor(){
+        $qb = $this->getEntityManager()->createQuery(
+            'SELECT c.curso FROM AppBundle\Entity\cursos c WHERE c.idTutor is null'
+        );
+        return $qb->getResult();
+    }
 }
