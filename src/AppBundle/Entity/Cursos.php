@@ -2,7 +2,6 @@
 
 namespace AppBundle\Entity;
 
-use AppBundle\Repository\CursosRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -146,13 +145,13 @@ class Cursos
     }
 
     /**
-     * Get consulta
+     * Get grupo
      *
-     * @return array
+     * @return string
      */
-    public function getConsulta()
+    public function getGrupoSinTutor()
     {
-        $repositorio = new CursosRepository();
-        return $repositorio->cursosSinTutor();
+        if ($this->getIdTutor() === null)
+        return $this->grupo;
     }
 }
