@@ -143,4 +143,15 @@ class Cursos
     {
         return $this->grupo;
     }
+
+    /**
+     * Get grupo
+     *
+     * @return string
+     */
+    public function getGrupoSinTutor()
+    {
+        if ($this->getIdTutor() === null)
+        return $this->grupo;
+    }
 }
