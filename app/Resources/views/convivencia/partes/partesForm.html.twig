@@ -5,13 +5,26 @@
     {% block javascripts %}
         <script>
             $(function() {
-                let submitButton = $('#submitButton');
-                console.log(submitButton)
-                $(submitButton).click(function(e) {
+                $('#submitEnlace').click(function(e) {
                     e.preventDefault();
-                    submitButton.attr("href", "javascript:$('#parteForm').submit()")
+                    $('#submitEnlace').attr("href", "javascript:$('#parteForm').submit()")
                 });
             });
+
+           function comprobar(){
+                if($('#envioSMS').is(':checked')==true){
+                    $('#boton').remove();
+                    $('#submitEnlace').css("display","inline-block");
+
+
+                }else{
+                    console.log("false");
+                    $('#submitEnlace').css("display","none");
+
+                    $('#contenedor').append('  <button  id="boton" class="z-depth-3 btn blue darken-3 waves-effect waves-light  "\n' +
+                        '                   style="margin-bottom: 1%">Enviar <i class="material-icons right">send</i></button>');
+                }
+            }
         </script>
     {% endblock %}
     <div class="">
@@ -106,7 +119,7 @@
         {% endif %}
         {% if app.request.get('idParte') is null %}
             <div class="col s12 m12" style="text-align:center; margin-left: 66px">
-                <input type="checkbox" id="envioSMS" name="envioSMS"/>
+                <input onclick="comprobar()" type="checkbox" id="envioSMS" name="envioSMS"/>
                 <label for="envioSMS">Enviar SMS</label>
             </div>
         {% endif %}
@@ -149,7 +162,7 @@
         <div class="" id="formu" style="display:none">
             {{ form_widget(form) }}
         </div>
-        <div class="col s12 center" style="margin-bottom: 1%">
+        <div id="contenedor" class="col s12 center" style="margin-bottom: 1%">
             {% if app.request.get('idParte') is not null %}
                 <div class="col s12 center" style="margin-bottom: 1%">
                     {% if sanciones != null and sanciones|length>0 %}
@@ -171,8 +184,13 @@
             <a href="{{ path('gestion_partes') }}" data-title="Cancelar"
                class="z-depth-3 btn blue darken-3 waves-effect waves-light botonSubmit confirm" style="margin-bottom: 1%">Cancelar<i
                         class="material-icons left">undo</i></a>
-             <a id="submitButton" href="" data-title="Asignar parte" class="z-depth-3 btn blue darken-3 waves-effect waves-light botonSubmit confirm"
-               style="margin-bottom: 1%" name="submit">Enviar <i class="material-icons right">send</i></a>
+
+          <a id="submitEnlace"  data-title="Asignar parte"
+             class="z-depth-3 btn blue darken-3 waves-effect waves-light botonSubmit confirm"
+               style="margin-bottom: 1%; display: none" name="submit">Enviar <i class="material-icons right">send</i></a>
+
+                <button  id="boton"  class="z-depth-3 btn blue darken-3 waves-effect waves-light  "
+                   style="margin-bottom: 1%">Enviar <i class="material-icons right">send</i></button>
             </div>
             {{ form_end(form) }}
         </div>
