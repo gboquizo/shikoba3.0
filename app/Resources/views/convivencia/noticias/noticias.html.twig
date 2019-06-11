@@ -1,32 +1,45 @@
 {% extends 'base2.html.twig' %}
 
+{% block stylesheets %}
+    {{ parent() }}
+    <style>
+        #resultados-contenido {
+            border: 1px solid black;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 10px 11px 4px -6px rgba(0, 0, 0, 0.37);
+            margin-bottom: 25px;
+        }
+
+    </style>
+
+{% endblock %}
 {% block body %}
     {% include 'convivencia/navegacion.html.twig' %}
     <div class="">
-        <h3 class="center azul-prof fuente">Gestión Noticias</h3>
+        <h3 class="center azul-prof fuente">Gestión noticias</h3>
         <div class="row center">
             <a href="{{ path('nuevaNoticia') }}"
                class="btn z-depth-3 blue darken-3 waves-effect waves-light"
                title="Nueva Noticia">Nueva<i
                         class="material-icons right" style="margin-top: -2%;">add</i></a>
         </div>
-
-        <div class="row" style="padding: 6%">
+        <div class="row" style="padding: 6%; margin-top: -40px">
             {% for noticia in noticias %}
-                <div style="border: 1px solid; margin-bottom: 20px">
+                <div id="resultados-contenido">
                     <div style="display: flex;justify-content: flex-end; ">
-                        <p style="margin: 5px">{{ noticia.fechaInicio|date("d/m/Y") }}</p>
-                        <p style="margin: 5px">{{ noticia.fechaFinal|date("d/m/Y") }}</p>
+                        <p style="margin: 5px" name="fechaI">{{ noticia.fechaInicio|date("d/m/Y") }}</p>
+                        <p style="margin: 5px" name="fechaF">{{ noticia.fechaFinal|date("d/m/Y") }}</p>
                     </div>
                     <div style="padding: 2%">
-                        <p id="noticiatd">{{ noticia.noticia_texto|raw }}</p>
+                        <p id="noticiatd" name="texto">{{ noticia.noticia_texto|raw }}</p>
                     </div>
                     <div style="display: flex; justify-content: flex-end">
-                        <p style="margin: 5px">{{ noticia.idCurso.grupo }}</p>
-                        <p style="margin: 5px">{{ noticia.puntos }}</p>
+                        <p style="margin: 5px" name="grupo">{{ noticia.idCurso.grupo }}</p>
+                        <p style="margin: 5px" name="puntos">{{ noticia.puntos }}</p>
                         {% if is_granted('ROLE_CONVIVENCIA') %}
                             <p style="margin: 5px">
-                                <a href="">
+                                <a href="{{ path('editNoticia', {'id': noticia.id}) }}">
                                     <i class="material-icons">edit</i></a>
                             </p>
                             <p style="margin: 5px">

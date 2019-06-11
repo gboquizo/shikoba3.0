@@ -6,7 +6,7 @@
     {% include 'convivencia/navegacion.html.twig' %}
 
     <div class="">
-        <h3 class="center azul-prof fuente">Nueva Noticia</h3>
+        <h3 class="center azul-prof fuente">Nueva noticia</h3>
         <form>
             <div class="input-field col s6 m4 offset-m2" id="noticiascursos">
                 <select id="puntosnoticias" name="puntos[]">
@@ -46,7 +46,11 @@
             </div>
             <div class="col s12 m8 offset-m2">
                 <textarea name="editor1" id="editor1" rows="10" cols="80">
-            Inserte la noticia aquí...
+                    {% if noticia is defined %}
+                     {{noticia[0].noticia_texto }}
+                    {% else %}
+                        Inserte la noticia aquí...
+                    {% endif %}
             </textarea>
                 <script>
                     // Replace the <textarea id="editor1"> with a CKEditor

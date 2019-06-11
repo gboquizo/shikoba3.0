@@ -23,6 +23,7 @@ class NoticiasController extends Controller
         /** @var NoticiasRepository $repositoryNoticias */
         $repositoryNoticias = $em->getRepository("AppBundle:Noticias");
         $noticias = $repositoryNoticias->getNoticias();
+
         return $this->render('convivencia/noticias/noticias.html.twig', array(
             'noticias' => $noticias,
             'user' => $this->getUser(),
@@ -84,4 +85,45 @@ class NoticiasController extends Controller
         $em->flush();
         return $this->redirectToRoute("noticias");
     }
+
+    /**
+     * @Route("/noticias/editNoticia/{id}", name="editNoticia")
+     * @Method({"GET", "POST"})
+     */
+    public function editNoticia(Noticias $noticia,Request $request)
+    {
+        $id=$noticia->getId();
+
+        $em = $this->getDoctrine()->getManager();
+        /** @var CursosRepository $repositoryACursos */
+        $repositoryACursos = $em->getRepository('AppBundle:Cursos');
+
+        /** @var NoticiasRepository $repositoryNoticias */
+        $repositoryNoticias = $em->getRepository("AppBundle:Noticias");
+
+        /** @var Cursos $cursos */
+        $cursos = $repositoryACursos->getCursosGroupByCursos2();
+
+        $noticia=$repositoryNoticias->getNoticia($id);
+
+        if(!empty($request->query->get('fechaFinal')) && !empty($request->query->get('puntos')) && !empty($request->query->get('cursos'))){
+
+            $fechaF=\DateTime::createFromFormat('d/m/Y', $request->get('fechaFinal'));
+            $puntos=$request->query->get('puntos');
+            $curso=$request->query->get('cursos');
+            $editor1=$request->query->get('editor1');
+
+           $repositoryNoticias->updateNoticias($id,$curso,$puntos,$fechaF,$editor1);
+
+            return $this->redirectToRoute("noticias");
+        }
+
+        return $this->render('convivencia/noticias/noticiasForm.html.twig', array(
+            'cursos' => $cursos,
+            'noticia' => $noticia,
+            'user' => $this->getUser(),
+        ));
+
+    }
+
 }
