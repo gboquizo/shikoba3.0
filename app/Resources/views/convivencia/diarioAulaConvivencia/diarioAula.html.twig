@@ -2,7 +2,6 @@
 
 {% block body %}
     {% include 'convivencia/navegacion.html.twig' %}
-
     <div class="">
         <h3 class="center azul-prof fuente">Diario del aula de convivencia.</h3>
         <form action="">
@@ -58,7 +57,6 @@
                     <tbody>
 
                     {% for diario in diarioData.diariosAula %}
-
                         <tr>
                             <td>{{ diario.fecha|date('d/m/Y') }}</td>
                             <td>{{ diario.hora }}</td>

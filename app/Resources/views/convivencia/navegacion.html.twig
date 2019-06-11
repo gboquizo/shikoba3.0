@@ -47,7 +47,6 @@
                                 <!--Debe ajustarse en la respectiva action en AlumnosController-->
                                 {% if is_granted('ROLE_PROFESOR') %}
                                     <li><a href="{{ path('show_alumnosgrupo') }}">Tutoría</a></li>
-
                                 {% endif %}
                                 {% if is_granted('ROLE_ADMIN') or is_granted('ROLE_CONVIVENCIA') %}
                                     <li class="no-padding">
@@ -214,9 +213,7 @@
                         <div class="col l4 right hide-on-med-and-down">
                             <ul class="right">
                                 <li>
-                                    <a href="{{ path('change_password') }}"
-                                    >Cambiar
-                                        Contraseña</a>
+                                    <a href="{{ path('change_password') }}">Cambiar contraseña</a>
                                 </li>
                                 <li>
                                     <a href="{{ path('logout') }}">Logout</a>

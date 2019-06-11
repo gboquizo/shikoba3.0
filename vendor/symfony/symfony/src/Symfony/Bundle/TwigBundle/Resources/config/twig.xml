@@ -141,12 +141,12 @@
         </service>
 
         <service id="twig.configurator.environment" class="Symfony\Bundle\TwigBundle\DependencyInjection\Configurator\EnvironmentConfigurator">
-            <argument /> <!-- date format, set in TwigExtension -->
-            <argument /> <!-- interval format, set in TwigExtension -->
-            <argument /> <!-- timezone, set in TwigExtension -->
-            <argument /> <!-- decimals, set in TwigExtension -->
-            <argument /> <!-- decimal point, set in TwigExtension -->
-            <argument /> <!-- thousands separator, set in TwigExtension -->
+            <argument /> <!-- date format, set in FileExtension -->
+            <argument /> <!-- interval format, set in FileExtension -->
+            <argument /> <!-- timezone, set in FileExtension -->
+            <argument /> <!-- decimals, set in FileExtension -->
+            <argument /> <!-- decimal point, set in FileExtension -->
+            <argument /> <!-- thousands separator, set in FileExtension -->
         </service>
 
         <service id="twig.runtime_loader" class="Twig\RuntimeLoader\ContainerRuntimeLoader">
