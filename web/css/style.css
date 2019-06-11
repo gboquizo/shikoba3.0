@@ -397,10 +397,32 @@ th {
 }
 
 /*Tabla responsive de las noticias*/
-@media screen and (max-width: 990px) {
+@media screen and (max-width: 1200px) {
     #noticiatd, #noticiath {
         overflow: auto;
         height: 130px;
+    } #noticiatd, #noticiath {
+        overflow: auto;
+        height: 130px;
+    }
+    .diarioSearch {
+        margin-top: 0;
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+        flex-wrap: nowrap;
+        min-height: 25vh;
+    }
+    .diarioSearch #divfecha {
+        box-sizing: border-box;
+        margin: 20px;
+        width: calc(1 / 3 * 100% - (1 - 1 / 3) * 10px);
+    }
+
+    .diarioSearch #divhora {
+        box-sizing: border-box;
+        margin: 10px;
+        width: calc(1 / 5 * 100% - (1 - 1 / 3) * 20px);
     }
 }
 
@@ -412,26 +434,27 @@ th {
     min-height: 15vh;
     width: 100%;
 }
+@media screen and (min-width: 1200px) {
+    .diarioSearch {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-wrap: nowrap;
+        min-height: 22vh;
 
-.diarioSearch {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-wrap: nowrap;
-    min-height: 40vh;
+    }
 
-}
+    .diarioSearch #divfecha {
+        box-sizing: border-box;
+        margin: 20px;
+        width: calc(1 / 3 * 100% - (1 - 1 / 3) * 10px);
+    }
 
-.diarioSearch #divfecha {
-    box-sizing: border-box;
-    margin: 40px;
-    width: calc(1 / 3 * 100% - (1 - 1 / 3) * 10px);
-}
-
-.diarioSearch #divhora {
-    box-sizing: border-box;
-    margin: 20px;
-    width: calc(1 / 5 * 100% - (1 - 1 / 3) * 20px);
+    .diarioSearch #divhora {
+        box-sizing: border-box;
+        margin: 20px;
+        width: calc(1 / 5 * 100% - (1 - 1 / 3) * 20px);
+    }
 }
 
 .prefooter .dataTables_length {
