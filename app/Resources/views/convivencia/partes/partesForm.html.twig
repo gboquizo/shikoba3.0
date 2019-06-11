@@ -4,25 +4,28 @@
     {% include 'convivencia/navegacion.html.twig' %}
     {% block javascripts %}
         <script>
-            $(function() {
-                $('#submitEnlace').click(function(e) {
+            $(document).ready(function () {
+                $('#envioSMS').prop('checked', false);
+            });
+            $(function () {
+                $('#submitEnlace').click(function (e) {
                     e.preventDefault();
                     $('#submitEnlace').attr("href", "javascript:$('#parteForm').submit()")
                 });
             });
 
-           function comprobar(){
-                if($('#envioSMS').is(':checked')==true){
+            function comprobar() {
+                console.log($('#envioSMS'))
+                if ($('#envioSMS').is(':checked') === true) {
                     $('#boton').remove();
-                    $('#submitEnlace').css("display","inline-block");
+                    $('#submitEnlace').css("display", "inline-block");
 
-
-                }else{
-                    console.log("false");
-                    $('#submitEnlace').css("display","none");
-
-                    $('#contenedor').append('  <button  id="boton" class="z-depth-3 btn blue darken-3 waves-effect waves-light  "\n' +
-                        '                   style="margin-bottom: 1%">Enviar <i class="material-icons right">send</i></button>');
+                } else {
+                    $('#envioSMS').prop('checked', false);
+                    $('#submitEnlace').css("display", "none");
+                    $('#botonera').append(
+                        '<button  id="boton" class="z-depth-3 btn blue darken-3 waves-effect waves-light  "\n'
+                        + 'style="margin-bottom: 1%">Enviar <i class="material-icons right">send</i></button>');
                 }
             }
         </script>
@@ -60,9 +63,10 @@
                        data-title="Recuperar Punto">-1 Punto <i class="material-icons left">thumb_down</i></a>
                 {% else %}
                     <button class="z-depth-3 btn blue darken-3 waves-effect waves-light botonSubmit confirm"
-                           type="button" name="recuperaPunto"
-                           value="-1 Punto"
-                            disabled>Recuperado</button>
+                            type="button" name="recuperaPunto"
+                            value="-1 Punto"
+                            disabled>Recuperado
+                    </button>
                 {% endif %}
             </div>
             <div class="col s6 left-align">
@@ -125,13 +129,13 @@
         {% endif %}
         <div class="col s12">
             {{ form_row(form.idConducta) }}
-           {# {% for conducta in conductas %}
-                <p class="col s12">
-                    <input type="checkbox" id="{{ conducta.conducta }}" name="idConducta"
-                           value="{{ conducta.conducta }}"/>
-                    <label for="{{ conducta.conducta }}">{{ "(" ~ conducta.puntos ~ ") - "~  conducta.conducta }}</label>
-                </p>
-            {% endfor %}#}
+            {# {% for conducta in conductas %}
+                 <p class="col s12">
+                     <input type="checkbox" id="{{ conducta.conducta }}" name="idConducta"
+                            value="{{ conducta.conducta }}"/>
+                     <label for="{{ conducta.conducta }}">{{ "(" ~ conducta.puntos ~ ") - "~  conducta.conducta }}</label>
+                 </p>
+             {% endfor %}#}
         </div>
         <div class="col s12 m6 input-field">
 
@@ -167,8 +171,8 @@
                 <div class="col s12 center" style="margin-bottom: 1%">
                     {% if sanciones != null and sanciones|length>0 %}
                         {% for sancion in sanciones %}
-                                <a class="btn z-depth-3 blue darken-4 waves-effect waves-light"
-                                   href="{{ path('nueva_sancion', {'idSancion': sancion.id}) }}">{{ sancion.sancion }}</a>
+                            <a class="btn z-depth-3 blue darken-4 waves-effect waves-light"
+                               href="{{ path('nueva_sancion', {'idSancion': sancion.id}) }}">{{ sancion.sancion }}</a>
                         {% endfor %}
                     {% else %}
                         {% if is_granted('ROLE_ADMIN') %}
@@ -180,17 +184,19 @@
                 </div>
 
             {% endif %}
-            <div class="col s12 center">
-            <a href="{{ path('gestion_partes') }}" data-title="Cancelar"
-               class="z-depth-3 btn blue darken-3 waves-effect waves-light botonSubmit confirm" style="margin-bottom: 1%">Cancelar<i
-                        class="material-icons left">undo</i></a>
+            <div id="botonera" class="col s12 center">
+                <a href="{{ path('gestion_partes') }}" data-title="Cancelar"
+                   class="z-depth-3 btn blue darken-3 waves-effect waves-light botonSubmit confirm"
+                   style="margin-bottom: 1%">Cancelar<i
+                            class="material-icons left">undo</i></a>
 
-          <a id="submitEnlace"  data-title="Asignar parte"
-             class="z-depth-3 btn blue darken-3 waves-effect waves-light botonSubmit confirm"
-               style="margin-bottom: 1%; display: none" name="submit">Enviar <i class="material-icons right">send</i></a>
+                <a id="submitEnlace" data-title="Comunicación SMS" data-content="Se va a realizar una comunicación sms, ¿desea continuar?"
+                   class="z-depth-3 btn blue darken-3 waves-effect waves-light botonSubmit confirm"
+                   style="margin-bottom: 1%; display: none" name="submit">Enviar <i
+                            class="material-icons right">send</i></a>
 
-                <button  id="boton"  class="z-depth-3 btn blue darken-3 waves-effect waves-light  "
-                   style="margin-bottom: 1%">Enviar <i class="material-icons right">send</i></button>
+                <button id="boton" class="z-depth-3 btn blue darken-3 waves-effect waves-light  "
+                        style="margin-bottom: 1%">Enviar <i class="material-icons right">send</i></button>
             </div>
             {{ form_end(form) }}
         </div>
