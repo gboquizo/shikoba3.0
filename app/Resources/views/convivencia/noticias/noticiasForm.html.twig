@@ -9,8 +9,8 @@
         <h3 class="center azul-prof fuente">Nueva noticia</h3>
         <form>
             <div class="input-field col s6 m4 offset-m2" id="noticiascursos">
-                <select id="puntosnoticias" name="puntos[]">
-                    <option value="" disabled selected>Elige Puntos</option>
+                <select id="puntosnoticias" name="puntos[]" required>
+                    <option value="" disabled selected>Elige puntos</option>
                     <option value="0">0</option>
                     <option value="1">1</option>
                     <option value="2">2</option>
@@ -23,31 +23,32 @@
                     <option value="9">9</option>
                     <option value="10">10</option>
                 </select>
-                <label>Puntos</label>
+                <label for="puntosnoticias">Puntos</label>
             </div>
             <div class="input-field col s6 m4" id="noticiascursos">
-                <select id="cursosnoticias" multiple name="cursos[]">
-                    <option value="" disabled selected>Elige Grupo</option>
+                <select id="cursosnoticias" multiple name="cursos[]" required>
+                    <option value="" disabled selected>Elige grupo</option>
                     {% for curso in cursos %}
                         <option value="{{ curso.id }}">{{ curso.grupo }}</option>
                     {% endfor %}
                 </select>
-                <label>Cursos</label>
+                <label for="cursosnoticias">Cursos</label>
             </div>
             <div class="input-field col s6 m4 offset-m2">
-                <label>Fecha de Inicio</label>
+                <label for="inicioNoticia">Fecha de inicio</label>
                 <input id="inicioNoticia" type="text" name="fechaInicio" class="datepicker"
                        value="{{ "now"|date('d/m/Y') }}" required>
             </div>
             <div class="input-field col s6 m4">
-                <label>Fecha Finalización</label>
+                <label for="finNoticia">Fecha finalización</label>
                 <input id="finNoticia" type="text" name="fechaFinal" class="datepicker"
                        value="" required>
             </div>
             <div class="col s12 m8 offset-m2">
+                <label for="editor1"></label>
                 <textarea name="editor1" id="editor1" rows="10" cols="80">
                     {% if noticia is defined %}
-                        {{noticia[0].noticia_texto }}
+                        {{ noticia[0].noticia_texto }}
                     {% else %}
                         Inserte la noticia aquí...
                     {% endif %}
@@ -60,7 +61,7 @@
                 </script>
             </div>
 
-            <div style="margin-top: 2%" class="col s12 center">
+            <div style="margin-top: 3%" class="col s12 center">
                 <a href="{{ path('noticias') }}" data-title="Cancelar"
                    class="z-depth-3 btn blue darken-3 waves-effect waves-light botonSubmit confirm"
                    style="margin-bottom: 1%">Cancelar<i
@@ -70,9 +71,5 @@
                         value="Enviar">Enviar <i class="material-icons right">send</i></button>
             </div>
         </form>
-
     </div>
-    </div>
-
-
 {% endblock %}

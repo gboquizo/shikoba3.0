@@ -10,42 +10,40 @@
             box-shadow: 10px 11px 4px -6px rgba(0, 0, 0, 0.37);
             margin-bottom: 25px;
         }
-
     </style>
-
 {% endblock %}
 {% block body %}
     {% include 'convivencia/navegacion.html.twig' %}
     <div class="">
-        <h3 class="center azul-prof fuente">Gestión noticias</h3>
+        <h3 class="center azul-prof fuente">Noticias</h3>
         <div class="row center">
             <a href="{{ path('nuevaNoticia') }}"
                class="btn z-depth-3 blue darken-3 waves-effect waves-light"
-               title="Nueva Noticia">Nueva<i
-                        class="material-icons right" style="margin-top: -2%;">add</i></a>
+               title="Nueva noticia">Nueva<i class="material-icons right" style="margin-top: -2%;">add</i></a>
         </div>
         <div class="row" style="padding: 6%; margin-top: -40px">
             {% for noticia in noticias %}
                 <div id="resultados-contenido">
                     <div style="display: flex;justify-content: flex-end; ">
-                        <p style="margin: 5px" name="fechaI">{{ noticia.fechaInicio|date("d/m/Y") }}</p>
-                        <p style="margin: 5px" name="fechaF">{{ noticia.fechaFinal|date("d/m/Y") }}</p>
+                        <p style="margin: 5px" id="fechaI"><b>Fecha inicio: </b>{{ noticia.fechaInicio|date("d/m/Y") }}</p>
+                        <p style="margin: 5px" id="fechaF"><b>Fecha fin: </b>{{ noticia.fechaFinal|date("d/m/Y") }}</p>
                     </div>
                     <div style="padding: 2%">
-                        <p id="noticiatd" name="texto">{{ noticia.noticia_texto|raw }}</p>
+                        <p id="noticiatd" id="texto">{{ noticia.noticia_texto|raw }}</p>
                     </div>
                     <div style="display: flex; justify-content: flex-end">
-                        <p style="margin: 5px" name="grupo">{{ noticia.idCurso.grupo }}</p>
-                        <p style="margin: 5px" name="puntos">{{ noticia.puntos }}</p>
+                        <p style="margin: 5px" id="grupo"><b>Curso: </b>{{ noticia.idCurso.grupo }}</p>
+                        <p style="margin: 5px" id="puntos"><b>Puntos: </b>{{ noticia.puntos }}</p>
                         {% if is_granted('ROLE_CONVIVENCIA') %}
                             <p style="margin: 5px">
                                 <a href="{{ path('editNoticia', {'id': noticia.id}) }}">
                                     <i class="material-icons">edit</i></a>
                             </p>
                             <p style="margin: 5px">
-                                <a class="confirm paddingRightLeft "
+                                <a class="confirm paddingRightLeft"
                                    href="{{ path('borrar_noticia', {'id': noticia.id}) }}"
-                                   data-title="Eliminar Noticia"><i class="material-icons ">delete</i></a>
+                                   data-content="Se va a eliminar la noticia, ¿desea continuar?"
+                                   data-title="Eliminar noticia"><i class="material-icons ">delete</i></a>
                             </p>
                         {% endif %}
                     </div>
