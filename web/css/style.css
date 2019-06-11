@@ -411,7 +411,7 @@ th {
         justify-content: center;
         align-items: flex-start;
         flex-wrap: nowrap;
-        min-height: 25vh;
+        min-height: 40vh;
     }
     .diarioSearch #divfecha {
         box-sizing: border-box;
@@ -440,7 +440,7 @@ th {
         justify-content: center;
         align-items: center;
         flex-wrap: nowrap;
-        min-height: 22vh;
+        min-height: 25vh;
 
     }
 
