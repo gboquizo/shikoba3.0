@@ -38,18 +38,17 @@
                 </button>
             </div>
             <div class="col l12 s10 center" id="img">
-                {% if (file_exists(asset('img/alumnos/'~alumnoData.alumno.nie~'.PNG')) is null) %}
-                    <img class="responsive-img circle logo-inicial"
-                         src="{{ asset('img/alumnos/'~alumnoData.alumno.nie~'.PNG'  ) }}"
-                       {#  src="{{ asset('img/default_user.svg' ) }}"#}
-                         alt="avatar">
-                {% elseif alumnoData.alumno.foto != "" or alumnoData.alumno.foto != null %}
-                    <img class="responsive-img circle" src="{{ asset('img/alumnos/'~alumnoData.alumno.foto) }}"
-                         alt="avatar">
-                {% else %}
+                {% if alumnoData.alumno.foto == "" or alumnoData.alumno.foto == null %}
                     <img class="circle logo-inicial"
                          src="{{ asset('img/default_user.svg' ) }}"
                          alt="avatar">
+
+              {% elseif alumnoData.alumno.foto != "" or alumnoData.alumno.foto != null %}
+                    <img class="responsive-img circle" src="{{ asset('img/alumnos/'~alumnoData.alumno.foto) }}"
+                         alt="avatar">
+                {% else %}
+                    <img class="responsive-img circle logo-inicial"
+                         src="{{ asset('img/alumnos/'~alumnoData.alumno.nie~'.PNG'  ) }}" alt="avatar">
                 {% endif %}
             </div>
                 <div class="center" style="padding-bottom: 1%">

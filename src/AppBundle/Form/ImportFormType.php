@@ -13,7 +13,7 @@ class ImportFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('importar', FileType::class, array(
-            'label' => 'Fichero csv',
+            'label' => 'Fichero csv ',
             'attr' => array('class' => 'file-field input-field'),
             'label_attr' => array('class' => '')
         ));

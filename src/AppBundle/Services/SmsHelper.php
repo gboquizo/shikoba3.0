@@ -31,8 +31,9 @@ class SmsHelper
       	$numbers = implode(',', $telefonos);
 
       	// Prepare data for POST request
-      	$data = array('apikey' => $apiKey, 'numbers' => $numbers, "sender" => $sender, "message" => $message, "test" => false);
-
+      	$data = array('apikey' => $apiKey, 'numbers' => $numbers, "sender" => $sender, "message" => $message, "test" => true);
+          dump ($data);
+          die();
       	// Send the POST request with cURL
       	$ch = curl_init('https://api.txtlocal.com/send/');
       	curl_setopt($ch, CURLOPT_POST, true);
@@ -40,6 +41,9 @@ class SmsHelper
       	curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
       	$response = curl_exec($ch);
       	curl_close($ch);
+
+         /* dump ($response);
+          die();*/
 
       	// Process your response here
       	// print_r( $response );

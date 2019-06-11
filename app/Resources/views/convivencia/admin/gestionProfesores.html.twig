@@ -6,7 +6,7 @@
 
     <div class="col s12 center" id="contenedorUpload">
 
-        <h3 class="center azul-prof fuente">Importar Profesores</h3>
+        <h3 class="center azul-prof fuente">Importar profesores</h3>
         <div class="col s12 center">
 
             <!-- Modal Trigger -->
@@ -27,19 +27,20 @@
             </div>
         </div>
         <div class="divider2"></div>
-        <div class="col s12 l4 offset-l4 center">
+        <div class="col s12 l5 offset-l5 center">
             {% for flash_message in app.session.flashBag.get('profesor') %}
-                <div class="card-panel green white-text" style="position: relative;">
+                <div class="card-panel green white-text flash">
                     <span class="spancaja">{{ flash_message }} </span><i class="material-icons spanico">done</i>
                 </div>
             {% endfor %}
 
             {% for flash_message in app.session.flashBag.get('profesorError') %}
-                <div class="card-panel red white-text" style="position: relative;">
+                <div class="card-panel red white-text flash">
                     <span class="spancaja">{{ flash_message }}</span> <i class="material-icons spanico">clear</i>
                 </div>
             {% endfor %}
-
+        </div>
+        <div class="col s12 l4 offset-l4 center">
             {{ form_start(form, {'attr': {'class':' formConvivencia'}}) }}
             {{ form_widget(form) }}
             <button class="btn blue darken-3 waves-effect waves-light" style="margin-top: 7%;"  type="submit" name="importarProfesores" id="botonImportar" value="Importar" disabled>Importar<i
