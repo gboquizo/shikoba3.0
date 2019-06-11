@@ -16,7 +16,7 @@ use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
 
 /**
- * TwigExtension configuration structure.
+ * FileExtension configuration structure.
  *
  * @author Jeremy Mikola <jmikola@gmail.com>
  */

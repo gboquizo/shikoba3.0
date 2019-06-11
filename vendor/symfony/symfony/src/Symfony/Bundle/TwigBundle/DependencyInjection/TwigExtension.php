@@ -25,7 +25,7 @@ use Twig\Extension\RuntimeExtensionInterface;
 use Twig\Loader\LoaderInterface;
 
 /**
- * TwigExtension.
+ * FileExtension.
  *
  * @author Fabien Potencier <fabien@symfony.com>
  * @author Jeremy Mikola <jmikola@gmail.com>

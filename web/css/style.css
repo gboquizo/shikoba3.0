@@ -480,6 +480,9 @@ th {
     100%{
         opacity: 0;
     }
+}
 
-
+.logo-inicial {
+    max-height: 70%;
+    max-width: 70%;
 }

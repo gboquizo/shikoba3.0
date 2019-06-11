@@ -2,6 +2,8 @@
 # http://symfony.com/doc/current/service_container.html
 parameters:
 #    parameter_name: value
+    app.file.twig.extension.class: AppBundle\Twig\Extension\FileExtension
+
 
 services:
     _defaults:
@@ -29,3 +31,7 @@ services:
         class: AppBundle\Form\ParteFormType
         arguments: ["@doctrine.orm.entity_manager"]
         tags: [ name: ParteFormType ]
+    app.file.twig.extension:
+        class: AppBundle\Twig\Extension\FileExtension
+        tags:
+            - { name:FileExtension }
