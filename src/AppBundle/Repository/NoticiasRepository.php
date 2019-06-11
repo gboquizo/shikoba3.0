@@ -45,4 +45,42 @@ class NoticiasRepository extends \Doctrine\ORM\EntityRepository
         return $query->getResult();
 
     }
+
+    /**
+     * Función que realiza un update en noticias
+     * @return array
+     */
+    public function updateNoticias($id,$curso,$puntos,$fechaF,$texto)
+    {
+        $query = $this->getEntityManager()->createQuery(
+            'UPDATE AppBundle\Entity\noticias n 
+                SET n.fechaFinal= :fechaF, n.idCurso=:curso, n.puntos=:puntos, n.noticia_texto=:texto 
+                where n.id= :id ');
+
+        $query->setParameter(':id', $id);
+        $query->setParameter(':curso', $curso);
+        $query->setParameter(':puntos', $puntos);
+        $query->setParameter(':fechaF', $fechaF);
+        $query->setParameter(':texto', $texto);
+
+        return $query->getResult();
+
+    }
+    /**
+     * Función que devuelve noticia segun el id
+     * @return array
+     */
+    public function getNoticia($id)
+    {
+        $query = $this->getEntityManager()->createQuery(
+            'SELECT n
+             FROM AppBundle\Entity\Noticias n 
+             WHERE n.id = :id');
+
+        $query->setParameter(':id', $id);
+        return $query->getResult();
+
+    }
+
+
 }
