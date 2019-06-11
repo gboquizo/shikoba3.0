@@ -4,7 +4,6 @@
     {% include 'convivencia/navegacion.html.twig' %}
     <div class="">
         <h3 class="center azul-prof fuente">Gestión Noticias</h3>
-
         <div class="row center">
             <a href="{{ path('nuevaNoticia') }}"
                class="btn z-depth-3 blue darken-3 waves-effect waves-light"
@@ -26,6 +25,10 @@
                         <p style="margin: 5px">{{ noticia.idCurso.grupo }}</p>
                         <p style="margin: 5px">{{ noticia.puntos }}</p>
                         {% if is_granted('ROLE_CONVIVENCIA') %}
+                            <p style="margin: 5px">
+                                <a href="">
+                                    <i class="material-icons">edit</i></a>
+                            </p>
                             <p style="margin: 5px">
                                 <a class="confirm paddingRightLeft "
                                    href="{{ path('borrar_noticia', {'id': noticia.id}) }}"
