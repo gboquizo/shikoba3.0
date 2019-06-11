@@ -29,7 +29,7 @@ class NoticiasController extends Controller
             'user' => $this->getUser(),
         ));
 
-        
+
     }
     /**
      * @Route("/noticiasForm", name="nuevaNoticia")
@@ -42,13 +42,13 @@ class NoticiasController extends Controller
         $repositoryACursos = $em->getRepository('AppBundle:Cursos');
         /** @var Cursos $cursos */
         $cursos = $repositoryACursos->getCursosGroupByCursos2();
-       
+
 
         if(!empty($request->query->get('fechaFinal')) && !empty($request->query->get('puntos')) && !empty($request->query->get('cursos'))){
-            
+
 
             $cursosIds=$request->query->get('cursos');
-        
+
             foreach ($cursosIds as $key => $value) {
                 $noticia = new Noticias();
                 $curso=$repositoryACursos->findOneById($value);
@@ -69,7 +69,7 @@ class NoticiasController extends Controller
 
         }
 
-         return $this->render('convivencia/noticias/noticiasForm.html.twig', array(
+        return $this->render('convivencia/noticias/noticiasForm.html.twig', array(
             'cursos' => $cursos,
             'user' => $this->getUser(),
         ));
@@ -113,7 +113,7 @@ class NoticiasController extends Controller
             $curso=$request->query->get('cursos');
             $editor1=$request->query->get('editor1');
 
-           $repositoryNoticias->updateNoticias($id,$curso,$puntos,$fechaF,$editor1);
+            $repositoryNoticias->updateNoticias($id,$curso,$puntos,$fechaF,$editor1);
 
             return $this->redirectToRoute("noticias");
         }
