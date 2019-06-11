@@ -219,7 +219,7 @@ class ConvivenciaController extends Controller
 
             $this->addFlash(
                 'password',
-                'La contraseña ha sido cambiada con éxito'
+                'Contraseña cambiada con éxito'
             );
         } elseif ($form->isSubmitted() && !$form->isValid()) {
             $this->addFlash(
@@ -249,7 +249,7 @@ class ConvivenciaController extends Controller
                 $importHelper->importarAlumnos($file);
                 $this->addFlash(
                     'alumnos',
-                    'El fichero ha sido importado!'
+                    '¡El fichero ha sido importado!'
                 );
             }
         } catch (\Exception $e) {
@@ -281,7 +281,7 @@ class ConvivenciaController extends Controller
                 $importHelper->importarProfesor($file);
                 $this->addFlash(
                     'profesor',
-                    'El fichero ha sido importado!'
+                    '¡El fichero ha sido importado!'
                 );
             }
         } catch (\Exception $e) {
