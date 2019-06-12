@@ -26,7 +26,7 @@
                 <label for="puntosnoticias">Puntos</label>
             </div>
             <div class="input-field col s6 m4" id="noticiascursos">
-                <select id="cursosnoticias" multiple name="cursos[]" required>
+                <select id="cursosnoticias"  name="cursos[]" required>
                     <option value="" disabled selected>Elige grupo</option>
                     {% for curso in cursos %}
                         <option value="{{ curso.id }}">{{ curso.grupo }}</option>
@@ -37,7 +37,12 @@
             <div class="input-field col s6 m4 offset-m2">
                 <label for="inicioNoticia">Fecha de inicio</label>
                 <input id="inicioNoticia" type="text" name="fechaInicio" class="datepicker"
-                       value="{{ "now"|date('d/m/Y') }}" required>
+                    {% if noticia is defined %}
+                        value="{{ noticia[0].fechaInicio|date("d/m/Y") }}"
+                    {% else %}
+                        value="{{ "now"|date('d/m/Y') }}"
+                    {% endif %}
+                    required>
             </div>
             <div class="input-field col s6 m4">
                 <label for="finNoticia">Fecha finalización</label>

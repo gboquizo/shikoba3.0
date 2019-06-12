@@ -109,11 +109,12 @@ class NoticiasController extends Controller
         if(!empty($request->query->get('fechaFinal')) && !empty($request->query->get('puntos')) && !empty($request->query->get('cursos'))){
 
             $fechaF=\DateTime::createFromFormat('d/m/Y', $request->get('fechaFinal'));
+            $fechaI=\DateTime::createFromFormat('d/m/Y', $request->get('fechaInicio'));
             $puntos=$request->query->get('puntos');
             $curso=$request->query->get('cursos');
             $editor1=$request->query->get('editor1');
 
-            $repositoryNoticias->updateNoticias($id,$curso,$puntos,$fechaF,$editor1);
+            $repositoryNoticias->updateNoticias($id,$curso,$puntos,$fechaI,$fechaF,$editor1);
 
             return $this->redirectToRoute("noticias");
         }
