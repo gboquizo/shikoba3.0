@@ -128,7 +128,7 @@ class CursosRepository extends \Doctrine\ORM\EntityRepository
      */
     public function cursosSinTutor(){
         $qb = $this->getEntityManager()->createQuery(
-            'SELECT c.grupo FROM AppBundle\Entity\cursos c WHERE c.idTutor is NULL'
+            'SELECT c.grupo FROM AppBundle\Entity\cursos c WHERE c.idTutor is NULL ORDER BY c.grupo ASC'
         );
         return $qb->getResult();
     }

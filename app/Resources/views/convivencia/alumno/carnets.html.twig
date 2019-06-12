@@ -106,11 +106,10 @@ Actualizado por GUBS, RAGZ, 2019
                                             ({{ sancion.fecha|date('d/m/Y') }} - {{ sancion.idTipo.tipo }}
                                             - {{ sancion.idEstado.estado }})<br/>
                                         {% endif %}
-
                                     {% endif %}
                                 {% endfor %}
                             {% else %}
-                                {% if (carnet.alumno.puntos > 0 or carnet.arraySanciones is empty) or carnet.arraySanciones is not defined %}
+                                {% if (carnet.alumno.puntos > 6) %}
                                     <td>
                                         {% if ( is_granted('ROLE_ADMIN') or is_granted('ROLE_CONVIVENCIA')) %}
                                             <a href="{{ path('nueva_sancion', {'idAlumno': carnet.alumno.id}) }}">Crear

@@ -23,7 +23,7 @@ class ProfesoresRepository extends \Doctrine\ORM\EntityRepository
             'SELECT p.id,p.nombre, p.apellido1, p.apellido2
                     FROM AppBundle\Entity\profesores p
                     where not exists(select c.id from AppBundle\Entity\Cursos c 
-                    WHERE c.idTutor = p.id)');
+                    WHERE c.idTutor = p.id) ORDER BY p.apellido1 ASC');
         return $query->getResult();
     }
 }

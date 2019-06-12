@@ -1,5 +1,12 @@
 {% extends 'base2.html.twig' %}
-
+{% block javascripts %}
+    {{ parent() }}
+<script type="text/javascript">
+   /* $(function(){
+        $(".cursostutor").chosen();
+    });*/
+</script>
+{% endblock %}
 
 {% block body %}
     {% include 'convivencia/navegacion.html.twig' %}
@@ -9,8 +16,8 @@
         <form action="{{ path('admin_import_profesorGrupo') }}" method="post">
             <div style=" margin:auto;width: 80%">
                 <div class="col s12 m6">
-
-                    <select id="cursostutor" name="curso[]"  required>
+                    <label for="cursostutor">Curso</label>
+                    <select class="chosen-search" id="cursostutor" name="curso[]" data-placeholder="Seleccione un curso" required>
                         <option value="" disabled selected>Elige curso</option>
 
                         {% for curso in cursos %}
@@ -20,7 +27,7 @@
 
                 </div>
                 <div class="col s12 m6">
-
+                    <label for="profesorestutor">Profesor/a</label>
                     <select id="profesorestutor" name="profesor[]" required>
                         <option value="" disabled selected>Elige profesor</option>
                         {% for profesor in profesores %}

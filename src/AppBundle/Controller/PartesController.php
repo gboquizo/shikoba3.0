@@ -30,6 +30,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Component\Config\Definition\Exception\Exception;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use AppBundle\Config\SmsMessage;
 
 class PartesController extends Controller
 {
@@ -139,7 +140,9 @@ class PartesController extends Controller
                         $telefonos[] = $parte->getIdAlumno()->getTelefonoTL2();
                     }
 
-                    $smsHelper->sendSms($telefonos, $parte->getIdAlumno()->getNombreCompleto() . '. ' . $parte->getDescripcion());
+                    $pre = SmsMessage::getMessagePre();
+                    $post = SmsMessage::getMessagePost();
+                    $smsHelper->sendSms($telefonos, $pre . ' ' . $parte->getIdAlumno()->getNombreCompleto() . ' ' .$post);
                 }
 
                 $parteHelper->createSancionFromRequest($request, $parte);
