@@ -15,6 +15,8 @@ $(document).ready(function () {
     //select noticias form
     $('#cursosnoticias').material_select();
     $('#puntosnoticias').material_select();
+    $('#cursostutor').material_select();
+    $('#profesorestutor').material_select();
     //fechas noticias form
     $("#finNoticia,#inicioNoticia").datepicker({
         minDate: 0,

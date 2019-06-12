@@ -343,6 +343,7 @@ class ConvivenciaController extends Controller
         ));
     }
 
+
     /**
      * @Route("/admin/importProfesorGrupo", name="admin_import_profesorGrupo")
      * @Security("has_role('ROLE_ADMIN')")
@@ -357,11 +358,33 @@ class ConvivenciaController extends Controller
         )
             return $this->redirectToRoute("index");
 
-        $em = $this->getDoctrine()->getManager();
-        $form = $this->createForm(ProfesoresFormType::class);
-        $form->handleRequest($request);
+        $em = $this->getDoctrine()->getEntityManager();
+        /** @var ProfesoresRepository $repositoryProfesores*/
+        $repositoryProfesores = $em->getRepository('AppBundle:Profesores');
+        /** @var CursosRepository$repositoryCursos*/
+        $repositoryCursos = $em->getRepository('AppBundle:Cursos');
 
-        if ($form->isSubmitted() && $form->isValid()) {
+        $cursos=$repositoryCursos->cursosSinTutor();
+        $profesores=$repositoryProfesores->verProfesoresSinCurso();
+
+       if(!empty($_POST['curso'])){
+           $curso=$_POST['curso'];
+           $profesor=$_POST['profesor'];
+
+           $repositoryCursos->updateProfesorCurso($profesor, $curso);
+           return $this->redirectToRoute('admin_tutores');
+       }
+
+        return $this->render('convivencia/admin/gestionProfesoresGrupo.html.twig', array(
+            'profesores' =>$profesores,
+            'cursos' =>$cursos,
+            /* 'form' => $form->createView()*/
+        ));
+
+      /*  $form = $this->createForm(ProfesoresFormType::class);
+        $form->handleRequest($request);*/
+
+      /*  if ($form->isSubmitted() && $form->isValid()) {
             $data = $form->getData();
             $profesor = $data['idProfesor']->getId();
             $grupo = $data['grupo']->getGrupo();
@@ -376,11 +399,8 @@ class ConvivenciaController extends Controller
 
             $em->flush();
             return $this->redirectToRoute('admin_tutores');
-        }
+        }*/
 
-        return $this->render('convivencia/admin/gestionProfesoresGrupo.html.twig', array(
-            'form' => $form->createView()
-        ));
     }
 
     /**

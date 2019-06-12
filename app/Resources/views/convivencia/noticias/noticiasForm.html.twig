@@ -10,44 +10,67 @@
         <form>
             <div class="input-field col s6 m4 offset-m2" id="noticiascursos">
                 <select id="puntosnoticias" name="puntos[]" required>
-                    <option value="" disabled selected>Elige puntos</option>
-                    <option value="0">0</option>
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                    <option value="4">4</option>
-                    <option value="5">5</option>
-                    <option value="6">6</option>
-                    <option value="7">7</option>
-                    <option value="8">8</option>
-                    <option value="9">9</option>
-                    <option value="10">10</option>
+
+                    {% if noticia is defined %}
+                        {% for i in 0..10 %}
+                            <option value="{{ i }}"
+                                {% if (i == noticia[0].puntos ) %}
+                                    selected
+                                {% endif %}
+                             >{{ i }}</option>
+                        {% endfor %}
+
+                    {% else %}
+                        <option value="" disabled selected>Elige puntos</option>
+                        {% for i in 0..10 %}
+                            <option value="{{ i }}">{{ i }}</option>
+                        {% endfor %}
+
+                    {% endif %}
                 </select>
                 <label for="puntosnoticias">Puntos</label>
             </div>
             <div class="input-field col s6 m4" id="noticiascursos">
                 <select id="cursosnoticias"  name="cursos[]" required>
-                    <option value="" disabled selected>Elige grupo</option>
-                    {% for curso in cursos %}
-                        <option value="{{ curso.id }}">{{ curso.grupo }}</option>
-                    {% endfor %}
+
+                    {% if noticia is defined %}
+                        {% for curso in cursos %}
+                            <option value="{{ curso.id }}"
+                                    {% if (curso.grupo == noticia[0].idcurso.grupo ) %}
+                                        selected
+                                    {% endif %}
+                            >{{ curso.grupo }}</option>
+                        {% endfor %}
+
+                    {% else %}
+                        <option value="" disabled selected>Elige grupo</option>
+                        {% for curso in cursos %}
+                            <option value="{{ curso.id }}">{{ curso.grupo }}</option>
+                        {% endfor %}
+
+                    {% endif %}
+
                 </select>
                 <label for="cursosnoticias">Cursos</label>
             </div>
             <div class="input-field col s6 m4 offset-m2">
                 <label for="inicioNoticia">Fecha de inicio</label>
                 <input id="inicioNoticia" type="text" name="fechaInicio" class="datepicker"
-                    {% if noticia is defined %}
-                        value="{{ noticia[0].fechaInicio|date("d/m/Y") }}"
-                    {% else %}
-                        value="{{ "now"|date('d/m/Y') }}"
-                    {% endif %}
-                    required>
+                        {% if noticia is defined %}
+                            value="{{ noticia[0].fechaInicio|date("d/m/Y") }}"
+                        {% else %}
+                            value="{{ "now"|date('d/m/Y') }}"
+                        {% endif %}
+                       required>
             </div>
             <div class="input-field col s6 m4">
                 <label for="finNoticia">Fecha finalización</label>
                 <input id="finNoticia" type="text" name="fechaFinal" class="datepicker"
-                       value="" required>
+                        {% if noticia is defined %}
+                            value="{{ noticia[0].fechaFinal|date("d/m/Y") }}"
+                        {% else %}
+                            value=""
+                        {% endif %} required>
             </div>
             <div class="col s12 m8 offset-m2">
                 <label for="editor1"></label>

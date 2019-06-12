@@ -17,9 +17,10 @@ class ProfesoresRepository extends \Doctrine\ORM\EntityRepository
      * @param $grupo
      * @return array
      */
-    public function verProfesoresSinCurso(){
+    public function verProfesoresSinCurso()
+    {
         $query = $this->getEntityManager()->createQuery(
-            'SELECT p.nombre, p.apellido1, p.apellido2
+            'SELECT p.id,p.nombre, p.apellido1, p.apellido2
                     FROM AppBundle\Entity\profesores p
                     where not exists(select c.id from AppBundle\Entity\Cursos c 
                     WHERE c.idTutor = p.id)');
