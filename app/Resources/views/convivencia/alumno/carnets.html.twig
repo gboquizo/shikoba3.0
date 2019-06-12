@@ -1,3 +1,8 @@
+{#
+Vista de carnets.
+Actualizado por GUBS, RAGZ, 2019
+#}
+
 {% extends 'base2.html.twig' %}
 
 {% block body %}
@@ -5,12 +10,11 @@
 
     <div class="">
         <h3 class="center azul-prof fuente">Carnets</h3>
-
         <form action="">
             <div class="row">
                 <div class="input-field col s12 m6 left">
-                    <div class=" col s10" id="aqui" >
-                        <label>Filtra por puntos</label>
+                    <div class=" col s10" id="aqui">
+                        <label for="carnetFilterPuntos">Filtra por puntos</label>
                         <select name="puntosFiltro" id="carnetFilterPuntos">
                             {% for puntos in puntosSelect %}
                                 {% if app.request.get('puntosFiltro') == puntos %}
@@ -21,15 +25,15 @@
                             {% endfor %}
                         </select>
                     </div>
-                    <div class="col s1" id="aqui2" style="margin-top: 8%;" >
+                    <div class="col s1" id="aqui2" style="margin-top: 8%;">
                         <button class="bus2 z-depth-3 btn btn-floating blue darken-3 waves-effect waves-light"
                                 type="submit"
-                                value="Buscar" title="Buscar" ><i class="material-icons right">search</i></button>
+                                value="Buscar" title="Buscar"><i class="material-icons right">search</i></button>
                     </div>
                     <div class="col s6 m4" id="exp">
                         {#<a style="display: none" href="{{ path('export_form_carnets') }}"#}
-                           {#class="btn z-depth-3  btn-floating blue darken-3 waves-effect waves-light"#}
-                           {#title="Exportar"><i class="material-icons">get_app</i></a>#}
+                        {#class="btn z-depth-3  btn-floating blue darken-3 waves-effect waves-light"#}
+                        {#title="Exportar"><i class="material-icons">get_app</i></a>#}
                     </div>
                 </div>
             </div>
@@ -73,25 +77,44 @@
                             {% endif %}
                             {% if carnet.arraySanciones|length > 0 %}
                                 <td>
-                                    {% for sancion in carnet.arraySanciones %}
-                                        {% if sancion.idEstado.estado == "Iniciada" or sancion.idEstado.estado == "Vigente" %}
-
+                                {{ dump(carnet.arraySanciones) }}
+                                {% if carnet.arraySanciones|length <= 1 %}
+                                    {% if carnet.arraySanciones[0].idEstado.estado == "Finalizada" %}
+                                        {% if ( is_granted('ROLE_ADMIN') or is_granted('ROLE_CONVIVENCIA')) %}
+                                            <a href="{{ path('nueva_sancion', {'idAlumno': carnet.alumno.id}) }}">Recrear
+                                                sanción</a>
+                                        {% endif %}
+                                    {% endif %}
+                                {% endif %}
+                                {% if carnet.arraySanciones|length > 1 %}
+                                    {% if "Finalizada" not in carnet.arraySanciones %}
+                                        {% if "Vigente" in carnet.arraySanciones or "Iniciada" in carnet.arraySanciones%}
                                             {% if ( is_granted('ROLE_ADMIN') or is_granted('ROLE_CONVIVENCIA')) %}
-                                                <a href="{{ path('nueva_sancion', {'idSancion':sancion.id}) }}">
-                                                   ({{ sancion.fecha|date('d/m/Y') }} - {{ sancion.idTipo.tipo }}
-                                                   - {{ sancion.idEstado.estado }})</a><br/>
-                                            {% else %}
-                                               ({{ sancion.fecha|date('d/m/Y') }} - {{ sancion.idTipo.tipo }}
-                                                - {{ sancion.idEstado.estado }})<br/>
+                                                <a href="{{ path('nueva_sancion', {'idAlumno': carnet.alumno.id}) }}">Recrear
+                                                    sanción</a>
                                             {% endif %}
                                         {% endif %}
-                                    {% endfor %}
-                                </td>
+                                    {% endif %}
+                                {% endif %}
+                                {% for sancion in carnet.arraySanciones %}
+                                    {% if sancion.idEstado.estado == "Iniciada" or sancion.idEstado.estado == "Vigente" %}
+                                        {% if ( is_granted('ROLE_ADMIN') or is_granted('ROLE_CONVIVENCIA')) %}
+                                            <a href="{{ path('nueva_sancion', {'idSancion':sancion.id}) }}">
+                                                ({{ sancion.fecha|date('d/m/Y') }} - {{ sancion.idTipo.tipo }}
+                                                - {{ sancion.idEstado.estado }})</a><br/>
+                                        {% else %}
+                                            ({{ sancion.fecha|date('d/m/Y') }} - {{ sancion.idTipo.tipo }}
+                                            - {{ sancion.idEstado.estado }})<br/>
+                                        {% endif %}
+
+                                    {% endif %}
+                                {% endfor %}
                             {% else %}
-                                {% if carnet.alumno.puntos >0 %}
+                                {% if (carnet.alumno.puntos > 0 or carnet.arraySanciones is empty) or carnet.arraySanciones is not defined %}
                                     <td>
                                         {% if ( is_granted('ROLE_ADMIN') or is_granted('ROLE_CONVIVENCIA')) %}
-                                            <a href="{{ path('nueva_sancion', {'idAlumno': carnet.alumno.id}) }}">Crear Sanción</a>
+                                            <a href="{{ path('nueva_sancion', {'idAlumno': carnet.alumno.id}) }}">Crear
+                                                sanción</a>
                                         {% endif %}
                                     </td>
                                     {#<td>No sancionado(implementar crear sanción)</td>#}
