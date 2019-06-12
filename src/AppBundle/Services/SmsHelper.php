@@ -32,8 +32,9 @@ class SmsHelper
 
       	// Prepare data for POST request
       	$data = array('apikey' => $apiKey, 'numbers' => $numbers, "sender" => $sender, "message" => $message, "test" => true);
-          dump ($data);
-          die();
+         /* dump ($data);
+          die();*/
+
       	// Send the POST request with cURL
       	$ch = curl_init('https://api.txtlocal.com/send/');
       	curl_setopt($ch, CURLOPT_POST, true);
