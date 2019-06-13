@@ -1,6 +1,10 @@
 /**
  * Created by Josema on 04/10/2017.
+ * Updated by GUBS, RAGZ on 2019.
+ * @author Josema, GUBS, RAGZ.
+ *
  */
+
 //Spinner loader intro
 var tmrReady = setInterval(isPageFullyLoaded, 200);
 function isPageFullyLoaded() {
@@ -15,8 +19,8 @@ $(document).ready(function () {
     //select noticias form
     $('#cursosnoticias').material_select();
     $('#puntosnoticias').material_select();
-    $('#cursostutor').material_select();
-    $('#profesorestutor').material_select();
+    $('#cursostutor').chosen({no_results_text: "No hay resultados"});
+    $('#profesorestutor').chosen({no_results_text: "No hay resultados"});
     //fechas noticias form
     $("#finNoticia,#inicioNoticia").datepicker({
         minDate: 0,

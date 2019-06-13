@@ -2,12 +2,10 @@
 Vista de carnets.
 Actualizado por GUBS, RAGZ, 2019
 #}
-
 {% extends 'base2.html.twig' %}
 
 {% block body %}
     {% include 'convivencia/navegacion.html.twig' %}
-
     <div class="">
         <h3 class="center azul-prof fuente">Carnets</h3>
         <form action="">
@@ -52,14 +50,14 @@ Actualizado por GUBS, RAGZ, 2019
                     {% for carnet in arrayCarnetData %}
                         {% if carnet.alumno.puntos == 0 %}
                             {% set colorClass = 'green-text' %}
-                        {% elseif carnet.alumno.puntos > 0 and carnet.alumno.puntos <7 %}
+                        {% elseif carnet.alumno.puntos > 0 and carnet.alumno.puntos < 7 %}
                             {% set colorClass = 'orange-text' %}
                         {% elseif carnet.alumno.puntos == 7 %}
                             {% set colorClass = 'pink-text' %}
-                        {% elseif carnet.alumno.puntos > 7 and carnet.alumno.puntos <10 %}
+                        {% elseif carnet.alumno.puntos > 7 and carnet.alumno.puntos < 10 %}
                             {% set colorClass = 'red-text text-darken-3' %}
                         {% elseif carnet.alumno.puntos >= 10 %}
-                            {% set colorClass = 'red-text' %}
+                            {% set colorClass = 'red-text text-darken-4' %}
                         {% else %}
                             {% set colorClass = 'black-text' %}
                         {% endif %}
@@ -77,9 +75,8 @@ Actualizado por GUBS, RAGZ, 2019
                             {% endif %}
                             {% if carnet.arraySanciones|length > 0 %}
                                 <td>
-                                {{ dump(carnet.arraySanciones) }}
                                 {% if carnet.arraySanciones|length <= 1 %}
-                                    {% if carnet.arraySanciones[0].idEstado.estado == "Finalizada" %}
+                                    {% if carnet.arraySanciones[0].idEstado.estado == "Finalizada" and carnet.alumno.puntos > 6 %}
                                         {% if ( is_granted('ROLE_ADMIN') or is_granted('ROLE_CONVIVENCIA')) %}
                                             <a href="{{ path('nueva_sancion', {'idAlumno': carnet.alumno.id}) }}">Recrear
                                                 sanción</a>
@@ -87,12 +84,19 @@ Actualizado por GUBS, RAGZ, 2019
                                     {% endif %}
                                 {% endif %}
                                 {% if carnet.arraySanciones|length > 1 %}
-                                    {% if "Finalizada" not in carnet.arraySanciones %}
-                                        {% if "Vigente" in carnet.arraySanciones or "Iniciada" in carnet.arraySanciones%}
-                                            {% if ( is_granted('ROLE_ADMIN') or is_granted('ROLE_CONVIVENCIA')) %}
-                                                <a href="{{ path('nueva_sancion', {'idAlumno': carnet.alumno.id}) }}">Recrear
-                                                    sanción</a>
-                                            {% endif %}
+                                    {% set flagF = 0 %}
+                                    {% set flagIV = 0 %}
+                                    {% for sancion in carnet.arraySanciones %}
+                                        {% if sancion.idEstado.estado == "Finalizada" %}
+                                            {% set flagF = 1 %}
+                                        {% elseif sancion.idEstado.estado != "Finalizada" %}
+                                            {% set flagIV = 1 %}
+                                        {% endif %}
+                                    {% endfor %}
+                                    {% if flagF == 1 and flagIV == 0 and carnet.alumno.puntos > 6 %}
+                                        {% if ( is_granted('ROLE_ADMIN') or is_granted('ROLE_CONVIVENCIA')) %}
+                                            <a href="{{ path('nueva_sancion', {'idAlumno': carnet.alumno.id}) }}">Recrear
+                                                sanción</a>
                                         {% endif %}
                                     {% endif %}
                                 {% endif %}
@@ -109,7 +113,7 @@ Actualizado por GUBS, RAGZ, 2019
                                     {% endif %}
                                 {% endfor %}
                             {% else %}
-                                {% if (carnet.alumno.puntos > 6) %}
+                                {% if carnet.alumno.puntos > 6 %}
                                     <td>
                                         {% if ( is_granted('ROLE_ADMIN') or is_granted('ROLE_CONVIVENCIA')) %}
                                             <a href="{{ path('nueva_sancion', {'idAlumno': carnet.alumno.id}) }}">Crear

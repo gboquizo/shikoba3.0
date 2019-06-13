@@ -1,3 +1,7 @@
+{#
+Vista de edición de alumno.
+Actualizado por GUBS, RAGZ, 2019
+#}
 {% extends 'base2.html.twig' %}
 
 {% block body %}
@@ -5,9 +9,7 @@
 
     <div class="">
         <h3 class="center azul-prof fuente">Modificar alumno</h3>
-
         {{ form_start(form, {'action':'', 'method':'POST'}) }}
-
         <div class="col s12 m6">
             {{ form_row(form.nombre) }}
         </div>
@@ -59,11 +61,15 @@
             {{ form_label(form.msgTL2) }}
         </div>
         <div class="col s12 l4 offset-l4 center">
+            <a class="z-depth-3 btn blue darken-3 waves-effect waves-light botonSubmit confirm"
+               style="margin: 2rem auto" href="{{ path('show_alumnos') }}" data-title="Cancelar" data-content="¿Desea volver a alumnado?" >Cancelar
+                <i class="material-icons left">undo</i>
+            </a>
             <button class=" btn z-depth-3 blue darken-4 waves-effect waves-light" type="submit"
-                    style="margin: 2rem auto" name="guardar" value="Enviar">Enviar <i
-                        class="material-icons right">send</i></button>
+                    style="margin: 2rem auto" name="guardar" value="Enviar">Enviar
+                <i class="material-icons right">send</i>
+            </button>
         </div>
         {{ form_end(form) }}
     </div>
-
 {% endblock %}
