@@ -274,12 +274,12 @@ Actualizado por GUBS, RAGZ, 2019
             <div class="col s10 l6 center">
                 <div class="card white darken-1">
                     <div class="card-content black-text">
-                        <span class="card-title center ">Histórico Partes</span>
+                        <span class="card-title center "><u>Histórico partes</u></span>
                         {% set contadorPartes = 0 %}
                         {% set break = false %}
                         {% for parte in alumnoData.partes if not break %}
                             <p style="margin-bottom: 2%">El {{ parte.fecha|date('d/m/Y') }} tuvo una
-                                falta {{ parte.idTipo.tipo }}
+                                falta {{ parte.idTipo.tipo|lower }}
                                 , {{ parte.idProfesor.getNombreCompleto() }} indicó: <br/>
                                 {{ parte.descripcion }}</p>
                         {% endfor %}
@@ -290,13 +290,13 @@ Actualizado por GUBS, RAGZ, 2019
             <div class="col s10 offset-s1 l6 center">
                 <div class="card white darken-1">
                     <div class="card-content black-text">
-                        <span class="card-title center">Histórico Sanciones</span>
+                        <span class="card-title center"><u>Histórico sanciones</u></span>
                         {% set contadorSanciones = 0 %}
                         {% set break = false %}
                         {% for sancion in alumnoData.sanciones if not break %}
                             {% set contadorSanciones = contadorSanciones + 1 %}
                             <p style="margin-bottom: 2%">El {{ sancion.fecha|date('d/m/Y') }} tuvo una sanción de
-                                tipo {{ sancion.idTipo.tipo }}<br/>sanción: {{ sancion.sancion }}</p>
+                                tipo {{ sancion.idTipo.tipo }}<br/>Sanción: {{ sancion.sancion }}</p>
                         {% endfor %}
                     </div>
                 </div>

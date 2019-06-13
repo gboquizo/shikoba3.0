@@ -1,19 +1,21 @@
+{#
+Vista de informes en los carnets.
+Actualizado por GUBS, RAGZ, 2019
+#}
 {% extends 'base.html.twig' %}
 
 {% block body %}
-
     <main class="w3-container w3-margin-top">
-
         {% if partes is defined %}
             <div class="w3-row contenedorCartaInforme">
                 <div class="w3-card-2 cartaAlumno">
                     <header class="w3-container w3-center">
-                        <h2>Historico Partes</h2>
+                        <h2>Historico partes</h2>
                     </header>
                     <div class="cartaInformeCuerpo">
                         {% for parte in partes %}
                             <div>
-                            <p>El {{ parte.fecha|date('d/m/Y') }} tuvo una falta {{ parte.idTipo.tipo }}
+                            <p>El {{ parte.fecha|date('d/m/Y') }} tuvo una falta {{ parte.idTipo.tipo|lower }}
                                 , {{ parte.idProfesor.getNombreCompleto() }} indicó:</p>
                                 <p>{{ parte.descripcion }}</p>
                             </div>

@@ -1,3 +1,7 @@
+{#
+Vista de alumnado.
+Actualizado por GUBS, RAGZ, 2019
+#}
 {% extends 'base2.html.twig' %}
 
 {% block body %}
@@ -7,11 +11,8 @@
         {% if ( is_granted('ROLE_PROFESOR')) %}
             <h3 class="center azul-prof fuente">Tutoría</h3>
         {% else %}
-        <h3 class="center azul-prof fuente">Alumnos</h3>
-
+        <h3 class="center azul-prof fuente">Alumnado</h3>
         {% endif %}
-
-
         <div class="col s12 l5 offset-l5 center">
             {% for flash_message in app.session.flashBag.get('alumno') %}
                 <div class="card-panel green white-text flash">
@@ -25,43 +26,37 @@
                 </div>
             {% endfor %}
         </div>
-
         <form action="">
           <div class="row" id="busq">
-
               <div class="col s12 l6">
                   <div class="row">
                       <div class="i-checks col s12 right-align" style="margin-top: 8%;padding-left: 0;" id="aqui">
-
-
+                          {#Comentamos el buscador sin uso del histórico#}
                           {#<div class="" id="botonbus" style="margin-left: -5%;">
-                              <button class=" z-depth-3 btn btn-floating blue darken-3 waves-effect waves-light"
+                              <button class="z-depth-3 btn btn-floating blue darken-3 waves-effect waves-light"
                                       type="submit"
-                                      value="Buscar" title="Buscar"><i
-                                          class="material-icons right">search</i></button>
-
+                                      value="Buscar" title="Buscar">
+                                      <i class="material-icons right">search</i>
+                                      </button>
                           </div>#}
                       </div>
-
-
                   </div>
               </div>
           </div>
-
             <div class="row">
                 <table class="responsive-table highlight tableData z-depth-3" data-order='[[ 0, "asc" ]]' data-page-length='10' style="margin-bottom: 1%">
                     <thead>
                     <tr class="blue darken-3 white-text">
                         <th>Nombre</th>
                         <th>Nie</th>
-                        <th>Telefono</th>
-                        <th>Cod.Postal</th>
+                        <th>Teléfono</th>
+                        <th>Cód.Postal</th>
                         <th>Puntos</th>
                         <th>TutorL1</th>
                         <th>TutorL2</th>
                         <th>Tlf. TutorL1</th>
                         <th>Tlf. TutorL2</th>
-                        <th class="noExport">Accion</th>
+                        <th class="noExport">Accion</th>{# Añadimos esa clase para controlar la no exportación de acciones #}
                     </tr>
                     </thead>
                     <tbody>
@@ -76,7 +71,6 @@
                                 {% if ( is_granted('ROLE_CONVIVENCIA') or is_granted('ROLE_PROFESOR')) %}
                                         {{ alumno.getNombreCompletoYCurso() }}
                                 {% endif %}
-
                             </td>
                             <td>{{ alumno.nie }}</td>
                             <td>{{ alumno.telefono }}</td>
@@ -98,7 +92,6 @@
                     </tbody>
                 </table>
             </div>
-
         </form>
     </div>
 {% endblock %}
