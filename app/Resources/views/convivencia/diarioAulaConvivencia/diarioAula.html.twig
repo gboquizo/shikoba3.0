@@ -1,4 +1,19 @@
+{#
+Vista del diario del aula de convivencia.
+Actualizado por GUBS, RAGZ, 2019
+#}
 {% extends 'base2.html.twig' %}
+{% block javascripts %}
+    <script>
+        $(document).ready(function() {
+            {% if diarioData.diariosAula == null %}
+                $("#warning").text("No existen datos para el día y/o las horas seleccionadas.");
+            {% else %}
+            $("#result").text("Mostrando los resultados.");
+            {% endif %}
+        });
+    </script>
+{% endblock %}
 
 {% block body %}
     {% include 'convivencia/navegacion.html.twig' %}
@@ -7,12 +22,12 @@
         <form action="">
             <div class="diarioSearch">
                 <div id="divfecha">
-                    <span for="diarioFechaSearchBar">Fecha</span>
+                    <label for="diarioFechaSearchBar">Fecha</label>
                     <input type="text" class="datepicker" name="likeFecha" id="diarioFechaSearchBar"
                            value="{{ diarioData.fecha|date('d/m/Y') }}">
                 </div>
                 <div id="divhora">
-                    <span>Horas</span>
+                    <label for="horasSelect">Horas</label>
                     <select data-placeholder="Seleccione hora/s..." id="horasSelect"
                             class="chosen-select col s12" name="likeHora[]"
                             id="diarioHorasSearchBar" multiple>
@@ -35,9 +50,9 @@
             </div>
         </form>
         {% if diarioData.diariosAula == null %}
-            <h4 class="center fuente" style="margin: 50px auto">No existen datos para las horas seleccionadas.</h4>
-        {% endif %}
-        {% if diarioData.diariosAula != null %}
+            <h5 class="center fuente" id="warning" style="margin: 50px auto"></h5>
+        {% else %}
+            <h5 class="center fuente" id="result" style="margin: 50px auto"></h5>
             <div class="row" id="busq">
                 <table class="responsive-table highlight tableDataDiario z-depth-3" data-order='[[ 0, "desc" ]]'
                        style="margin-bottom: 1%" data-page-length='10'>
@@ -55,7 +70,6 @@
                         </tr>
                     </thead>
                     <tbody>
-
                     {% for diario in diarioData.diariosAula %}
                         <tr>
                             <td>{{ diario.fecha|date('d/m/Y') }}</td>

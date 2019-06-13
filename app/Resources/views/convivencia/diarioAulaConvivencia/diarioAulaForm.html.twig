@@ -1,3 +1,7 @@
+{#
+Vista del editor del diario del aula de convivencia.
+Actualizado por GUBS, RAGZ, 2019
+#}
 {% extends 'base2.html.twig' %}
 
 {% block body %}
@@ -8,12 +12,11 @@
 
     <div class="col s12 l4 offset-l4 center">
 
-
         <form method="post" class="" name="formBusqueda">
             <div class="center">
             {% if recupera %}
                 <a href="{{ path('edit_diario', {'id': app.request.get('id'), 'recuperaPunto': 'true'}) }}"
-                   class="btn  btn-floating blue darken-3 waves-effect waves-light" data-title="Recuperar Punto">-1</a>
+                   class="btn  btn-floating blue darken-3 waves-effect waves-light" data-title="Recuperar punto">-1</a>
             {% else %}
                 <button class="btn btn-floating blue darken-3 waves-effect waves-light" type="button" name="recuperaPunto"
                        value="-1 Punto"
@@ -27,7 +30,5 @@
         <button style="margin-bottom: 20px" class="btn blue darken-3 waves-effect waves-light"  type="submit"
                 name="editarDiario" value="Editar">Editar<i class="material-icons right">send</i></button>
         {{ form_end(form) }}
-
     </div>
-
 {% endblock %}
