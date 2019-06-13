@@ -1,3 +1,7 @@
+{#
+Vista de informes de partes de profesorado.
+Creado por GUBS, RAGZ, 2019
+#}
 {% extends 'base2.html.twig' %}
 {% set modify = '1' %}
 {% set fecha = "now"|date("m/d/Y") %}
@@ -27,8 +31,8 @@
                                     <div class="" id="botonbus">
                                         <button
                                                 class=" z-depth-3 btn btn-floating blue darken-3 waves-effect waves-light"
-                                                type="submit" value="Buscar" title="Buscar"><i
-                                                    class="material-icons right">search</i>
+                                                type="submit" value="Buscar" title="Buscar">
+                                            <i class="material-icons right">search</i>
                                         </button>
                                     </div>
                                 </div>
@@ -38,9 +42,8 @@
                 </div>
             </div>
         {% endif %}
-
         {% if data != null %}
-            <table class="responsive-table highlight tableData z-depth-1" data-order='[[ 0, "asc" ]]'
+            <table class="responsive-table highlight tableData z-depth-1" data-order='[[ 1, "desc" ]]'
                    data-page-length='10'
                    style="margin-bottom: 2%; margin-top: 0">
                 <thead>

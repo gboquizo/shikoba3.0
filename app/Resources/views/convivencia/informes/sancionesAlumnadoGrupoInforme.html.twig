@@ -1,13 +1,14 @@
+{#
+Vista de informes de sanciones del alumnado.
+Creado por GUBS, RAGZ, 2019
+#}
 {% extends 'base2.html.twig' %}
 {% set modify = '1' %}
 {% set fecha = "now"|date("m/d/Y") %}
 {% block body %}
     {% include 'convivencia/navegacion.html.twig' %}
-
     <div class="">
         <h3 class="center azul-prof fuente" style="margin-bottom: 50px">Informe sanciones alumnado</h3>
-        <br>
-        <br>
         {% if data == null %}
             <div class="row" style="margin-left: 23%; margin-bottom: 0">
                 <div class="col s12 16 ">
@@ -29,8 +30,8 @@
                                     <div class="" id="botonbus">
                                         <button
                                                 class=" z-depth-3 btn btn-floating blue darken-3 waves-effect waves-light"
-                                                type="submit" value="Buscar" title="Buscar"><i
-                                                    class="material-icons right">search</i>
+                                                type="submit" value="Buscar" title="Buscar">
+                                            <i class="material-icons right">search</i>
                                         </button>
                                     </div>
                                 </div>
@@ -42,9 +43,9 @@
         {% endif %}
 
         {% if data != null %}
-            <table class="responsive-table highlight tableData z-depth-1" data-order='[[ 0, "asc" ]]'
+            <table class="responsive-table highlight tableData z-depth-1" data-order='[[ 3, "desc" ]]'
                    data-page-length='10'
-                   style="margin-bottom: 2%; margin-top: 0">
+                   style="margin-bottom: 3%; margin-top: 0">
                 <thead>
                 <tr class="blue darken-3 white-text">
                     <th>Grupo</th>
