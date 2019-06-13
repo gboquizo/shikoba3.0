@@ -1,12 +1,8 @@
+{#
+Vista de asignación cursos-profesores.
+Creado por GUBS, RAGZ, 2019
+#}
 {% extends 'base2.html.twig' %}
-{% block javascripts %}
-    {{ parent() }}
-<script type="text/javascript">
-   /* $(function(){
-        $(".cursostutor").chosen();
-    });*/
-</script>
-{% endblock %}
 
 {% block body %}
     {% include 'convivencia/navegacion.html.twig' %}
@@ -17,19 +13,17 @@
             <div style=" margin:auto;width: 80%">
                 <div class="col s12 m6">
                     <label for="cursostutor">Curso</label>
-                    <select class="chosen-search" id="cursostutor" name="curso[]" data-placeholder="Seleccione un curso" required>
-                        <option value="" disabled selected>Elige curso</option>
-
+                    <select id="cursostutor" name="curso[]" data-placeholder="Seleccione un curso" required>
+                        <option value="" disabled selected></option>
                         {% for curso in cursos %}
                             <option value="{{ curso['grupo'] }}">{{ curso['grupo'] }}</option>
                         {% endfor %}
                     </select>
-
                 </div>
                 <div class="col s12 m6">
                     <label for="profesorestutor">Profesor/a</label>
-                    <select id="profesorestutor" name="profesor[]" required>
-                        <option value="" disabled selected>Elige profesor</option>
+                    <select id="profesorestutor" name="profesor[]" data-placeholder="Seleccione un profesor/a" required>
+                        <option value="" disabled selected></option>
                         {% for profesor in profesores %}
                             <option value="{{ profesor['id'] }} ">{{ profesor['nombre'] }} {{ profesor['apellido1'] }}</option>
                         {% endfor %}
@@ -37,36 +31,15 @@
                 </div>
             </div>
             <div class="col s12 l4 offset-l4 center">
+                <a class="z-depth-3 btn blue darken-3 waves-effect waves-light botonSubmit confirm"
+                   style="margin: 2rem auto" href="{{ path('admin_tutores') }}" data-title="Cancelar" >Cancelar
+                    <i class="material-icons left">undo</i>
+                </a>
                 <button class=" btn z-depth-3 blue darken-4 waves-effect waves-light" type="submit"
-                        style="margin: 2rem auto" name="guardar" value="Enviar">Enviar <i
-                            class="material-icons right">send</i></button>
+                        style="margin: 2rem auto" name="guardar" value="Enviar">Enviar
+                    <i class="material-icons right">send</i>
+                </button>
             </div>
         </form>
     </div>
 {% endblock %}
-
-
-{#
-{% extends 'base2.html.twig' %}
-
-
-{% block body %}
-    {% include 'convivencia/navegacion.html.twig' %}
-    <div class="">
-        <h3 class="center azul-prof fuente">Modificar tutor de grupos</h3>
-
-<br><br>
-        {{ form_start(form, {'attr': {'class':'col s12 l10 offset-l1 mtop', 'id':'profesoresGruposForm', 'action':'', 'method':'POST'}}) }}
-            <div class="col s12 m6">
-                {{ form_row(form.grupo) }}
-            </div>
-            <div class="col s12 m6">
-                {{ form_row(form.idProfesor) }}
-        </div>
-        <div class="col s12 l4 offset-l4 center">
-            <button class=" btn z-depth-3 blue darken-4 waves-effect waves-light" type="submit" style="margin: 2rem auto" name="guardar" value="Enviar">Enviar <i class="material-icons right">send</i></button>
-        </div>
-        {{ form_end(form) }}
-    </div>
-{% endblock %}
-#}

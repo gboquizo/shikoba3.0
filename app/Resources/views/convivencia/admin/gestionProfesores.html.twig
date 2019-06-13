@@ -1,5 +1,8 @@
+{#
+Vista de importación de profesores.
+Actualizado por GUBS, RAGZ, 2019
+#}
 {% extends 'base2.html.twig' %}
-
 
 {% block body %}
     {% include 'convivencia/navegacion.html.twig' %}
@@ -43,8 +46,9 @@
         <div class="col s12 l4 offset-l4 center">
             {{ form_start(form, {'attr': {'class':' formConvivencia'}}) }}
             {{ form_widget(form) }}
-            <button class="btn blue darken-3 waves-effect waves-light" style="margin-top: 7%;"  type="submit" name="importarProfesores" id="botonImportar" value="Importar" disabled>Importar<i
-                        class="material-icons right" >send</i></button>
+            <button class="btn blue darken-3 waves-effect waves-light" style="margin-top: 7%;" type="submit"
+                    name="importarProfesores" id="botonImportar" value="Importar" disabled>Importar<i
+                        class="material-icons right">send</i></button>
             {{ form_end(form) }}
         </div>
         <div class="">

@@ -25,7 +25,7 @@
                 </div>
             </div>
             <div class="row">
-                <table class="responsive-table highlight tableData z-depth-3" data-order='[[ 0, "desc" ]]'
+                <table class="responsive-table highlight tableData z-depth-3" data-order='[[ 1, "asc" ]]'
                        style="margin-bottom: 1%" data-page-length='10'>
                     <thead>
                     <tr class="blue darken-3 white-text">
@@ -42,7 +42,7 @@
                             <td>{{tutor.grupo }}</td>
                             <td> <a class="confirm paddingRightLeft "
                                     href="{{ path('borrarTutor', {'grupo': tutor.grupo}) }}"
-                                    data-title="Eliminar tutor"><i class="material-icons ">delete</i></a></td>
+                                    data-title="Eliminar tutor" data-content="Se va a eliminar la actual asignación, ¿desea continuar?"><i class="material-icons ">delete</i></a></td>
                         </tr>
                     {% endfor %}
                     </tbody>
