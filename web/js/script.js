@@ -248,7 +248,7 @@ $(document).ready(function () {
         //oculto un icono que no tiene porque estar ahi
         $('.caret').css("display", "none");
         //estilo material para un selector en sanciones form
-        $('#sancion_form_idTipo').material_select();
+        $('#sancion_form_idTipo').chosen();
         $('#horasAC > select').material_select();
         //select tipo de partes
         $('#parte_form_Formato').material_select();
@@ -263,7 +263,7 @@ $(document).ready(function () {
         $('#sancion_form > div').addClass("input-field");
         $('#sancion_form').addClass("col s12 m6");
         //caja de observaciones
-        $('#sancion_form_Observaciones').attr("data-length", "200");
+        $('#sancion_form_Observaciones').attr("data-length", "300");
         $('#sancion_form_Observaciones').characterCounter();
         //estilo al paginador de datatable
         $("#DataTables_Table_0_paginate").addClass("col s12 l8 right");

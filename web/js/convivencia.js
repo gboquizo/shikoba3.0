@@ -131,7 +131,7 @@ $(document).ready(function () {
         let input = '<div class="row contenedorFlexEdit">' +
             '<div class="col s6 input-field">' +
             '<input type="text" class="datepicker" id="dat" placeholder="." name="fechaHora[]" contenteditable="false" value="' + fecha + '">' +
-            '<label for="dat" class="active">Fecha Hora Sanción</label>' +
+            '<label for="dat" class="active">Fecha hora sanción</label>' +
             '</div>' +
             '<div class="col s6 input-field" id="horasAC">' +
             '<select name="horaAc[]">';
@@ -167,6 +167,7 @@ $(document).ready(function () {
     $('.tooltip').tooltipster({
         theme: 'tooltipster-light'
     });
+
     // Pantalla Confirmación
     $('a.confirm').confirm({
         theme: 'supervan',
@@ -956,11 +957,19 @@ let customizeHeader = function(customDoc,classs) {
     });
 };
 
+/**
+ * Let get the past year from a moment date.
+ * @return a moment date
+ */
 let getPastYear = function() {
     let dateFrom = moment().format('YYYY');
     return moment(dateFrom, 'YYYY').subtract(1, 'year').endOf('year').format('YYYY');
 }
 
+/**
+ * Let get the current year from a moment date.
+ * @return a moment date
+ */
 let getCurrentYear = function() {
     return moment().format('YYYY');
 }

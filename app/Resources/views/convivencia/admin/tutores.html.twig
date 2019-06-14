@@ -8,6 +8,18 @@ Creado por GUBS, RAGZ, 2019
     {% include 'convivencia/navegacion.html.twig' %}
     <div class="">
         <h3 class="center azul-prof fuente">Gestión tutores</h3>
+        <div class="col s12 l5 offset-l5 center">
+            {% for flash_message in app.session.flashBag.get('tutor') %}
+                <div class="card-panel green white-text flash">
+                    <span class="spancaja">{{ flash_message }} </span><i class="material-icons spanico">done</i>
+                </div>
+            {% endfor %}
+            {% for flash_message in app.session.flashBag.get('tutorError') %}
+                <div class="card-panel red white-text flash">
+                    <span class="spancaja">{{ flash_message }}</span><i class="material-icons spanico">clear</i>
+                </div>
+            {% endfor %}
+        </div>
         <form action="">
             <div class="row" id="busq">
                 <div class="col s12 l6">

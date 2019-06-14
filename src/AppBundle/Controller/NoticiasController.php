@@ -6,6 +6,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use AppBundle\Repository\NoticiasRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+use Symfony\Component\Config\Definition\Exception\Exception;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
@@ -40,12 +41,10 @@ class NoticiasController extends Controller
         $em = $this->getDoctrine()->getManager();
         /** @var CursosRepository $repositoryACursos */
         $repositoryACursos = $em->getRepository('AppBundle:Cursos');
-        /** @var Cursos $cursos */
         $cursos = $repositoryACursos->getCursosGroupByCursos2();
 
 
         if(!empty($request->query->get('fechaFinal')) && !empty($request->query->get('puntos')) && !empty($request->query->get('cursos'))){
-
 
             $cursosIds=$request->query->get('cursos');
 
@@ -80,9 +79,15 @@ class NoticiasController extends Controller
      */
     public function deleteNoticias(Noticias $noticia)
     {
-        $em = $this->getDoctrine()->getManager();
-        $em->remove($noticia);
-        $em->flush();
+        try {
+            $em = $this->getDoctrine()->getManager();
+            $em->remove($noticia);
+            $em->flush();
+            $this->addFlash("noticia", "Noticia eliminada correctamente");
+        } catch (Exception $e) {
+            $this->addFlash("noticiaError", "No se ha podido eliminar la noticia");
+        }
+
         return $this->redirectToRoute("noticias");
     }
 

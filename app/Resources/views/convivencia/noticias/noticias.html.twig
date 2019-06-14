@@ -1,3 +1,7 @@
+{#
+Vista de noticias.
+Actualizado por GUBS, RAGZ, 2019
+#}
 {% extends 'base2.html.twig' %}
 
 {% block stylesheets %}
@@ -21,6 +25,21 @@
                class="btn z-depth-3 blue darken-3 waves-effect waves-light"
                title="Nueva noticia">Nueva<i class="material-icons right" style="margin-top: -2%;">add</i></a>
         </div>
+        <div class="col s12 l5 offset-l5 center">
+            {% for flash_message in app.session.flashBag.get('noticia') %}
+                <div class="card-panel green white-text flash">
+                    <span class="spancaja">{{ flash_message }} </span><i class="material-icons spanico">done</i>
+                </div>
+            {% endfor %}
+
+            {% for flash_message in app.session.flashBag.get('noticiaError') %}
+                <div class="card-panel red white-text flash">
+                    <span class="spancaja">{{ flash_message }}</span> <i class="material-icons spanico">clear</i>
+                </div>
+            {% endfor %}
+
+        </div>
+        <div class="divider3"></div>
         <div class="row" style="padding: 6%; margin-top: -40px">
             {% for noticia in noticias %}
                 <div id="resultados-contenido">

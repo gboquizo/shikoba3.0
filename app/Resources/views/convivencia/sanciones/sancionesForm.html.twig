@@ -1,3 +1,7 @@
+{#
+Vista de formulario de sanciones.
+Actualizado por GUBS, RAGZ, 2019
+#}
 {% extends 'base2.html.twig' %}
 
 {% block body %}
@@ -11,8 +15,9 @@
                 <div class="" id="botonbus">
                     <button class="busquedaMas z-depth-3 btn btn-floating blue darken-3 waves-effect waves-light"
                             type="button"
-                            value="Búsqueda Avanzada" title="Búsqueda avanzada"><i
-                                class="material-icons right">search</i></button>
+                            value="Búsqueda Avanzada" title="Búsqueda avanzada">
+                        <i class="material-icons right">search</i>
+                    </button>
                 </div>
             </div>
             <div class="col s12 center" style="margin: 1% 0">
@@ -20,17 +25,17 @@
                     {% if accion != 'Inhabilitada' %}
                         <a href="{{ path('nueva_sancion', {'idSancion': sancion.id, 'estadoSancion': 'continuar' }) }}"
                            class="botonSubmit confirm btn z-depth-3 blue darken-3 waves-effect waves-light"
-                           data-title="{{ accion }}">{{ accion }}<i
-                                    class="right material-icons">send</i></a>
-
+                           data-title="{{ accion }}">{{ accion }}
+                            <i class="right material-icons">send</i>
+                        </a>
                         {#<input class="w3-button w3-text-white"#}
                         {#type="submit" name="estadoSancion" value="{{ accion }}">#}
                     {% else %}
                         <button class="z-depth-3 btn blue darken-3 waves-effect waves-light"
                                 type="button"
                                 value="{{ sancion.getIdEstado().getEstado() }}"
-                                disabled>{{ sancion.getIdEstado().getEstado() }}<i
-                                    class="material-icons right">send</i></button>
+                                disabled>{{ sancion.getIdEstado().getEstado() }}
+                            <i class="material-icons right">send</i></button>
                         {#<input class="w3-button w3-text-white botonSubmit confirm"#}
                         {#     type="button" value="{{ sancion.getIdEstado().getEstado() }}" disabled>#}
                     {% endif %}
@@ -47,8 +52,9 @@
                     <div class="col s12 center">
                         <button class="z-depth-3 btn blue darken-3 waves-effect waves-light"
                                 type="submit"
-                                value="Buscar" name="busqueda" title="Buscar">Buscar <i
-                                    class="material-icons right">search</i></button>
+                                value="Buscar" name="busqueda" title="Buscar">Buscar
+                            <i class="material-icons right">search</i>
+                        </button>
                     </div>
                 </div>
             </div>
@@ -60,19 +66,19 @@
             </div>
             {#{{ form_row(form.Fecha) }}#}
             <div class="input-field col s12 m6">
-                <label>Fecha</label>
+                <label for="fecha">Fecha</label>
                 <input type="text" name="fecha" class="datepicker"
-                       value="{{ sancion.fecha|date('d/m/Y') }}" required>
+                       value="{{ sancion.fecha|date('d/m/Y') }}" required id="fecha"/>
             </div>
             <div class="input-field col s12 m6">
-                <label>Fecha Inicio</label>
+                <label for="fechaI">Fecha inicio</label>
                 <input type="text" name="fechaInicio" class="w3-select datepicker w3-border w3-light-grey marginBottom"
-                       value="{{ sancion.fechaInicio|date('d/m/Y') }}" required>
+                       value="{{ sancion.fechaInicio|date('d/m/Y') }} " id="fechaI" required />
             </div>
             <div class="input-field col s12 m6">
-                <label>Fecha Final</label>
+                <label for="fechaF">Fecha final</label>
                 <input type="text" name="fechaFinal" class="w3-select datepicker w3-border w3-light-grey marginBottom"
-                       value="{{ sancion.fechaFinal|date('d/m/Y') }}" required>
+                       value="{{ sancion.fechaFinal|date('d/m/Y') }}" id="fechaF" required>
             </div>
             <div class="input-field col s12 m6">
                 {{ form_row(form.fechaComunicacion, {value : sancion.fechaComunicacion|date("d/m/Y")}) }}
@@ -86,14 +92,13 @@
                     <div class="row contenedorFlexEdit">
                         {% for detalle in detalles %}
                             <div class="col s6 input-field">
-                                <label>Fecha Hora Sanción</label>
+                                <label for="fechaHoraS">Fecha hora sanción</label>
                                 <input type="text" class="datepicker"
                                        value="{{ detalle.fecha|date('d/m/Y') }}" name="fechaHoraEdit[{{ detalle.id }}]"
-                                       contenteditable="false">
-                                <label>Fecha Hora Sanción</label>
+                                       contenteditable="false" id="fechaHoraS" />
                             </div>
                             <div class="col s6 input-field" id="horasAC">
-                                <select name="horaAcEdit[{{ detalle.id }}]">
+                                <select id="horaAcEdit" name="horaAcEdit[{{ detalle.id }}]">
                                     {% for key, hora in horas %}
                                         {% if detalle.hora == key %}
                                             <option value="{{ key }}" selected>{{ hora }}</option>
@@ -102,21 +107,16 @@
                                         {% endif %}
                                     {% endfor %}
                                 </select>
-                                <label>Hora</label>
-
+                                <label for="horaAcEdit">Hora</label>
                             </div>
                         {% endfor %}
                         <div class="col s12 center">
-                            <input type="button" id="checkEditSancion"
-                                   class="btn z-depth-3 blue darken-3 waves-effect waves-light checkNewSancion"
-                                   value="+">
+                            <input type="button" id="checkEditSancion" class="btn z-depth-3 blue darken-3 waves-effect waves-light checkNewSancion" value="+">
                         </div>
                     </div>
                 {% endif %}
             </div>
-
             {{ form_widget(form) }}
-
             <br/>
             <div class="col s12 center">
                 <a href="{{ path('gestion_sanciones') }}" data-title="Cancelar"

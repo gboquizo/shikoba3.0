@@ -219,9 +219,9 @@ class PartesController extends Controller
             foreach ($sanciones as $sancion)
                 $em->remove($sancion);
             $em->flush();
-            $this->addFlash("parte", "Se ha eliminado correctamente");
+            $this->addFlash("parte", "Parte eliminado correctamente");
         } catch (Exception $e) {
-            $this->addFlash("parteError", "No se ha podido eliminar la sanción");
+            $this->addFlash("parteError", "No se ha podido eliminar el parte");
         }
         return $this->redirectToRoute("gestion_partes");
     }
