@@ -142,7 +142,7 @@ class SancionController extends Controller
         try {
             $em = $this->getDoctrine()->getManager();
             $em->remove($sancion);
-            $this->addFlash("sancion", "Se ha eliminado correctamente");
+            $this->addFlash("sancion", "Sanción eliminada correctamente");
             $em->flush();
         } catch (Exception $e) {
             $this->addFlash("sancionError", "No se ha podido eliminar la sanción");

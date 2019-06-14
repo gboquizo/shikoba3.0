@@ -470,6 +470,15 @@ th {
     opacity: 0;
     animation: opacityAnimation 5s;
 }
+
+.flash2{
+    left: 0;
+    top: 0;
+    padding-left: 50px;
+    transform: translate(0%,30%);
+    opacity: 0;
+    animation: opacityAnimation 3s;
+}
 @keyframes opacityAnimation {
     0%{
         opacity: 1;
@@ -481,6 +490,7 @@ th {
         opacity: 0;
     }
 }
+
 
 .logo-inicial {
     max-height: 70%;

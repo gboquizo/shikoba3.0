@@ -1,3 +1,7 @@
+{#
+Vista de sanciones.
+Actualizado por GUBS, RAGZ, 2019
+#}
 {% extends 'base2.html.twig' %}
 
 {% block body %}
@@ -6,15 +10,15 @@
     <div class="">
         <h3 class="center azul-prof fuente">Sanciones</h3>
 
-        <div class="col s12 l4 offset-l4 center">
+        <div class="col s12 l5 offset-l5 center">
             {% for flash_message in app.session.flashBag.get('sancion') %}
-                <div class="card-panel green white-text" style="position: relative;">
+                <div class="card-panel green white-text flash">
                     <span class="spancaja">{{ flash_message }} </span><i class="material-icons spanico">done</i>
                 </div>
             {% endfor %}
 
             {% for flash_message in app.session.flashBag.get('sancionError') %}
-                <div class="card-panel red white-text" style="position: relative;">
+                <div class="card-panel red white-text flash">
                     <span class="spancaja">{{ flash_message }}</span> <i class="material-icons spanico">clear</i>
                 </div>
             {% endfor %}
@@ -25,35 +29,34 @@
 
                 <div class="col s12 l6">
                     <div class="row">
-                        {#<div class="i-checks col s6 center l3 right-align" style="margin-top: 2%;padding-left: 0;">#}
+                        {# <div class="i-checks col s6 center l3 right-align" style="margin-top: 2%;padding-left: 0;"> #}
                         <div class="i-checks col s12 right-align" style="margin-top: 8%;padding-left: 0;" id="aqui">
-                           {# {% if app.request.get('historico') == 'on' %}
-                                <input type="checkbox" name="historico" checked>
-                            {% else %}
-                                <input type="checkbox" name="historico">
-                            {% endif %}
-                            <span style="float:left;margin-top: 4%;"> Histórico</span>#}
+                            {# Deshabilitamos el histórico"> #}
+                            {# {% if app.request.get('historico') == 'on' %}
+                                 <input type="checkbox" name="historico" checked>
+                             {% else %}
+                                 <input type="checkbox" name="historico">
+                             {% endif %}
+                             <span style="float:left;margin-top: 4%;"> Histórico</span>#}
                             <div class="" id="botonbus" style="margin-left: -5%;">
+                                {# Deshabilitamos el buscador del histórico"> #}
                                 {#<button class="z-depth-3 btn btn-floating blue darken-3 waves-effect waves-light"
                                         type="submit"
-                                        value="Buscar" title="Buscar"><i
-                                            class="material-icons right">search</i></button>#}
+                                        value="Buscar" title="Buscar">
+                                        <i class="material-icons right">search</i></button>#}
                                 {% if (is_granted('ROLE_ADMIN') or is_granted('ROLE_CONVIVENCIA')) %}
-                                <a id="parte" href="{{ path('nueva_sancion') }}"
-                                   class="btn z-depth-3 blue darken-3 waves-effect waves-light"
-                                   title="Nueva Sanción">Nueva<i
-                                            class="material-icons right">add</i></a>
+                                    <a id="parte" href="{{ path('nueva_sancion') }}"
+                                       class="btn z-depth-3 blue darken-3 waves-effect waves-light"
+                                       title="Nueva sanción">Nueva
+                                        <i class="material-icons right">add</i></a>
                                 {% endif %}
                             </div>
                         </div>
-
-                        {#<div class="col s2 l1">#}
-                        {#</div>#}
                         <div class="col s2 l1">
-                            {#<a href="{{ path('export_form_sanciones') }}"#}
-                            {#class="btn z-depth-3  btn-floating blue darken-3 waves-effect waves-light"#}
-                            {#title="Exportar"><i#}
-                            {#class="material-icons">get_app</i></a>#}
+                            {# <a href="{{ path('export_form_sanciones') }}" #}
+                            {# class="btn z-depth-3  btn-floating blue darken-3 waves-effect waves-light" #}
+                            {# title="Exportar">
+                            {# <i class="material-icons">get_app</i></a>#}
                         </div>
                     </div>
                 </div>
@@ -87,12 +90,12 @@
                             <td>{{ sancion.idTipo.tipo }}</td>
                             {#<td>{{ sancion.puntosRecuperados }}</td>#}
                             <td>{{ sancion.idEstado.estado }}</td>
-                            {% if is_granted('ROLE_ADMIN') %}
+                            {% if is_granted('ROLE_ADMIN') or is_granted('ROLE_CONVIVENCIA') %}
                                 <td><a href="{{ path('nueva_sancion') }}?idSancion={{ sancion.id }}">
                                         <i class="material-icons">edit</i></a>
                                     <a class="confirm paddingRightLeft "
                                        href="{{ path('borrar_sancion', {'id': sancion.id}) }}"
-                                       data-title="Eliminar Sanción"><i class="material-icons ">delete</i></a>
+                                       data-title="Eliminar sanción"><i class="material-icons ">delete</i></a>
                                 </td>
                             {% else %}
                                 <td></td>
@@ -102,9 +105,9 @@
                     </tbody>
                 </table>
             </div>
-            {#<div class="paginator w3-col m12">#}
-            {#{{ knp_pagination_render(sanciones) }}#}
-            {#</div>#}
+            {# <div class="paginator w3-col m12"> #}
+            {# {{ knp_pagination_render(sanciones) }} #}
+            {# </div> #}
         </form>
     </div>
 {% endblock %}

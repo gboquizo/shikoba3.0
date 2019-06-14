@@ -1,3 +1,7 @@
+{#
+Vista de partes.
+Actualizado por GUBS, RAGZ, 2019
+#}
 {% extends 'base2.html.twig' %}
 
 {% block body %}
@@ -6,57 +10,59 @@
     <div class="">
         <h3 class="center azul-prof fuente">Partes</h3>
 
-        <div class="col s12 l4 offset-l4 center">
+        <div class="col s12 l5 offset-l5 center">
             {% for flash_message in app.session.flashBag.get('parte') %}
-                <div class="card-panel green white-text" style="position: relative;">
+                <div class="card-panel green white-text flash" style="position: relative;">
                     <span class="spancaja">{{ flash_message }} </span><i class="material-icons spanico">done</i>
                 </div>
             {% endfor %}
-
             {% for flash_message in app.session.flashBag.get('parteError') %}
-                <div class="card-panel red white-text" style="position: relative;">
-                    <span class="spancaja">{{ flash_message }}</span> <i class="material-icons spanico">clear</i>
+                <div class="card-panel red white-text flash" style="position: relative;">
+                    <span class="spancaja">{{ flash_message }}</span><i class="material-icons spanico">clear</i>
                 </div>
             {% endfor %}
         </div>
         <form action="">
             <div class="row" id="busq">
-
                 <div class="col s12 l6">
                     <div class="row">
                         <div class="i-checks col s12 right-align" style="margin-top: 8%;padding-left: 0;" id="aqui">
-                         {#   {% if app.request.get('historico') == 'on' %}
-                                <input type="checkbox" name="historico" checked>
-                            {% else %}
-                                <input type="checkbox" name="historico">
-                            {% endif %}
-                            <span style="float:left;margin-top: 4%;"> Histórico</span>#}
+                            {# Comentamos la opción de histórico #}
+                            {# {% if app.request.get('historico') == 'on' %}
+                                   <input type="checkbox" name="historico" checked>
+                               {% else %}
+                                   <input type="checkbox" name="historico">
+                               {% endif %}
+                               <span style="float:left;margin-top: 4%;"> Histórico</span>#}
                             <div class="" id="botonbus" style="margin-left: -5%;">
-                                {#<button class=" z-depth-3 btn btn-floating blue darken-3 waves-effect waves-light"
+                                {# Comentamos la opción de búsqueda en el histórico #}
+                                {# <button class=" z-depth-3 btn btn-floating blue darken-3 waves-effect waves-light"
                                         type="submit"
-                                        value="Buscar" title="Buscar"><i
-                                            class="material-icons right">search</i></button>#}
+                                        value="Buscar" title="Buscar">
+                                        <i class="material-icons right">search</i></button> #}
+
+                                {# Restringimos la creación de partes a los roles definidos #}
                                 {% if (is_granted('ROLE_ADMIN') or is_granted('ROLE_CONVIVENCIA')) %}
-                                <a id="parte" href="{{ path('nuevoParte') }}"
-                                   class="btn z-depth-3 blue darken-3 waves-effect waves-light"
-                                   title="Nuevo Parte">Nuevo<i
-                                            class="material-icons right" style="margin-top: -2%;">add</i></a>
+                                    <a id="parte" href="{{ path('nuevoParte') }}"
+                                       class="btn z-depth-3 blue darken-3 waves-effect waves-light"
+                                       title="Nuevo Parte">Nuevo
+                                        <i class="material-icons right" style="margin-top: -2%;">add</i></a>
                                 {% endif %}
                             </div>
                         </div>
 
-                        {#<div class="col s2 l1" id="aqui2">#}
-                            {#<a href="{{ path('nuevoParte') }}"#}
-                               {#class="btn z-depth-3  btn-floating blue darken-3 waves-effect waves-light"#}
-                               {#title="Nuevo Parte"><i#}
-                                        {#class="material-icons" style="margin-top: -2%;">add</i></a>#}
-                        {#</div>#}
-                        <div class="col s2 l1">
-                            {#<a href="{{ path('export_form_partes') }}"#}
-                               {#class="btn z-depth-3  btn-floating blue darken-3 waves-effect waves-light"#}
-                               {#title="Exportar"><i#}
-                                        {#class="material-icons">get_app</i></a>#}
-                        </div>
+                        {# <div class="col s2 l1" id="aqui2"> #}
+                        {# <a href="{{ path('nuevoParte') }}" #}
+                        {# class="btn z-depth-3  btn-floating blue darken-3 waves-effect waves-light" #}
+                        {# title="Nuevo Parte"><i#}
+                        {# class="material-icons" style="margin-top: -2%;">add</i></a> #}
+                        {# </div> #}
+                       {# <div class="col s2 l1">#}
+                            {# <a href="{{ path('export_form_partes') }}" #}
+                            {# class="btn z-depth-3  btn-floating blue darken-3 waves-effect waves-light" #}
+                            {# title="Exportar"><i#}
+                            {# class="material-icons">get_app</i></a> #}
+                       {# </div> #}
                     </div>
                 </div>
             </div>
@@ -64,19 +70,21 @@
                 <table class="tableDataPartes responsive-table highlight z-depth-3" data-order='[[ 1, "desc" ]]'
                        style="margin-bottom: 1%" data-page-length='10'>
                     <thead>
-                    <tr class="blue darken-3 white-text">
-                        <th class="noExport">NumParte</th>
-                        <th>Fecha</th>
-                        <th>Alumnado</th>
-                        <th>Curso</th>
-                        <th>Profesorado</th>
-                        <th>Tipo</th>
-                        <th>Puntos</th>
-                        <th>Estado</th>
-                        <th class="noExport">Acciones</th>
-                    </tr>
+                        <tr class="blue darken-3 white-text">
+                            <th class="noExport">NumParte</th> {# Controlamos con noExport el no envío a la exportación pdf #}
+                            <th>Fecha</th>
+                            <th>Alumnado</th>
+                            <th>Curso</th>
+                            <th>Profesorado</th>
+                            <th>Tipo</th>
+                            <th>Puntos</th>
+                            <th>Estado</th>
+                            <th class="noExport">Acciones</th> {# Controlamos con noExport el no envío a la exportación pdf #}
+                        </tr>
                     </thead>
                     <tbody>
+
+                    {# Definimos tonos para los partes por puntos #}
                     {% for parte in partes %}
                         {% if parte.puntos >= 10 %}
                             {% set tipo = 'Muy Grave' %}
@@ -88,17 +96,18 @@
                             {% set tipo = 'Leve' %}
                             {% set colorClass = 'amber-text' %}
                         {% endif %}
-
-                      {#  {% if parte.idTipo.tipo == 'Grave' %}
-                            {% set colorClass = 'orange-text' %}
-                        {% elseif parte.idTipo.tipo  == 'Leve' %}
-                            {% set colorClass = 'amber-text' %}
-                        {% else %}
-                            {% set colorClass = 'red-text' %}
-                        {% endif %}#}
                         {% if parte.idEstado.estado == 'Caducado' %}
                             {% set colorClass = 'grey-text' %}
                         {% endif %}
+
+                        {#  {% if parte.idTipo.tipo == 'Grave' %}
+                             {% set colorClass = 'orange-text' %}
+                         {% elseif parte.idTipo.tipo  == 'Leve' %}
+                             {% set colorClass = 'amber-text' %}
+                         {% else %}
+                             {% set colorClass = 'red-text' %}
+                         {% endif %}#}
+
                         <tr>
                             <td>{{ parte.id }}</td>
                             <td>{{ parte.fecha|date("d/m/Y") }}</td>
@@ -107,7 +116,8 @@
                             </td>
                             {% if parte.idAlumno.idCurso != null %}
                                 <td>
-                                    {#<a href="{{ path('gestion_partes', {'like': parte.idAlumno.idCurso.grupo}) }}">{{ parte.idAlumno.idCurso.grupo }}</a>#}
+                                    {# Queda sin funcionalidad, lo deshabilitamos #}
+                                    {# <a href="{{ path('gestion_partes', {'like': parte.idAlumno.idCurso.grupo}) }}">{{ parte.idAlumno.idCurso.grupo }}</a> #}
                                     {{ parte.idAlumno.idCurso.grupo }}
                                 </td>
                             {% else %}
@@ -116,32 +126,41 @@
                             <td>
                                 {{ parte.idProfesor.getNombreCompleto() }}
                             </td>
-                        {#    <td class="{{ colorClass }}">{{ parte.idTipo.tipo }}</td>#}
+                            {# Controlamos el tipo establecido en el control previo, le pasamos la variable tipo #}
+                            {# <td class="{{ colorClass }}">{{ parte.idTipo.tipo }}</td> #}
                             <td class="{{ colorClass }}">{{ tipo }}</td>
                             <td>{{ parte.puntos }}</td>
                             <td>{{ parte.idEstado.estado }}</td>
-                            {% if (is_granted('ROLE_ADMIN') == false) and (is_granted('ROLE_PROFESOR')) %}
-                                {% if(parte.idProfesor.idUsuario.id == app.user.id) %}
-                                    <td><a href="{{ path('nuevoParte') }}?idParte={{ parte.id }}">
-                                    <i class="material-icons">edit</i></a>
-                                    <a class="confirm paddingRightLeft "
-                                       href="{{ path('borrar_parte', {'id': parte.id}) }}"
-                                       data-title="Eliminar Parte"><i class="material-icons ">delete</i></a>
+
+                            {# Controlamos la edición de los partes para los profesores que los ponen #}
+                            {% if not is_granted('ROLE_ADMIN') and is_granted('ROLE_PROFESOR') %}
+                                {% if (parte.idProfesor.idUsuario.id == app.user.id) %}
+                                    <td>
+                                    <a href="{{ path('nuevoParte') }}?idParte={{ parte.id }}">
+                                        <i class="material-icons">edit</i>
+                                    </a>
+                                    <a class="confirm paddingRightLeft " href="{{ path('borrar_parte', {'id': parte.id}) }}"
+                                       data-title="Eliminar Parte" data-content="Se va a proceder a borrar el parte, ¿desea continuar?">
+                                        <i class="material-icons ">delete</i>
+                                    </a>
                                     <a href="{{ path('printParte') }}?idParte={{ parte.id }}">
-                                        <i class="material-icons">print</i></a>
+                                        <i class="material-icons">print</i>
+                                    </a>
                                 {% else %}
                                     <td></td>
                                 {% endif %}
                             {% endif %}
-                            {% if is_granted('ROLE_ADMIN') or (is_granted('ROLE_CONVIVENCIA')) %}{# pendiente de ver quien tiene acceso#}
-                            <td><a href="{{ path('nuevoParte') }}?idParte={{ parte.id }}">
-                                    <i class="material-icons">edit</i></a>
-                                <a class="confirm paddingRightLeft "
-                                   href="{{ path('borrar_parte', {'id': parte.id}) }}"
-                                   data-title="Eliminar Parte"><i class="material-icons ">delete</i></a>
-                                <a href="{{ path('printParte') }}?idParte={{ parte.id }}">
-                                    <i class="material-icons">print</i></a>
-                            </td>
+                            {% if is_granted('ROLE_ADMIN') or (is_granted('ROLE_CONVIVENCIA')) %}{# pendiente de ver quien tiene acceso #}
+                                <td>
+                                    <a href="{{ path('nuevoParte') }}?idParte={{ parte.id }}">
+                                        <i class="material-icons">edit</i>
+                                    </a>
+                                    <a class="confirm paddingRightLeft " href="{{ path('borrar_parte', {'id': parte.id}) }}"
+                                       data-title="Eliminar Parte" data-content="Se va a proceder a borrar el parte, ¿desea continuar?">
+                                        <i class="material-icons ">delete</i></a>
+                                    <a href="{{ path('printParte') }}?idParte={{ parte.id }}">
+                                        <i class="material-icons">print</i></a>
+                                </td>
                             {% endif %}
                         </tr>
                     {% endfor %}

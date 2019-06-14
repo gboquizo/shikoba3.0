@@ -335,10 +335,21 @@ class ConvivenciaController extends Controller
         )
             return $this->redirectToRoute("index");
 
-        $em = $this->getDoctrine()->getManager();
-        $repositoryCursos = $em->getRepository('AppBundle:Cursos');
-        $repositoryCursos->borrarTutores($grupo);
-        $tutores=$repositoryCursos->verTutores();
+        try {
+            $em = $this->getDoctrine()->getManager();
+            $repositoryCursos = $em->getRepository('AppBundle:Cursos');
+            $repositoryCursos->borrarTutores($grupo);
+            $tutores = $repositoryCursos->verTutores();
+            $this->addFlash(
+                'tutor',
+                '¡Tutor borrado con éxito!'
+            );
+        } catch (\Exception $e) {
+            $this->addFlash(
+                'tutorError',
+                'El tutor no se ha podido borrar'
+            );
+        }
 
         return $this->render('convivencia/admin/tutores.html.twig', array(
             'tutores'=>$tutores
@@ -454,7 +465,7 @@ class ConvivenciaController extends Controller
                 ->setTo($email)
                 ->setBody("Enlace para recuperar su contraseña:\n" . $this->generateUrl("reset_password", array(), UrlGeneratorInterface::ABSOLUTE_URL) . "?hash=" . $hash);
             $this->get('mailer')->send($message);
-            $this->addFlash('login', 'Se ha enviado un mensaje a su correo');
+            $this->addFlash('login', 'Mensaje enviado a su correo');
             return $this->redirectToRoute('login');
         } catch (\Exception $e) {
             $this->addFlash('loginError', 'No se ha podido enviar el correo');
