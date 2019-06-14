@@ -135,8 +135,8 @@ Actualizado por GUBS, RAGZ, 2019
                             {# Controlamos la edición de los partes para los profesores que los ponen #}
                             {% if not is_granted('ROLE_ADMIN') and is_granted('ROLE_PROFESOR') %}
                                 {% if (parte.idProfesor.idUsuario.id == app.user.id) %}
-                                    <td>
-                                    <a href="{{ path('nuevoParte') }}?idParte={{ parte.id }}">
+                                  <td>
+                                   {# <a href="{{ path('nuevoParte') }}?idParte={{ parte.id }}">
                                         <i class="material-icons">edit</i>
                                     </a>
                                     <a class="confirm paddingRightLeft " href="{{ path('borrar_parte', {'id': parte.id}) }}"
@@ -145,7 +145,7 @@ Actualizado por GUBS, RAGZ, 2019
                                     </a>
                                     <a href="{{ path('printParte') }}?idParte={{ parte.id }}">
                                         <i class="material-icons">print</i>
-                                    </a>
+                                    </a>#}
                                 {% else %}
                                     <td></td>
                                 {% endif %}

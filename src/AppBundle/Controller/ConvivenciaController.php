@@ -253,8 +253,8 @@ class ConvivenciaController extends Controller
                 );
             }
         } catch (\Exception $e) {
-            dump($e);
-            die();
+            /*dump($e);
+            die();*/
             $this->addFlash(
                 'alumnosError',
                 'El fichero no se ha podido importar'

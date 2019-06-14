@@ -69,8 +69,8 @@ class ImportHelper
                         $alumno->setTutorL2($row[10]);
                         $alumno->setTelefonoTL1($row[11]);
                         $alumno->setTelefonoTL2($row[12]);
-                     /*   $alumno->setMsgTL1(0);
-                        $alumno->setMsgTL2(0);*/
+                        $alumno->setMsgTL1(0);
+                        $alumno->setMsgTL2(0);
                         $alumno->setPuntos(0);
                         $alumno->setFoto('');
                         $alumno->setNie($row[6]);
