@@ -3,7 +3,6 @@ Vista de formulario de sanciones.
 Actualizado por GUBS, RAGZ, 2019
 #}
 {% extends 'base2.html.twig' %}
-
 {% block body %}
     {% include 'convivencia/navegacion.html.twig' %}
 
@@ -73,7 +72,7 @@ Actualizado por GUBS, RAGZ, 2019
             <div class="input-field col s12 m6">
                 <label for="fechaI">Fecha inicio</label>
                 <input type="text" name="fechaInicio" class="w3-select datepicker w3-border w3-light-grey marginBottom"
-                       value="{{ sancion.fechaInicio|date('d/m/Y') }} " id="fechaI" required />
+                       value="{{ (sancion.fechaInicio|date('d/m/Y')) }}" id="fechaI" required />
             </div>
             <div class="input-field col s12 m6">
                 <label for="fechaF">Fecha final</label>
