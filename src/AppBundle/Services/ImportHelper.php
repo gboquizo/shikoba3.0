@@ -62,18 +62,17 @@ class ImportHelper
                         if ($curso != null) $alumno->setIdCurso($curso);
                         $alumno->setTelefono($row[4]);
                         $alumno->setEmail($row[5]);
-
+                        $alumno->setNie($row[6]);
                         $alumno->setDireccion($row[7]);
                         $alumno->setCodigoPostal($row[8]);
                         $alumno->setTutorL1($row[9]);
                         $alumno->setTutorL2($row[10]);
                         $alumno->setTelefonoTL1($row[11]);
                         $alumno->setTelefonoTL2($row[12]);
-                        $alumno->setMsgTL1(0);
-                        $alumno->setMsgTL2(0);
+                        $alumno->setMsgTL1(1);
+                        $alumno->setMsgTL2(1);
                         $alumno->setPuntos(0);
                         $alumno->setFoto('');
-                        $alumno->setNie($row[6]);
                         $alumno->setPuntosIniciales(0);
                         $user = new Usuarios();
                         $userNombre = mb_substr($alumno->getNombre(), 0, 2) . mb_substr($alumno->getApellido1(), 0, 2) . mb_substr($alumno->getApellido2(), 0, 2);
