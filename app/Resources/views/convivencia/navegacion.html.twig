@@ -34,7 +34,8 @@ Actualizado por GUBS, RAGZ, 2019
                                     <a class="waves-effect waves-blue" href="{{ path('gestion_partes') }}">Partes</a>
                                 </li>
                                 <li>
-                                    <a class="waves-effect waves-blue" href="{{ path('gestion_sanciones') }}">Medidas</a></li>
+                                    <a class="waves-effect waves-blue"
+                                       href="{{ path('gestion_sanciones') }}">Medidas</a></li>
                                 {% if (is_granted('ROLE_ADMIN')  or is_granted('ROLE_CONVIVENCIA')) %}
                                     <li>
                                         <a class="waves-effect waves-blue" href="{{ path('show_diario') }}">Diario</a>
@@ -42,7 +43,8 @@ Actualizado por GUBS, RAGZ, 2019
                                 {% endif %}
                                 {% if ( is_granted('ROLE_ADMIN') or is_granted('ROLE_CONVIVENCIA')) %}
                                     <li>
-                                        <a class="waves-effect waves-blue" href="{{ path('show_alumnos') }}">Alumnado</a>
+                                        <a class="waves-effect waves-blue"
+                                           href="{{ path('show_alumnos') }}">Alumnado</a>
                                     </li>
                                 {% endif %}
                                 <div class="divider"></div>
@@ -68,22 +70,26 @@ Actualizado por GUBS, RAGZ, 2019
                                                 <div class="collapsible-body ">
                                                     <ul>
                                                         <li>
-                                                            <a class="waves-effect waves-blue" href="{{ path('partes_alumno_informe') }}">
+                                                            <a class="waves-effect waves-blue"
+                                                               href="{{ path('partes_alumno_informe') }}">
                                                                 Partes alumnado
                                                             </a>
                                                         </li>
                                                         <li>
-                                                            <a class="waves-effect waves-blue" href={{ path('partes_grupos_informe') }}>
+                                                            <a class="waves-effect waves-blue"
+                                                               href={{ path('partes_grupos_informe') }}>
                                                                 Partes grupos
                                                             </a>
                                                         </li>
                                                         <li>
-                                                            <a class="waves-effect waves-blue" href="{{ path('partes_profesor_informe') }}">
+                                                            <a class="waves-effect waves-blue"
+                                                               href="{{ path('partes_profesor_informe') }}">
                                                                 Partes profesorado
                                                             </a>
                                                         </li>
                                                         <li>
-                                                            <a class="waves-effect waves-blue" href="{{ path('sanciones_alumnosgrupos_informe') }}">
+                                                            <a class="waves-effect waves-blue"
+                                                               href="{{ path('sanciones_alumnosgrupos_informe') }}">
                                                                 Sanciones alumnado
                                                             </a>
                                                         </li>
@@ -107,10 +113,12 @@ Actualizado por GUBS, RAGZ, 2019
                                                             </a>
                                                         </li>
                                                         <li>
-                                                            <a class="waves-effect waves-blue" href="{{ path('admin_import_profesor') }}">Profesorado</a>
+                                                            <a class="waves-effect waves-blue"
+                                                               href="{{ path('admin_import_profesor') }}">Profesorado</a>
                                                         </li>
                                                         <li>
-                                                            <a href="{{ path('admin_tutores') }}" class="blue darken-2 white-text">Tutoría</a>
+                                                            <a href="{{ path('admin_tutores') }}"
+                                                               class="blue darken-2 white-text">Tutoría</a>
                                                         </li>
                                                         {# <li>
                                                             <a class="waves-effect waves-blue" href="{{ path('admin_security') }}">Copia de seguridad</a>
@@ -122,21 +130,23 @@ Actualizado por GUBS, RAGZ, 2019
                                     </li>
                                 {% endif %}
                                 {% elseif is_granted('ROLE_TUTOR') %}
-                                {# <li>
-                                    <a class="waves-effect waves-blue" href="{{ path('index') }}">Alumnado</a>
-                                   </li>
-                                {% elseif is_granted('ROLE_USER') %}
-                                <a class="waves-effect waves-blue" href="{{ path('registrarAlumno') }}">Perfil</a> #}
+                                    {# <li>
+                                        <a class="waves-effect waves-blue" href="{{ path('index') }}">Alumnado</a>
+                                       </li>
+                                    {% elseif is_granted('ROLE_USER') %}
+                                    <a class="waves-effect waves-blue" href="{{ path('registrarAlumno') }}">Perfil</a> #}
                                 {% endif %}
                                 <div class="divider"></div>
                                 <li>
-                                    <a class="waves-effect waves-blue" href="{{ path('change_password') }}">Cambiar contraseña</a>
+                                    <a class="waves-effect waves-blue" href="{{ path('change_password') }}">Cambiar
+                                        contraseña</a>
                                 </li>
                                 <li>
                                     <a class="waves-effect waves-blue" href="{{ path('logout') }}">Salir</a>
                                 </li>
                                 <div class="divider"></div>
-                                <li style="color: rgba(0,0,0,0.87);font-weight: 500;">Perfil: {{ app.user.usuario }}</li>
+                                <li style="color: rgba(0,0,0,0.87);font-weight: 500;">
+                                    Perfil: {{ app.user.usuario }}</li>
 
                             </ul>
                         </div>
@@ -190,16 +200,20 @@ Actualizado por GUBS, RAGZ, 2019
                                                 <i class="material-icons right">keyboard_arrow_right</i></a>
                                             <ul id="dropdown1" class="dropdown-content">
                                                 <li>
-                                                    <a href="{{ path('partes_alumno_informe') }}" class="blue darken-5 white-text">Partes alumnado</a>
+                                                    <a href="{{ path('partes_alumno_informe') }}"
+                                                       class="blue darken-5 white-text">Partes alumnado</a>
                                                 </li>
                                                 <li>
-                                                    <a href="{{ path('partes_grupos_informe') }}" class="blue darken-2 white-text">Partes grupos</a>
+                                                    <a href="{{ path('partes_grupos_informe') }}"
+                                                       class="blue darken-2 white-text">Partes grupos</a>
                                                 </li>
                                                 <li>
-                                                    <a href="{{ path('partes_profesor_informe') }}" class="blue darken-2 white-text">Partes profesorado</a>
+                                                    <a href="{{ path('partes_profesor_informe') }}"
+                                                       class="blue darken-2 white-text">Partes profesorado</a>
                                                 </li>
                                                 <li>
-                                                    <a href="{{ path('sanciones_alumnosgrupos_informe') }}" class="blue darken-2 white-text">Sanciones alumnado</a>
+                                                    <a href="{{ path('sanciones_alumnosgrupos_informe') }}"
+                                                       class="blue darken-2 white-text">Sanciones alumnado</a>
                                                 </li>
                                             </ul>
                                         </li>
@@ -211,14 +225,21 @@ Actualizado por GUBS, RAGZ, 2019
                                             </a>
                                             <ul id="dropdown2" class="dropdown-content">
                                                 <li>
-                                                    <a href="{{ path('admin_import') }}" class="blue darken-2 white-text">Alumnado</a>
+                                                    <a href="{{ path('admin_import') }}"
+                                                       class="blue darken-2 white-text">Alumnado</a>
                                                 </li>
                                                 <li>
-                                                    <a href="{{ path('admin_import_profesor') }}" class="blue darken-2 white-text">Profesorado</a>
+                                                    <a href="{{ path('admin_import_profesor') }}"
+                                                       class="blue darken-2 white-text">Profesorado</a>
                                                 </li>
                                                 <li>
-                                                    <a href="{{ path('admin_tutores') }}" class="blue darken-2 white-text">Tutoría</a>
+                                                    <a href="{{ path('admin_tutores') }}"
+                                                       class="blue darken-2 white-text">Tutoría</a>
                                                 </li>
+                                                <li>
+                                                    <a href="{{ asset('apk/shikobaApp.apk') }}"  download="" class="blue darken-2 white-text">Apk</a>
+                                                </li>
+
                                                 {#<li>
                                                     <a href="{{ path('admin_security') }}" class="blue darken-2 white-text">Copia
                                                              de seguridad
@@ -229,12 +250,12 @@ Actualizado por GUBS, RAGZ, 2019
                                     {% endif %}
 
                                     {#Deshabilitamos esta opción para el rol tutor#}
-                                {#{% elseif is_granted('ROLE_TUTOR') %}#}
-                                   {# <li>
-                                        <a href="{{ path('index') }}" class="ancla centro"> <img id="img_nav" src="/img/logo3.png" alt=""></a>
-                                    </li>
-                                {% elseif is_granted('ROLE_USER') %}
-                                    <a href="{{ path('registrarAlumno') }}">Perfil</a>#}
+                                    {#{% elseif is_granted('ROLE_TUTOR') %}#}
+                                    {# <li>
+                                         <a href="{{ path('index') }}" class="ancla centro"> <img id="img_nav" src="/img/logo3.png" alt=""></a>
+                                     </li>
+                                 {% elseif is_granted('ROLE_USER') %}
+                                     <a href="{{ path('registrarAlumno') }}">Perfil</a>#}
                                 {% endif %}
                             </ul>
                         </div>
