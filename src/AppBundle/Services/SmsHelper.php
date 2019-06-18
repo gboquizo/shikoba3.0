@@ -25,8 +25,8 @@ class SmsHelper
             //apikey antigua, agotada.
             /*$apiKey = urlencode('iUwvbUxoPqQ-rlROmafgB9yaSoRqSVzP6xSubBnIbF');*/
 
-            //apikey de prueba con el correo de GUBS
-            $apiKey = urlencode('f38wHyhIeZI-rjWRcRAG35pt7xWeJ1YOQyohgMD12U');
+            //apikey para la cuenta shikobatres
+            $apiKey = urlencode('koHSNImupAg-v4OpRw4w4r0OvmJl9CTbhgy5qlQglh');
 
             // Message details
             // $numbers = array(447123456789, 447987654321);
