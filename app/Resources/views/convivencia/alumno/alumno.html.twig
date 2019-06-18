@@ -13,18 +13,16 @@ Actualizado por GUBS, RAGZ, 2019
     </script>
     <div class="">
         <h3 class="center azul-prof fuente">{{ alumnoData.alumno.getNombreCompleto() }}</h3>
-        <h4 class="center fuente" id="punto">Puntos: <span
-                    style="margin-top: -10px; font-size: 2rem;">{{ alumnoData.alumno.puntos }}</span>/10</h4>
-        <div class="col s12 l6 offset-l3 center">
+        <h4 class="center fuente" id="punto">Puntos: <span style="margin-top: -10px; font-size: 2rem;">{{ alumnoData.alumno.puntos }}</span>/10</h4>
+        <div class="col s12 l5 offset-l5 center">
             {% for flash_message in app.session.flashBag.get('alumno') %}
-                <div class="card-panel green white-text" style="position: relative;">
+                <div class="card-panel green white-text flash" style="position: relative;">
                     <span class="spancaja">{{ flash_message }} </span><i class="material-icons spanico">done</i>
                 </div>
             {% endfor %}
-
             {% for flash_message in app.session.flashBag.get('alumnoError') %}
-                <div class="card-panel red white-text" style="position: relative;">
-                    <span class="spancaja">{{ flash_message }}</span> <i class="material-icons spanico">clear</i>
+                <div class="card-panel red white-text flash" style="position: relative;">
+                    <span class="spancaja">{{ flash_message }}</span><i class="material-icons spanico">clear</i>
                 </div>
             {% endfor %}
         </div>
