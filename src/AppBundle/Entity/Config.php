@@ -1,18 +1,25 @@
 <?php
+/**
+ * @User: Guillermo Boquizo Sánchez (GUBS), Rafael García Zurita (RAGZ).
+ * @File: Config.php
+ * @Updated: 2019
+ * @Description: Entidad para la config.
+ * @license http://opensource.org/licenses/gpl-license.php  GNU Public License
+ */
 
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Config
- *
+ * Class Config.
  * @ORM\Table(name="config")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\ConfigRepository")
  */
 class Config
 {
     /**
+     * Id principal de la clase.
      * @var int
      *
      * @ORM\Column(name="id", type="integer")
@@ -22,17 +29,16 @@ class Config
     private $id;
 
     /**
+     * Días de validez.
      * @var int
      *
      * @ORM\Column(name="dias_validez", type="integer")
      */
     private $diasValidez;
 
-
     /**
-     * Get id
-     *
-     * @return int
+     * Permite obtener el id.
+     * @return int id
      */
     public function getId()
     {
@@ -40,10 +46,8 @@ class Config
     }
 
     /**
-     * Set diasValidez
-     *
-     * @param string $diasValidez
-     *
+     * Establece los diasValidez.
+     * @param string $diasValidez los días de validez
      * @return Config
      */
     public function setDiasValidez($diasValidez)
@@ -54,9 +58,8 @@ class Config
     }
 
     /**
-     * Get diasValidez
-     *
-     * @return string
+     * Permite obtener los diasValidez.
+     * @return string diasValidez
      */
     public function getDiasValidez()
     {

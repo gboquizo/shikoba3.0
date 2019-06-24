@@ -1,11 +1,20 @@
 <?php
+/**
+ * @User: Guillermo Boquizo Sánchez (GUBS), Rafael García Zurita (RAGZ).
+ * @File: RecuperaPuntos.php
+ * @Updated: 2019
+ * @Description: Entidad para la recuperación de puntos.
+ *
+ * @license http://opensource.org/licenses/gpl-license.php  GNU Public License
+ */
 
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use DateTime;
 
 /**
- * RecuperaPuntos
+ * Class RecuperaPuntos.
  *
  * @ORM\Table(name="recupera_puntos")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\RecuperaPuntosRepository")
@@ -13,6 +22,7 @@ use Doctrine\ORM\Mapping as ORM;
 class RecuperaPuntos
 {
     /**
+     * Id principal de la clase.
      * @var int
      *
      * @ORM\Column(name="id", type="integer")
@@ -22,13 +32,15 @@ class RecuperaPuntos
     private $id;
 
     /**
-     * @var \DateTime
+     * Fecha.
+     * @var DateTime
      *
      * @ORM\Column(name="fecha", type="datetime")
      */
     private $fecha;
 
     /**
+     * Descripción.
      * @var string
      *
      * @ORM\Column(name="descripcion", type="string", length=255)
@@ -36,6 +48,7 @@ class RecuperaPuntos
     private $descripcion;
 
     /**
+     * Observaciones.
      * @var string
      *
      * @ORM\Column(name="observaciones", type="string", length=255)
@@ -43,6 +56,7 @@ class RecuperaPuntos
     private $observaciones;
 
     /**
+     * Puntos.
      * @var int
      *
      * @ORM\Column(name="puntos", type="integer")
@@ -50,6 +64,7 @@ class RecuperaPuntos
     private $puntos;
 
     /**
+     * idParte.
      * @var int
      *
      * @ORM\ManyToOne(targetEntity="Partes")
@@ -58,6 +73,7 @@ class RecuperaPuntos
     private $idParte;
 
     /**
+     * idAlumno.
      * @var int
      *
      * @ORM\ManyToOne(targetEntity="Alumno")
@@ -65,9 +81,8 @@ class RecuperaPuntos
      */
     private $idAlumno;
 
-
     /**
-     * Get id
+     * Permite obtener el id.
      *
      * @return int
      */
@@ -77,9 +92,9 @@ class RecuperaPuntos
     }
 
     /**
-     * Set fecha
+     * Establece la fecha.
      *
-     * @param \DateTime $fecha
+     * @param DateTime $fecha
      *
      * @return RecuperaPuntos
      */
@@ -91,9 +106,9 @@ class RecuperaPuntos
     }
 
     /**
-     * Get fecha
+     * Permite obtener la fecha.
      *
-     * @return \DateTime
+     * @return DateTime
      */
     public function getFecha()
     {
@@ -101,7 +116,7 @@ class RecuperaPuntos
     }
 
     /**
-     * Set descripcion
+     * Establece la descripción.
      *
      * @param string $descripcion
      *
@@ -115,7 +130,7 @@ class RecuperaPuntos
     }
 
     /**
-     * Get descripcion
+     * Permite obtener la descripción.
      *
      * @return string
      */
@@ -125,7 +140,7 @@ class RecuperaPuntos
     }
 
     /**
-     * Set observaciones
+     * Establece las observaciones.
      *
      * @param string $observaciones
      *
@@ -139,7 +154,7 @@ class RecuperaPuntos
     }
 
     /**
-     * Get observaciones
+     * Permite obtener las observaciones.
      *
      * @return string
      */
@@ -149,10 +164,8 @@ class RecuperaPuntos
     }
 
     /**
-     * Set puntos
-     *
-     * @param integer $puntos
-     *
+     * Establece los puntos.
+     * @param int $puntos
      * @return RecuperaPuntos
      */
     public function setPuntos($puntos)
@@ -163,7 +176,7 @@ class RecuperaPuntos
     }
 
     /**
-     * Get puntos
+     * Permite obtener los puntos.
      *
      * @return int
      */
@@ -173,9 +186,9 @@ class RecuperaPuntos
     }
 
     /**
-     * Set idParte
+     * Establece el idParte.
      *
-     * @param integer $idParte
+     * @param int $idParte
      *
      * @return RecuperaPuntos
      */
@@ -187,7 +200,7 @@ class RecuperaPuntos
     }
 
     /**
-     * Get idParte
+     * Permite obtener el idParte.
      *
      * @return int
      */
@@ -197,6 +210,7 @@ class RecuperaPuntos
     }
 
     /**
+     * Permite obtener el idAlumno.
      * @return int
      */
     public function getIdAlumno()
@@ -205,7 +219,9 @@ class RecuperaPuntos
     }
 
     /**
+     * Establece el idAlumno.
      * @param int $idAlumno
+     * @return RecuperaPuntos
      */
     public function setIdAlumno($idAlumno)
     {
@@ -213,6 +229,4 @@ class RecuperaPuntos
 
         return $this;
     }
-
-
 }

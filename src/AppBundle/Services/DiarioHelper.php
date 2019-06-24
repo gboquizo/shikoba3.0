@@ -1,37 +1,46 @@
 <?php
 /**
- * Created by PhpStorm.
- * User: maze
- * Date: 9/05/17
- * Time: 17:12
+ * @User: Guillermo Boquizo Sánchez (GUBS), Rafael García Zurita (RAGZ).
+ * @File: DiarioHelper.php
+ * @Updated: 2019
+ * @Description: Servicio para la gestión del diario.
+ * @license http://opensource.org/licenses/gpl-license.php  GNU Public License
  */
 
 namespace AppBundle\Services;
-
 
 use AppBundle\Entity\DiarioAulaConvivencia;
 use AppBundle\Model\DiarioData;
 use AppBundle\Repository\DiarioAulaConvivenciaRepository;
 use Doctrine\ORM\EntityManager;
 use Symfony\Component\HttpFoundation\Request;
+use DateTime;
+use Exception;
 
+/**
+ * Class DiarioHelper.
+ */
 class DiarioHelper
 {
-
-    function __construct(EntityManager $em)
+    /**
+     * DiarioHelper constructor.
+     *
+     * @param EntityManager $em
+     */
+    public function __construct(EntityManager $em)
     {
         $this->em = $em;
-        /** @var DiarioAulaConvivenciaRepository repositoryDiario */
+        /* @var DiarioAulaConvivenciaRepository repositoryDiario */
         $this->repositoryDiario = $this->em->getRepository('AppBundle:DiarioAulaConvivencia');
     }
 
     /**
-     * Función que devuelve los diarios de una fecha y unas horas sin repetir alumno
-     * @param \DateTime $fecha
+     * Función que devuelve los diarios de una fecha y unas horas sin repetir alumno.
+     * @param DateTime $fecha
      * @param $horas
      * @return array
      */
-    public function getDiariosAula(\DateTime $fecha, $horas)
+    public function getDiariosAula(DateTime $fecha, $horas)
     {
         $arrDiariosAula = array();
         $arrIdSancion = array();
@@ -49,7 +58,7 @@ class DiarioHelper
     }
 
     /**
-     * Función que crea un nuevo Modelo DiarioData
+     * Función que crea un nuevo Modelo DiarioData.
      * @param \DateTime $fecha
      * @param $horas
      * @param $horasElegidas
@@ -62,16 +71,17 @@ class DiarioHelper
     }
 
     /**
-     * Función que recupera 1 punto si el usuario a pulsado el boton recupera punto
+     * Función que recupera 1 punto si el usuario a pulsado el boton recupera punto.
      * @param Request $request
+     * @throws Exception
      * @return bool
      */
     public function recuperarPuntos(Request $request)
     {
-        if ($request->get('recuperaPunto') != null && $request->get('id') != null) {
-            /** @var DiarioAulaConvivencia $diario */
+        if (null != $request->get('recuperaPunto') && null != $request->get('id')) {
+            /* @var DiarioAulaConvivencia $diario */
             $diario = $this->repositoryDiario->findOneById($request->get('id'));
-            if($diario->getRecupera()!=1) {
+            if (1 != $diario->getRecupera()) {
                 $diario->setRecupera(1);
                 $this->em->persist($diario);
                 $this->em->flush();
@@ -82,15 +92,15 @@ class DiarioHelper
     }
 
     /**
-     * Función que devuelve true si puede recuperar 1 punto, false en caso contrario
+     * Función que devuelve true si puede recuperar 1 punto, false en caso contrario.
      * @param DiarioAulaConviviencia $diario
      * @return bool
      */
     public function diarioRecupera(DiarioAulaConvivencia $diario)
     {
-        if ($diario->getRecupera() == 0)
+        if (0 == $diario->getRecupera()) {
             return true;
+        }
         return false;
     }
-
 }

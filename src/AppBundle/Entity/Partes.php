@@ -1,13 +1,24 @@
 <?php
+/**
+ * @User: Guillermo Boquizo Sánchez (GUBS), Rafael García Zurita (RAGZ).
+ * @File: Partes.php
+ * @Updated: 2019
+ * @Description: Entidad para los partes.
+ *
+ * @license http://opensource.org/licenses/gpl-license.php  GNU Public License
+ */
 
 namespace AppBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use Exception;
+use DateTime;
+use Doctrine\Common\Collections\Collection;
 
 /**
- * Partes
+ * Class Partes.
  *
  * @ORM\Table(name="partes")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\PartesRepository")
@@ -15,6 +26,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 class Partes
 {
     /**
+     * El id principal.
      * @var int
      *
      * @ORM\Column(name="id", type="integer")
@@ -24,13 +36,15 @@ class Partes
     private $id;
 
     /**
-     * @var \DateTime
+     * Fecha.
+     * @var DateTime
      *
      * @ORM\Column(name="fecha", type="datetime")
      */
     private $fecha;
 
     /**
+     * Descripción.
      * @var string
      *
      * @ORM\Column(name="descripcion", type="string", length=1000)
@@ -38,27 +52,31 @@ class Partes
     private $descripcion;
 
     /**
+     * Tareas.
      * @var string
      *
      * @ORM\Column(name="tareas", type="string", length=600, nullable=true)
      */
-    private $tareas = "";
+    private $tareas = '';
 
     /**
-     * @var \DateTime
+     * Hora de salida del aula.
+     * @var DateTime
      *
      * @ORM\Column(name="horaSalidaAula", type="time")
      */
     private $horaSalidaAula;
 
     /**
-     * @var \DateTime
+     * Hora de llegada a jefatura.
+     * @var DateTime
      *
      * @ORM\Column(name="horaLlegadaJefatura", type="time")
      */
     private $horaLlegadaJefatura;
 
     /**
+     * Formato.
      * @var string
      *
      * @ORM\Column(name="formato", type="string", length=255, columnDefinition="enum('Papel', 'Digital')")
@@ -66,6 +84,7 @@ class Partes
     private $formato;
 
     /**
+     * Observaciones.
      * @var string
      *
      * @ORM\Column(name="observacion", type="string", length=255)
@@ -73,6 +92,7 @@ class Partes
     private $observacion;
 
     /**
+     * Puntos.
      * @var int
      *
      * @Assert\Range(
@@ -87,7 +107,8 @@ class Partes
     private $puntos = 0;
 
     /**
-     * @var integer
+     * idEstado.
+     * @var int
      *
      * @ORM\ManyToOne(targetEntity="EstadosParte")
      * @ORM\JoinColumn(name="idEstado", referencedColumnName="id")
@@ -95,6 +116,7 @@ class Partes
     private $idEstado;
 
     /**
+     * idTipo.
      * @var string
      *
      * @ORM\ManyToOne(targetEntity="TipoParte")
@@ -103,6 +125,7 @@ class Partes
     private $idTipo;
 
     /**
+     * idAlumno.
      * @var int
      *
      * @ORM\ManyToOne(targetEntity="Alumno")
@@ -111,6 +134,7 @@ class Partes
     private $idAlumno;
 
     /**
+     * idProfesor.
      * @var int
      *
      * @ORM\ManyToOne(targetEntity="Profesores")
@@ -119,18 +143,21 @@ class Partes
     private $idProfesor;
 
     /**
+     * idConducta.
      * @ORM\ManyToMany(targetEntity="Conductas", inversedBy="idParte")
      * @ORM\JoinTable(name="partes_conductas")
      */
     private $idConducta;
 
     /**
+     * Recupera.
      * @var int
      * @ORM\Column(name="recupera", type="integer")
      */
     private $recupera;
 
     /**
+     * Fecha de confirmación.
      * @var string
      *
      * @ORM\Column(name="fechaConfirmacion", type="string", nullable=true)
@@ -138,6 +165,7 @@ class Partes
     private $fechaConfirmacion;
 
     /**
+     * Fecha de comunicación.
      * @var string
      *
      * @ORM\Column(name="fechaComunicacion", type="string", nullable=true)
@@ -145,15 +173,15 @@ class Partes
     private $fechaComunicacion;
 
     /**
+     * Sanción.
      * @var int
      *
      * @ORM\ManyToMany(targetEntity="Sanciones", mappedBy="idParte")
      */
     private $sancion;
 
-
     /**
-     * Get id
+     * Permite obtener el id.
      *
      * @return int
      */
@@ -163,9 +191,9 @@ class Partes
     }
 
     /**
-     * Set fecha
+     * Establece la fecha.
      *
-     * @param \DateTime $fecha
+     * @param DateTime $fecha
      *
      * @return Partes
      */
@@ -177,9 +205,9 @@ class Partes
     }
 
     /**
-     * Get fecha
+     * Permite obtener la fecha.
      *
-     * @return \DateTime
+     * @return DateTime
      */
     public function getFecha()
     {
@@ -187,7 +215,7 @@ class Partes
     }
 
     /**
-     * Set descripcion
+     * Establece la descripcion.
      *
      * @param string $descripcion
      *
@@ -201,7 +229,7 @@ class Partes
     }
 
     /**
-     * Get descripcion
+     * Permite obtener la descripcion.
      *
      * @return string
      */
@@ -211,7 +239,7 @@ class Partes
     }
 
     /**
-     * Set tareas
+     * Establece las tareas.
      *
      * @param string $tareas
      *
@@ -225,7 +253,7 @@ class Partes
     }
 
     /**
-     * Get tareas
+     * Permite obtener las tareas.
      *
      * @return string
      */
@@ -235,9 +263,9 @@ class Partes
     }
 
     /**
-     * Set horaSalidaAula
+     * Establece la horaSalidaAula.
      *
-     * @param \DateTime $horaSalidaAula
+     * @param DateTime $horaSalidaAula
      *
      * @return Partes
      */
@@ -249,9 +277,9 @@ class Partes
     }
 
     /**
-     * Get horaSalidaAula
+     * Permite obtener la horaSalidaAula.
      *
-     * @return \DateTime
+     * @return DateTime
      */
     public function getHoraSalidaAula()
     {
@@ -259,9 +287,9 @@ class Partes
     }
 
     /**
-     * Set horaLlegadaJefatura
+     * Establece la horaLlegadaJefatura.
      *
-     * @param \DateTime $horaLlegadaJefatura
+     * @param DateTime $horaLlegadaJefatura
      *
      * @return Partes
      */
@@ -273,9 +301,9 @@ class Partes
     }
 
     /**
-     * Get horaLlegadaJefatura
+     * Permite obtener la horaLlegadaJefatura.
      *
-     * @return \DateTime
+     * @return DateTime
      */
     public function getHoraLlegadaJefatura()
     {
@@ -283,7 +311,7 @@ class Partes
     }
 
     /**
-     * Set formato
+     * Establece el formato.
      *
      * @param string $formato
      *
@@ -297,7 +325,7 @@ class Partes
     }
 
     /**
-     * Get formato
+     * Permite obtener el formato.
      *
      * @return string
      */
@@ -307,7 +335,7 @@ class Partes
     }
 
     /**
-     * Set observacion
+     * Establece la observacion.
      *
      * @param string $observacion
      *
@@ -321,7 +349,7 @@ class Partes
     }
 
     /**
-     * Get observacion
+     * Permite obtener la observacion.
      *
      * @return string
      */
@@ -331,9 +359,9 @@ class Partes
     }
 
     /**
-     * Set puntos
+     * Establece los puntos.
      *
-     * @param integer $puntos
+     * @param int $puntos
      *
      * @return Partes
      */
@@ -345,7 +373,7 @@ class Partes
     }
 
     /**
-     * Get puntos
+     * Permite obtener los puntos.
      *
      * @return int
      */
@@ -355,6 +383,7 @@ class Partes
     }
 
     /**
+     * Permite obtener el idEstado.
      * @return int
      */
     public function getIdEstado()
@@ -363,7 +392,9 @@ class Partes
     }
 
     /**
+     * Establece el idEstado.
      * @param int $idEstado
+     * @return Partes
      */
     public function setIdEstado($idEstado)
     {
@@ -372,6 +403,7 @@ class Partes
     }
 
     /**
+     * Permite obtener el idTipo.
      * @return string
      */
     public function getIdTipo()
@@ -380,6 +412,7 @@ class Partes
     }
 
     /**
+     * Establece el idTipo.
      * @param string $idTipo
      */
     public function setIdTipo($idTipo)
@@ -388,9 +421,9 @@ class Partes
     }
 
     /**
-     * Set idAlumno
+     * Establece el idAlumno.
      *
-     * @param integer $idAlumno
+     * @param int $idAlumno
      *
      * @return Partes
      */
@@ -402,7 +435,7 @@ class Partes
     }
 
     /**
-     * Get idAlumno
+     * Permite obtener el idAlumno.
      *
      * @return int
      */
@@ -412,9 +445,9 @@ class Partes
     }
 
     /**
-     * Set idProfesor
+     * Establece el idProfesor.
      *
-     * @param integer $idProfesor
+     * @param int $idProfesor
      *
      * @return Partes
      */
@@ -426,7 +459,7 @@ class Partes
     }
 
     /**
-     * Get idProfesor
+     * Permite obtener el idProfesor.
      *
      * @return int
      */
@@ -453,29 +486,29 @@ class Partes
 //        return $this;
 //    }
 
-
     /**
-     * Constructor
+     * Partes constructor.
+     * @throws Exception
      */
     public function __construct()
     {
-        $this->fecha = new \DateTime();
+        $this->fecha = new DateTime();
         $this->fechaComunicacion = null;
         $this->fechaConfirmacion = null;
-        $this->horaSalidaAula = new \DateTime();
-        $this->horaLlegadaJefatura = new \DateTime();
-        $this->idConducta = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->horaSalidaAula = new DateTime();
+        $this->horaLlegadaJefatura = new DateTime();
+        $this->idConducta = new ArrayCollection();
         $this->recupera = 0;
     }
 
     /**
-     * Add idConductum
+     * Añade el idConductum.
      *
-     * @param \AppBundle\Entity\Conductas $idConductum
+     * @param Conductas $idConductum
      *
      * @return Partes
      */
-    public function addIdConductum(\AppBundle\Entity\Conductas $idConductum)
+    public function addIdConductum(Conductas $idConductum)
     {
         $this->idConducta[] = $idConductum;
 
@@ -483,19 +516,19 @@ class Partes
     }
 
     /**
-     * Remove idConductum
+     * Borra el idConductum.
      *
-     * @param \AppBundle\Entity\Conductas $idConductum
+     * @param Conductas $idConductum
      */
-    public function removeIdConductum(\AppBundle\Entity\Conductas $idConductum)
+    public function removeIdConductum(Conductas $idConductum)
     {
         $this->idConducta->removeElement($idConductum);
     }
 
     /**
-     * Get idConducta
+     * Permite obtener el idConducta.
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return Collection
      */
     public function getIdConducta()
     {
@@ -503,9 +536,9 @@ class Partes
     }
 
     /**
-     * Set recupera
+     * Establece si recupera puntos.
      *
-     * @param integer $recupera
+     * @param int $recupera
      *
      * @return Partes
      */
@@ -517,9 +550,9 @@ class Partes
     }
 
     /**
-     * Get recupera
+     * Permite obtener si recupera puntos.
      *
-     * @return integer
+     * @return int
      */
     public function getRecupera()
     {
@@ -527,7 +560,8 @@ class Partes
     }
 
     /**
-     * Set fechaConfirmacion
+     * Establece la fecha de confirmación.
+     *
      *
      * @param string $fechaConfirmacion
      *
@@ -541,7 +575,7 @@ class Partes
     }
 
     /**
-     * Get fechaConfirmacion
+     * Permite obtener la fecha de confirmación.
      *
      * @return string
      */
@@ -551,7 +585,7 @@ class Partes
     }
 
     /**
-     * Set fechaComunicacion
+     * Establece la fecha de comunicación.
      *
      * @param string $fechaComunicacion
      *
@@ -565,7 +599,7 @@ class Partes
     }
 
     /**
-     * Get fechaComunicacion
+     * Permite obtener la fecha de comunicación.
      *
      * @return string
      */
@@ -575,13 +609,13 @@ class Partes
     }
 
     /**
-     * Add sancion
+     * Añade la sancion.
      *
-     * @param \AppBundle\Entity\Sanciones $sancion
+     * @param Sanciones $sancion
      *
      * @return Partes
      */
-    public function addSancion(\AppBundle\Entity\Sanciones $sancion)
+    public function addSancion(Sanciones $sancion)
     {
         $this->sancion[] = $sancion;
 
@@ -589,19 +623,19 @@ class Partes
     }
 
     /**
-     * Remove sancion
-     *
-     * @param \AppBundle\Entity\Sanciones $sancion
+     * Borra la sancion.
+     * @param Sanciones $sancion
+     * @paramSanciones $sancion
      */
-    public function removeSancion(\AppBundle\Entity\Sanciones $sancion)
+    public function removeSancion(Sanciones $sancion)
     {
         $this->sancion->removeElement($sancion);
     }
 
     /**
-     * Get sancion
+     * Permite obtener la sancion.
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return int
      */
     public function getSancion()
     {

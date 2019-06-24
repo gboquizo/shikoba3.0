@@ -6,110 +6,123 @@
  * @Description: Controlador de alumnos.
  * @license http://opensource.org/licenses/gpl-license.php  GNU Public License
  */
+
 namespace AppBundle\Controller;
 
-
 use AppBundle\Entity\Alumno;
-use AppBundle\Entity\Cursos;
-use AppBundle\Entity\Profesores;
-use AppBundle\Entity\Usuarios;
-use AppBundle\Form\ImportFormType;
+use AppBundle\Entity\Noticias;
 use AppBundle\Form\PerfilAlumnoFormType;
 use AppBundle\Form\AlumnoType;
 use AppBundle\Repository\AlumnoRepository;
-use AppBundle\Repository\CursosRepository;
 use AppBundle\Repository\NoticiasRepository;
-use AppBundle\Repository\PerfilRepository;
 use AppBundle\Services\AlumnoHelper;
-use AppBundle\Services\ImportHelper;
-use AppBundle\Utils\CsvResponse;
 use Doctrine\ORM\EntityManager;
-use Doctrine\ORM\PersistentCollection;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-//use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Symfony\Component\Config\Definition\Exception\Exception;
-use Symfony\Component\HttpFoundation\File\File;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use Exception;
+
+/*use AppBundle\Entity\Cursos;
+use AppBundle\Entity\Profesores;
+use AppBundle\Entity\Usuarios;
+use AppBundle\Form\ImportFormType;
+use AppBundle\Repository\CursosRepository;
+use AppBundle\Repository\PerfilRepository;
+use AppBundle\Services\ImportHelper;
+use AppBundle\Utils\CsvResponse;
+use Doctrine\ORM\PersistentCollection;
+use Symfony\Component\Config\Definition\Exception\Exception;
+use Symfony\Component\HttpFoundation\File\File;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;*/
+//use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 
 /**
- *
- * Alumnos controller.
- *
+ * Class AlumnoController.
  */
 class AlumnoController extends Controller
 {
-
     /**
      * Permite visualizar un alumno/a logueado.
      * @Route("/alumno", name="alumno")
+     * @return Response la vista a renderizar
      */
     public function alumnoAction()
     {
         /** @var AlumnoHelper $alumnoHelper */
         $alumnoHelper = $this->get('app.alumnoHelper');
 
-        if (in_array("ROLE_ADMIN", $this->getUser()->getRoles())
-            || in_array("ROLE_TUTOR", $this->getUser()->getRoles())
-            || in_array("ROLE_PROFESOR", $this->getUser()->getRoles())
-            || in_array("ROLE_CONVIVENCIA", $this->getUser()->getRoles())
-        )
-            return $this->redirectToRoute("index");
+        if (in_array('ROLE_ADMIN', $this->getUser()->getRoles())
+            || in_array('ROLE_TUTOR', $this->getUser()->getRoles())
+            || in_array('ROLE_PROFESOR', $this->getUser()->getRoles())
+            || in_array('ROLE_CONVIVENCIA', $this->getUser()->getRoles())) {
+            return $this->redirectToRoute('index');
+        }
 
-        if (!$alumnoHelper->alumnoExists($this->getUser()))
+        if (!$alumnoHelper->alumnoExists($this->getUser())) {
             return $this->redirectToRoute('registrarAlumno');
+        }
 
-        $userData = $alumnoHelper->getUserData(
-            $alumnoHelper->getAlumnoLogueado($this->getUser()), true);
+        $userData = $alumnoHelper->getUserData($alumnoHelper->getAlumnoLogueado($this->getUser()), true);
+
+        /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
 
         /** @var NoticiasRepository $repositoryNoticias */
-        $repositoryNoticias = $em->getRepository("AppBundle:Noticias");
+        $repositoryNoticias = $em->getRepository('AppBundle:Noticias');
 
-        $noticias = $repositoryNoticias->getNoticiasCurso($userData->getAlumno()->getIdCurso(), $userData->getAlumno()->getPuntos());
+        /** @var Noticias $noticias */
+        $noticias = $repositoryNoticias->getNoticiasCurso(
+            $userData->getAlumno()->getIdCurso(),
+            $userData->getAlumno()->getPuntos()
+        );
 
-        return $this->render('convivencia/alumno/alumno.html.twig', array(
-                'alumnoData' => $userData,
-                'noticia' => $noticias,
-            )
+        return $this->render(
+            'convivencia/alumno/alumno.html.twig',
+            array('alumnoData' => $userData, 'noticia' => $noticias)
         );
     }
 
     /**
-     *
      * Permite visualizar un alumno por su id.
      * @Route("/alumno/{id}", name="verAlumno", requirements={"id": "\d+"})
-     *
+     * @param Alumno $alumno el alumno a visualizar
+     * @return Response la vista a renderizar
      */
     public function showAlumnoAction(Alumno $alumno)
     {
         /** @var AlumnoHelper $alumnoHelper */
         $alumnoHelper = $this->get('app.alumnoHelper');
 
-        if (!in_array("ROLE_ADMIN", $this->getUser()->getRoles())
-            && !in_array("ROLE_CONVIVENCIA", $this->getUser()->getRoles())
-            && !in_array("ROLE_TUTOR", $this->getUser()->getRoles())
-            && !in_array("ROLE_PROFESOR", $this->getUser()->getRoles())
-        )
-            return $this->redirectToRoute("index");
+        if (!in_array('ROLE_ADMIN', $this->getUser()->getRoles())
+            && !in_array('ROLE_CONVIVENCIA', $this->getUser()->getRoles())
+            && !in_array('ROLE_TUTOR', $this->getUser()->getRoles())
+            && !in_array('ROLE_PROFESOR', $this->getUser()->getRoles())) {
+            return $this->redirectToRoute('index');
+        }
 
-        if (in_array("ROLE_TUTOR", $this->getUser()->getRoles()) &&
-            !$alumnoHelper->isTutorAlumno($alumno, $alumnoHelper->getTutorByUsuario($this->getUser()))
-        )
-            return $this->redirectToRoute("index");
+        if (in_array('ROLE_TUTOR', $this->getUser()->getRoles()) &&
+            !$alumnoHelper->isTutorAlumno($alumno, $alumnoHelper->getTutorByUsuario($this->getUser()))) {
+            return $this->redirectToRoute('index');
+        }
 
         $userData = $alumnoHelper->getUserData($alumno, true);
 
+        /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
 
         /** @var NoticiasRepository $repositoryNoticias */
-        $repositoryNoticias = $em->getRepository("AppBundle:Noticias");
-        $noticias = $repositoryNoticias->getNoticiasCurso($userData->getAlumno()->getIdCurso(), $userData->getAlumno()->getPuntos());
+        $repositoryNoticias = $em->getRepository('AppBundle:Noticias');
+        $noticias = $repositoryNoticias->getNoticiasCurso(
+            $userData->getAlumno()->getIdCurso(),
+            $userData->getAlumno()->getPuntos()
+        );
 
-        return $this->render('convivencia/alumno/alumno.html.twig', array(
+        return $this->render(
+            'convivencia/alumno/alumno.html.twig',
+            array(
                 'alumnoData' => $userData,
                 'noticia' => $noticias,
                 'userAdmin' => $this->getUser(),
@@ -120,20 +133,23 @@ class AlumnoController extends Controller
     /**
      * Permite visualizar el alumnado de una tutoría.
      * @Route("/tutoria", name="show_alumnosgrupo")
+     * @return Response la vista a renderizar
      */
     public function showAlumnosGrupoAction()
     {
-        if (
-            !in_array("ROLE_ADMIN", $this->getUser()->getRoles()) &&
-            !in_array("ROLE_CONVIVENCIA", $this->getUser()->getRoles()) &&
-            !in_array("ROLE_PROFESOR", $this->getUser()->getRoles()) &&
-            !in_array("ROLE_TUTOR_DOCENTE", $this->getUser()->getRoles())
-        )
-            return $this->redirectToRoute("index");
+        if (!in_array('ROLE_ADMIN', $this->getUser()->getRoles()) &&
+            !in_array('ROLE_CONVIVENCIA', $this->getUser()->getRoles()) &&
+            !in_array('ROLE_PROFESOR', $this->getUser()->getRoles()) &&
+            !in_array('ROLE_TUTOR_DOCENTE', $this->getUser()->getRoles())
+        ) {
+            return $this->redirectToRoute('index');
+        }
 
+        /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
+
         /** @var AlumnoRepository $repositoryAlumnos */
-        $repositoryAlumnos = $em->getRepository("AppBundle:Alumno");
+        $repositoryAlumnos = $em->getRepository('AppBundle:Alumno');
 
         $profesor = $this->getUser()->getId();
 
@@ -149,18 +165,24 @@ class AlumnoController extends Controller
      * Permite registrar un alumno.
      * @Route("/registrarAlumno", name="registrarAlumno")
      * @Method({"GET", "POST"})
+     * @param Request $request la petición a registrar
+     * @throws Exception
+     * @return Response la vista a renderizar
      */
     public function registrarAlumnoAction(Request $request)
     {
+        /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
 
         /** @var AlumnoHelper $alumnoHelper */
         $alumnoHelper = $this->get('app.alumnoHelper');
 
-        if ($alumnoHelper->alumnoExists($this->getUser()))
+        if ($alumnoHelper->alumnoExists($this->getUser())
+        ) {
             $alumno = $alumnoHelper->getAlumnoLogueado($this->getUser());
-        else
+        } else {
             $alumno = new Alumno();
+        }
 
         $form = $this->createForm(PerfilAlumnoFormType::class, $alumno);
         $form->handleRequest($request);
@@ -168,14 +190,15 @@ class AlumnoController extends Controller
             if (!$alumnoHelper->alumnoExists($this->getUser())) {
                 $alumno->setIdUsuario($this->getUser());
                 $alumno->setPuntos(12);
-            } else
+            } else {
                 $alumno->setPuntos($alumnoHelper->getPuntosAlumnoLogin($this->getUser()));
-            $em->persist($alumno);
-            $em->flush();
+                $em->persist($alumno);
+                $em->flush();
+            }
             return $this->redirectToRoute('alumno');
         }
 
-//        return $this->render('convivencia/alumno/registroAlumno.html.twig', array(
+        //return $this->render('convivencia/alumno/registroAlumno.html.twig', array(
         return $this->render('convivencia/index.html.twig', array(
             'alumno' => $this->getUser(),
             'form' => $form->createView(),
@@ -186,29 +209,36 @@ class AlumnoController extends Controller
      * Muestra los carnets de los alumnos.
      * @Route("/carnets", name="show_carnets")
      * @Method({"GET", "POST"})
+     * @param Request $request la petición a realizar
+     * @return Response la vista a renderizar
      */
     public function showCarnets(Request $request)
     {
+        /** @var EntityManager $em */
         $emConvivencia = $this->getDoctrine()->getManager();
 
         /** @var AlumnoRepository $repositoryAlumnos */
         $repositoryAlumnos = $emConvivencia->getRepository('AppBundle:Alumno');
 
-        if ($request->get('like') != null AND $request->get('like') != '')
+        if (null != $request->get('like') and '' != $request->get('like')) {
             $alumnos = $repositoryAlumnos->getAlumnosLike($request->get('like'));
-        else
+        } else {
             $alumnos = $repositoryAlumnos->getAlumnoOrderByPuntos();
+        }
 
         /** @var AlumnoHelper $alumnoHelper */
         $alumnoHelper = $this->get('app.alumnoHelper');
 
-        if ($request->get('puntosFiltro') != null)
-            $arrayCarnetData = $alumnoHelper->filtrarPorPuntos($request->get('puntosFiltro'), $alumnos);
-        else
+        if (!is_null($request->get('puntosFiltro'))) {
+            $arrayCarnetData = $alumnoHelper->filtrarPorPuntos(
+                $request->get('puntosFiltro'),
+                $alumnos
+            );
+        } else {
             $arrayCarnetData = $alumnoHelper->getArrayCarnetsData($alumnos);
-
+        }
         return $this->render('convivencia/alumno/carnets.html.twig', array(
-//            'arrayCarnetData' => $arrayCarnetDataPaginator,
+            //'arrayCarnetData' => $arrayCarnetDataPaginator,
             'arrayCarnetData' => $arrayCarnetData,
             'puntosSelect' => AlumnoHelper::SELECT_PUNTOS,
         ));
@@ -217,13 +247,16 @@ class AlumnoController extends Controller
     /**
      * Muestra todos los partes de los alumnos.
      * @Route("/partes/{id}", name="show_partesAlumno")
+     * @param Alumno $alumno el alumno a mostrar
+     * @return Response la vista a renderizar
      */
     public function mostrarTodosPartes(Alumno $alumno)
     {
         /** @var AlumnoHelper $alumnoHelper */
         $alumnoHelper = $this->get('app.alumnoHelper');
-
-        if (!$this->comprobarIsThisAlumno($alumno)) return $this->redirectToRoute('index');
+        if (!$this->comprobarIsThisAlumno($alumno)) {
+            return $this->redirectToRoute('index');
+        }
         $partes = $alumnoHelper->getPartesByAlumno($alumno, true, true);
 
         return $this->render('convivencia/alumno/informe.html.twig', array(
@@ -234,13 +267,16 @@ class AlumnoController extends Controller
     /**
      * Muestra todas las sanciones.
      * @Route("/sanciones/{id}", name="show_partesSanciones")
+     * @param Alumno $alumno el alumno a mostrar
+     * @return Response la vista a renderizar
      */
     public function mostrarTodasSanciones(Alumno $alumno)
     {
-
         /** @var AlumnoHelper $alumnoHelper */
         $alumnoHelper = $this->get('app.alumnoHelper');
-        if (!$this->comprobarIsThisAlumno($alumno)) return $this->redirectToRoute('index');
+        if (!$this->comprobarIsThisAlumno($alumno)) {
+            return $this->redirectToRoute('index');
+        }
 
         $sanciones = $alumnoHelper->getSancionesByAlumno($alumno, true, true);
 
@@ -250,9 +286,9 @@ class AlumnoController extends Controller
     }
 
     /**
-     * Función que comprueba que el el usuario sea el alumno pasado por parámetro
-     * @param Alumno $alumno
-     * @return bool
+     * Función que comprueba que el usuario sea el alumno pasado por parámetro.
+     * @param Alumno $alumno el alumno a comprobar
+     * @return bool true si es el alumno, false en caso contrario
      */
     public function comprobarIsThisAlumno(Alumno $alumno)
     {
@@ -260,32 +296,42 @@ class AlumnoController extends Controller
         $alumnoHelper = $this->get('app.alumnoHelper');
         $thisAlumno = $alumnoHelper->getAlumnoLogueado($this->getUser());
         $isThisAlumno = false;
-        if ($thisAlumno != null && $thisAlumno->getId() == $alumno->getId())
+        if (null != $thisAlumno and $thisAlumno->getId() == $alumno->getId()
+        ) {
             $isThisAlumno = true;
-        if (!in_array("ROLE_ADMIN", $this->getUser()->getRoles()) && $isThisAlumno == false)
+        }
+        if (!in_array('ROLE_ADMIN', $this->getUser()->getRoles())
+            && false == $isThisAlumno
+        ) {
             return false;
+        }
         return true;
     }
 
     /**
      * Permite cambiar la imagen de perfil del usuario.
      * @Route("/alumnoImage", name="change_image")
+     * @param Request $request la petición a realizar
+     * @return Response la vista a renderizar
      */
     public function changeProfileImage(Request $request)
     {
-        if (!$request->isMethod('POST') || !in_array("ROLE_USER", $this->getUser()->getRoles()))
-            return $this->redirectToRoute("index");
+        if (!$request->isMethod('POST')
+            || !in_array('ROLE_USER', $this->getUser()->getRoles())
+        ) {
+            return $this->redirectToRoute('index');
+        }
 
         try {
             /** @var UploadedFile $file */
             $file = $request->files->get('file');
             if (!is_array(getimagesize($file))) {
                 $this->addFlash('alumnoError', 'No es una imagen');
-                return $this->redirectToRoute("index");
+                return $this->redirectToRoute('index');
             }
 
             /** @var EntityManager $em */
-            $em = $this->get('doctrine.orm.entity_manager');
+            $em = $this->getDoctrine()->getManager();
 
             /** @var AlumnoHelper $alumnoHelper */
             $alumnoHelper = $this->get('app.alumnoHelper');
@@ -296,21 +342,24 @@ class AlumnoController extends Controller
             $fecha = new \DateTime();
             $filename = $fecha->getTimestamp();
             $filename .= $file->getClientOriginalName();
-            $dir = __DIR__ . '/../../../web/img/alumnos';
+            $dir = __DIR__.'/../../../web/img/alumnos';
             $file->move($dir, $filename);
             $alumno->setFoto($filename);
             $em->persist($alumno);
             $em->flush();
+
             $this->addFlash('alumno', 'La imagen ha sido subida con éxito');
         } catch (\Exception $e) {
             $this->addFlash('alumnoError', 'La imagen no se ha podido subir');
         }
-        return $this->redirectToRoute("index");
+        return $this->redirectToRoute('index');
     }
 
 //    /**
 //     * Permite exportar sanciones
 //     * @Route("/carnet/exportCarnet", name="admin_export_carnets")
+//     * @param Request $request la petición a realizar.
+//     * @return Response la vista a renderizar.
 //     */
 //    public function exportSanciones(Request $request)
 //    {
@@ -360,8 +409,8 @@ class AlumnoController extends Controller
 //        $response->setFilename("Carnets.csv");
 //        return $response;
 //    }
-
-
+//
+//
 //    /**
 //     * Permite exportar carnets.
 //     * @Route("/carnet/exportFormCarnets", name="export_form_carnets")
@@ -383,31 +432,33 @@ class AlumnoController extends Controller
 //        ));
 //    }
 
-
     /**
      * Permite mostrar el conjunto de alumnos.
      * @Route("/alumnos", name="show_alumnos")
+     * @param Request $request la petición a realizar
+     * @return Response la vista a renderizar
      */
     public function indexAlumnos(Request $request)
     {
-        if (
-            !in_array("ROLE_ADMIN", $this->getUser()->getRoles()) &&
-            !in_array("ROLE_CONVIVENCIA", $this->getUser()->getRoles()) &&
-            !in_array("ROLE_PROFESOR", $this->getUser()->getRoles()) &&
-            !in_array("ROLE_TUTOR_DOCENTE", $this->getUser()->getRoles())
-        )
-            return $this->redirectToRoute("index");
+        if (!in_array('ROLE_ADMIN', $this->getUser()->getRoles()) &&
+            !in_array('ROLE_CONVIVENCIA', $this->getUser()->getRoles()) &&
+            !in_array('ROLE_PROFESOR', $this->getUser()->getRoles()) &&
+            !in_array('ROLE_TUTOR_DOCENTE', $this->getUser()->getRoles())
+        ) {
+            return $this->redirectToRoute('index');
+        }
 
+        /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
 
         /** @var AlumnoRepository $repositoryAlumnos */
-        $repositoryAlumnos = $em->getRepository("AppBundle:Alumno");
+        $repositoryAlumnos = $em->getRepository('AppBundle:Alumno');
 
         if ($request->query->has('like')) {
             $alumnos = $repositoryAlumnos->getAlumnosLike($request->get('like'));
         } else {
             $alumnos = $repositoryAlumnos->findAll();
-            //$alumnos = $repositoryAlumnos->getAlumnosByCursoYTutorD();
+            // $alumnos = $repositoryAlumnos->getAlumnosByCursoYTutorD();
         }
 
         return $this->render('convivencia/alumno/listaAlumnos.html.twig', array(
@@ -419,17 +470,21 @@ class AlumnoController extends Controller
     /**
      * Permite editar un alumno.
      * @Route("/alumnos/{id}", name="editarAlumno", requirements={"id": "\d+"})
+     * @param Request $request la petición a realizar
+     * @return Response la vista a renderizar
+     * @throws Exception
      */
     public function editAlumno(Request $request)
     {
-        if (
-            !in_array("ROLE_ADMIN", $this->getUser()->getRoles()) &&
-            !in_array("ROLE_CONVIVENCIA", $this->getUser()->getRoles()) &&
-            !in_array("ROLE_PROFESOR", $this->getUser()->getRoles()) &&
-            !in_array("ROLE_TUTOR_DOCENTE", $this->getUser()->getRoles())
-        )
-            return $this->redirectToRoute("index");
+        if (!in_array('ROLE_ADMIN', $this->getUser()->getRoles()) &&
+            !in_array('ROLE_CONVIVENCIA', $this->getUser()->getRoles()) &&
+            !in_array('ROLE_PROFESOR', $this->getUser()->getRoles()) &&
+            !in_array('ROLE_TUTOR_DOCENTE', $this->getUser()->getRoles())
+        ) {
+            return $this->redirectToRoute('index');
+        }
 
+        /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
 
         /** @var AlumnoRepository $repositoryAlumnos */
@@ -445,21 +500,22 @@ class AlumnoController extends Controller
                 $em->persist($alumno);
                 $em->flush();
 
-                $this->addFlash("alumno", "Alumno/a modificado/a correctamente");
+                $this->addFlash('alumno', 'Alumno/a modificado/a correctamente');
             } catch (\Exception $e) {
-                $this->addFlash("alumnoError", $e);
+                $this->addFlash('alumnoError', $e);
             }
-            if (in_array("ROLE_ADMIN", $this->getUser()->getRoles()) ||
-                in_array("ROLE_CONVIVENCIA", $this->getUser()->getRoles())
+            if (in_array('ROLE_ADMIN', $this->getUser()->getRoles()) ||
+                in_array('ROLE_CONVIVENCIA', $this->getUser()->getRoles())
             ) {
-                return $this->redirectToRoute("show_alumnos");
+                return $this->redirectToRoute('show_alumnos');
             } else {
-                return $this->redirectToRoute("show_alumnosgrupo");
+                return $this->redirectToRoute('show_alumnosgrupo');
             }
         }
 
-        return $this->render('convivencia/alumno/modificarAlumno.html.twig', array(
-            'form' => $form->createView()
-        ));
+        return $this->render(
+            'convivencia/alumno/modificarAlumno.html.twig',
+            array('form' => $form->createView())
+        );
     }
 }

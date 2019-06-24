@@ -1,22 +1,34 @@
 <?php
+/**
+ * @User: Guillermo Boquizo Sánchez (GUBS), Rafael García Zurita (RAGZ).
+ * @File: Usuarios.php
+ * @Updated: 2019
+ * @Description: Entidad para los usuarios.
+ *
+ * @license http://opensource.org/licenses/gpl-license.php  GNU Public License
+ */
 
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
+
+//use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * Usuarios
+ * Class Usuarios.
  *
  * @ORM\Table(name="usuarios")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\UsuariosRepository")
  * @UniqueEntity("usuario")
  */
-class Usuarios implements  UserInterface
+class Usuarios implements UserInterface
 {
     /**
+     * Id principal de la clase.
      * @var int
      *
      * @ORM\Column(name="id", type="integer")
@@ -26,47 +38,53 @@ class Usuarios implements  UserInterface
     private $id;
 
     /**
+     * Usuario.
      * @var string
      *
      * @ORM\Column(name="usuario", type="string", length=30, unique=true)
-     *
      */
     private $usuario;
 
     /**
+     * Contraseña.
      * @var string
      *
      * @ORM\Column(name="password", type="string", length=255)
      */
     private $password;
 
+    /**
+     * Contraseña en texto plano.
+     * @var string
+     */
     private $plainPassword;
 
     /**
+     * Roles.
      * @var string
      *
      * @ORM\Column(name="roles", type="array", length=255)
-     *
      */
     private $roles;
 
     /**
+     * Alumno.
      * @ORM\OneToMany(targetEntity="Alumno", mappedBy="idUsuario", cascade={"persist", "remove"}, orphanRemoval=true)
      */
     protected $alumno;
 
     /**
+     * Hash.
      * @var string
      *
      * @ORM\Column(name="hash", type="string", length=1000)
      */
     private $hash;
 
-
     /**
-     * Get id
+     * Permite obtener el id.
      *
-     * @return int
+     * @return int id
      */
     public function getId()
     {
@@ -74,9 +92,9 @@ class Usuarios implements  UserInterface
     }
 
     /**
-     * Set idUsuario
+     * Establece el idUsuario.
      *
-     * @param integer $idUsuario
+     * @param int $idUsuario
      *
      * @return Usuarios
      */
@@ -88,7 +106,7 @@ class Usuarios implements  UserInterface
     }
 
     /**
-     * Get idUsuario
+     * Obtiene el idUsuario.
      *
      * @return int
      */
@@ -98,7 +116,7 @@ class Usuarios implements  UserInterface
     }
 
     /**
-     * Set usuario
+     * Establece el usuario.
      *
      * @param string $usuario
      *
@@ -112,7 +130,7 @@ class Usuarios implements  UserInterface
     }
 
     /**
-     * Get usuario
+     * Obtiene el usuario.
      *
      * @return string
      */
@@ -122,7 +140,7 @@ class Usuarios implements  UserInterface
     }
 
     /**
-     * Set password
+     * Establece el password.
      *
      * @param string $password
      *
@@ -136,7 +154,7 @@ class Usuarios implements  UserInterface
     }
 
     /**
-     * Get password
+     * Obtiene el password.
      *
      * @return string
      */
@@ -146,6 +164,8 @@ class Usuarios implements  UserInterface
     }
 
     /**
+     * Obtiene el plainPassword.
+     *
      * @return mixed
      */
     public function getPlainPassword()
@@ -154,6 +174,8 @@ class Usuarios implements  UserInterface
     }
 
     /**
+     * Establece el plainPassword.
+     *
      * @param mixed $plainPassword
      */
     public function setPlainPassword($plainPassword)
@@ -161,10 +183,8 @@ class Usuarios implements  UserInterface
         $this->plainPassword = $plainPassword;
     }
 
-
-
     /**
-     * Returns the roles granted to the user.
+     * Devuelve los roles garantizados al usuario.
      *
      * <code>
      * public function getRoles()
@@ -173,32 +193,33 @@ class Usuarios implements  UserInterface
      * }
      * </code>
      *
-     * Alternatively, the roles might be stored on a ``roles`` property,
-     * and populated in any number of different ways when the user object
-     * is created.
+     * Alternativamente, los roles pueden ser almacenados en una propiedad ``roles`` q
+     * que se rellenan en cualquier número de maneras diferentes cuando el objeto usuario es creado.
      *
-     * @return (Role|string)[] The user roles
+     * @return mixed user roles
      */
     public function getRoles()
     {
         $roles = $this->roles;
-        $roles[] = "ROLE_USER";
+        $roles[] = 'ROLE_USER';
         return $roles;
     }
 
     /**
+     * Establece los roles.
      * @param array $roles
      * @return $this
      */
-    public function setRoles(array $roles){
+    public function setRoles(array $roles)
+    {
         $this->roles = $roles;
         return $this;
     }
 
     /**
-     * Returns the salt that was originally used to encode the password.
+     * Devuelve la sal  que fue empleada originalmente para codificar la clave.
      *
-     * This can return null if the password was not encoded using a salt.
+     * Puede devolver nulo si la password no fue codificada usando sal.
      *
      * @return string|null The salt
      */
@@ -208,7 +229,7 @@ class Usuarios implements  UserInterface
     }
 
     /**
-     * Returns the username used to authenticate the user.
+     * Devuelve el nombre de usuario empleado para autenticar al usuario.
      *
      * @return string The username
      */
@@ -218,33 +239,32 @@ class Usuarios implements  UserInterface
     }
 
     /**
-     * Removes sensitive data from the user.
+     * Elimina datos sensibles del usuario.
      *
-     * This is important if, at any given point, sensitive information like
-     * the plain-text password is stored on this object.
+     * Esto es importante si, en un momento dado, información sensible como
+     * la contraseña de texto plano se almacena en este objeto.
      */
     public function eraseCredentials()
     {
         // TODO: Implement eraseCredentials() method.
     }
 
-
     /**
-     * Constructor
+     * Usuarios constructor.
      */
     public function __construct()
     {
-        $this->alumno = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->alumno = new ArrayCollection();
     }
 
     /**
-     * Add alumno
+     * Añade un alumno.
      *
-     * @param \AppBundle\Entity\Alumno $alumno
+     * @param Alumno $alumno
      *
      * @return Usuarios
      */
-    public function addAlumno(\AppBundle\Entity\Alumno $alumno)
+    public function addAlumno(Alumno $alumno)
     {
         $this->alumno[] = $alumno;
 
@@ -252,19 +272,19 @@ class Usuarios implements  UserInterface
     }
 
     /**
-     * Remove alumno
+     * Elimina un alumno.
      *
-     * @param \AppBundle\Entity\Alumno $alumno
+     * @param Alumno $alumno
      */
-    public function removeAlumno(\AppBundle\Entity\Alumno $alumno)
+    public function removeAlumno(Alumno $alumno)
     {
         $this->alumno->removeElement($alumno);
     }
 
     /**
-     * Get alumno
+     * Obtiene un alumno.
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return Collection
      */
     public function getAlumno()
     {
@@ -272,7 +292,7 @@ class Usuarios implements  UserInterface
     }
 
     /**
-     * Set hash
+     * Establece el hash.
      *
      * @param string $hash
      *
@@ -286,7 +306,7 @@ class Usuarios implements  UserInterface
     }
 
     /**
-     * Get hash
+     * Obtiene el hash.
      *
      * @return
      */

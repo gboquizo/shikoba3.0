@@ -1,11 +1,18 @@
 <?php
+/**
+ * @User: Guillermo Boquizo Sánchez (GUBS), Rafael García Zurita (RAGZ).
+ * @File: AccionEstadoParte.php
+ * @Updated: 2019
+ * @Description: Entidad para la acción y el estado de los partes.
+ * @license http://opensource.org/licenses/gpl-license.php  GNU Public License
+ */
 
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * AccionEstadoParte
+ * Class AccionEstadoParte.
  *
  * @ORM\Table(name="accion_estado_parte")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\AccionEstadoParteRepository")
@@ -13,6 +20,7 @@ use Doctrine\ORM\Mapping as ORM;
 class AccionEstadoParte
 {
     /**
+     * Id principal de la tabla.
      * @var int
      *
      * @ORM\Column(name="id", type="integer")
@@ -22,6 +30,7 @@ class AccionEstadoParte
     private $id;
 
     /**
+     * Estado.
      * @var string
      *
      * @ORM\ManyToOne(targetEntity="EstadosParte")
@@ -30,17 +39,17 @@ class AccionEstadoParte
     private $estado;
 
     /**
+     * Acción.
      * @var string
      *
      * @ORM\Column(name="accion", type="string", length=255)
      */
     private $accion;
 
-
     /**
-     * Get id
+     * Permite obtener el id.
      *
-     * @return int
+     * @return int id el id
      */
     public function getId()
     {
@@ -48,9 +57,9 @@ class AccionEstadoParte
     }
 
     /**
-     * Set estado
+     * Establece el estado.
      *
-     * @param string $estado
+     * @param string $estado el estado
      *
      * @return AccionEstadoParte
      */
@@ -62,9 +71,9 @@ class AccionEstadoParte
     }
 
     /**
-     * Get estado
+     * Obtiene el estado.
      *
-     * @return string
+     * @return string estado el estado
      */
     public function getEstado()
     {
@@ -72,9 +81,9 @@ class AccionEstadoParte
     }
 
     /**
-     * Set accion
+     * Establece la acción.
      *
-     * @param string $accion
+     * @param string $accion la acción
      *
      * @return AccionEstadoParte
      */
@@ -86,16 +95,20 @@ class AccionEstadoParte
     }
 
     /**
-     * Get accion
+     * Obtiene la acción.
      *
-     * @return string
+     * @return string accion la acción
      */
     public function getAccion()
     {
         return $this->accion;
     }
 
-    function __toString()
+    /**
+     * Devuelve un string.
+     * @return string accion la acción
+     */
+    public function __toString()
     {
         return $this->accion;
     }

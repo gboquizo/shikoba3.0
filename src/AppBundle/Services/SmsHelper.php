@@ -1,18 +1,26 @@
 <?php
-
+/**
+ * @User: Guillermo Boquizo Sánchez (GUBS), Rafael García Zurita (RAGZ).
+ * @File: smsHelper.php
+ * @Updated: 2019
+ * @Description: Servicio para la gestión de los sms.
+ * @license http://opensource.org/licenses/gpl-license.php  GNU Public License
+ */
 namespace AppBundle\Services;
 
+/**
+ * Class SmsHelper.
+ */
 class SmsHelper
 {
-
     /**
-     * Función que realiza una peticion post a la pasarela para enviar sms
+     * Función que realiza una peticion post a la pasarela para enviar sms.
      * @param $telefonos []
      * @param $mensaje
      */
-    function sendSms($telefonos, $mensaje)
+    public function sendSms($telefonos, $mensaje)
     {
-        if (!empty($telefonos) && $mensaje != null) {
+        if (null != !empty($telefonos) && $mensaje) {
             $smsLimit = 1000;
 
             //Limite longitud de caracteres del sms
@@ -37,7 +45,13 @@ class SmsHelper
             $numbers = implode(',', $telefonos);
 
             // Prepare data for POST request
-            $data = array('apikey' => $apiKey, 'numbers' => $numbers, "sender" => $sender, "message" => $message, "test" => false);
+            $data = array(
+                'apikey' => $apiKey,
+                'numbers' => $numbers,
+                'sender' => $sender,
+                'message' => $message,
+                'test' => false,
+            );
 
             // Send the POST request with cURL
             $ch = curl_init('https://api.txtlocal.com/send/');
@@ -46,10 +60,6 @@ class SmsHelper
             curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
             $response = curl_exec($ch);
             curl_close($ch);
-
-            // dump($response);
-            // die();
-
 
             // Process your response here
             // print_r( $response );
@@ -63,7 +73,8 @@ class SmsHelper
             //   curl_setopt($ch, CURLOPT_URL,"http://url");
             //   curl_setopt($ch, CURLOPT_POST, 1);
             //
-            //   curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query( array('telefono' => $telefonos[$i], 'message' => $mensaje ) ) );
+            //   curl_setopt($ch, CURLOPT_POSTFIELDS,
+            //   http_build_query( array('telefono' => $telefonos[$i], 'message' => $mensaje ) ) );
             //
             //   // Respuesta del servidor
             //   curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
@@ -78,6 +89,4 @@ class SmsHelper
 
         }
     }
-
-
 }

@@ -1,11 +1,19 @@
 <?php
+/**
+ * @User: Guillermo Boquizo Sánchez (GUBS), Rafael García Zurita (RAGZ).
+ * @File: TiposSancion.php
+ * @Updated: 2019
+ * @Description: Entidad para los tipos de sanción.
+ *
+ * @license http://opensource.org/licenses/gpl-license.php  GNU Public License
+ */
 
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * TipoSancion
+ * Class TipoSancion.
  *
  * @ORM\Table(name="tipo_sancion")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\TipoSancionRepository")
@@ -13,6 +21,7 @@ use Doctrine\ORM\Mapping as ORM;
 class TipoSancion
 {
     /**
+     * Id principal de la clase.
      * @var int
      *
      * @ORM\Column(name="id", type="integer")
@@ -22,15 +31,15 @@ class TipoSancion
     private $id;
 
     /**
+     * Tipo.
      * @var string
      *
      * @ORM\Column(name="tipo", type="string", length=255)
      */
     private $tipo;
 
-
     /**
-     * Get id
+     * Permite obtener el id.
      *
      * @return int
      */
@@ -40,7 +49,7 @@ class TipoSancion
     }
 
     /**
-     * Set tipo
+     * Establece el tipo.
      *
      * @param string $tipo
      *
@@ -54,7 +63,7 @@ class TipoSancion
     }
 
     /**
-     * Get tipo
+     * Permite obtener el tipo.
      *
      * @return string
      */

@@ -1,11 +1,18 @@
 <?php
-
+/**
+ * @User: Guillermo Boquizo Sánchez (GUBS), Rafael García Zurita (RAGZ).
+ * @File: TipoParte.php
+ * @Updated: 2019
+ * @Description: Entidad para los tipos de parte.
+ *
+ * @license http://opensource.org/licenses/gpl-license.php  GNU Public License
+ */
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * TipoParte
+ * Class TipoParte.
  *
  * @ORM\Table(name="tipo_parte")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\TipoParteRepository")
@@ -13,6 +20,7 @@ use Doctrine\ORM\Mapping as ORM;
 class TipoParte
 {
     /**
+     * Id principal de la clase.
      * @var int
      *
      * @ORM\Column(name="id", type="integer")
@@ -22,15 +30,15 @@ class TipoParte
     private $id;
 
     /**
+     * Tipo.
      * @var string
      *
      * @ORM\Column(name="tipo", type="string", length=255)
      */
     private $tipo;
 
-
     /**
-     * Get id
+     * Permite obtener el id.
      *
      * @return int
      */
@@ -40,7 +48,7 @@ class TipoParte
     }
 
     /**
-     * Set tipo
+     * Establece el tipo.
      *
      * @param string $tipo
      *
@@ -54,7 +62,7 @@ class TipoParte
     }
 
     /**
-     * Get tipo
+     * Permite obtener el tipo.
      *
      * @return string
      */

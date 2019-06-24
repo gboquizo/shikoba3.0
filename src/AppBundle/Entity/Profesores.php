@@ -1,11 +1,19 @@
 <?php
+/**
+ * @User: Guillermo Boquizo Sánchez (GUBS), Rafael García Zurita (RAGZ).
+ * @File: Profesores.php
+ * @Updated: 2019
+ * @Description: Entidad para los profesores.
+ *
+ * @license http://opensource.org/licenses/gpl-license.php  GNU Public License
+ */
 
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Profesores
+ * Class Profesores.
  *
  * @ORM\Table(name="profesores")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\ProfesoresRepository")
@@ -13,6 +21,7 @@ use Doctrine\ORM\Mapping as ORM;
 class Profesores
 {
     /**
+     * El id principal.
      * @var int
      *
      * @ORM\Column(name="id", type="integer")
@@ -22,6 +31,7 @@ class Profesores
     private $id;
 
     /**
+     * idUsuario.
      * @var int
      * @ORM\ManyToOne(targetEntity="Usuarios")
      * @ORM\JoinColumn(name="idUsuario", referencedColumnName="id")
@@ -29,6 +39,7 @@ class Profesores
     private $idUsuario;
 
     /**
+     * Nombre.
      * @var string
      *
      * @ORM\Column(name="nombre", type="string", length=255)
@@ -36,6 +47,7 @@ class Profesores
     private $nombre;
 
     /**
+     * Primer apellido.
      * @var string
      *
      * @ORM\Column(name="apellido1", type="string", length=255)
@@ -43,6 +55,7 @@ class Profesores
     private $apellido1;
 
     /**
+     * Segundo apellido.
      * @var string
      *
      * @ORM\Column(name="apellido2", type="string", length=255)
@@ -50,6 +63,7 @@ class Profesores
     private $apellido2;
 
     /**
+     * Teléfono.
      * @var string
      *
      * @ORM\Column(name="telefono", type="string", length=10)
@@ -57,23 +71,24 @@ class Profesores
     private $telefono;
 
     /**
+     * Email.
      * @var string
      *
      * @ORM\Column(name="email", type="string", length=50)
      */
     private $email;
 
-
     /**
-     * Función que devuelve el nombre completo del profesor
+     * Función que devuelve el nombre completo del profesor.
      * @return string
      */
-    public function getNombreCompleto(){
-        return $this->getNombre() . ' ' . $this->getApellido1() . ' ' . $this->getApellido2();
+    public function getNombreCompleto()
+    {
+        return $this->getNombre().' '.$this->getApellido1().' '.$this->getApellido2();
     }
 
     /**
-     * Get id
+     * Permite obtener el id.
      *
      * @return int
      */
@@ -83,7 +98,7 @@ class Profesores
     }
 
     /**
-     * Set nombre
+     * Establece el nombre.
      *
      * @param string $nombre
      *
@@ -97,7 +112,7 @@ class Profesores
     }
 
     /**
-     * Get nombre
+     * Permite obtener el nombre.
      *
      * @return string
      */
@@ -107,7 +122,7 @@ class Profesores
     }
 
     /**
-     * Set apellido1
+     * Establece el apellido1.
      *
      * @param string $apellido1
      *
@@ -121,7 +136,7 @@ class Profesores
     }
 
     /**
-     * Get apellido1
+     * Permite obtener el apellido1.
      *
      * @return string
      */
@@ -131,7 +146,7 @@ class Profesores
     }
 
     /**
-     * Set apellido2
+     * Establece el apellido2.
      *
      * @param string $apellido2
      *
@@ -145,7 +160,7 @@ class Profesores
     }
 
     /**
-     * Get apellido2
+     * Permite obtener el apellido2.
      *
      * @return string
      */
@@ -155,7 +170,7 @@ class Profesores
     }
 
     /**
-     * Set telefono
+     * Establece el telefono.
      *
      * @param string $telefono
      *
@@ -169,7 +184,7 @@ class Profesores
     }
 
     /**
-     * Get telefono
+     * Permite obtener el telefono.
      *
      * @return string
      */
@@ -179,7 +194,7 @@ class Profesores
     }
 
     /**
-     * Set email
+     * Establece el email.
      *
      * @param string $email
      *
@@ -193,7 +208,7 @@ class Profesores
     }
 
     /**
-     * Get email
+     * Permite obtener el email.
      *
      * @return string
      */
@@ -203,13 +218,13 @@ class Profesores
     }
 
     /**
-     * Set idUsuario
+     * Establece el idUsuario.
      *
-     * @param \AppBundle\Entity\Usuarios $idUsuario
+     * @param Usuarios $idUsuario
      *
      * @return Profesores
      */
-    public function setIdUsuario(\AppBundle\Entity\Usuarios $idUsuario = null)
+    public function setIdUsuario(Usuarios $idUsuario = null)
     {
         $this->idUsuario = $idUsuario;
 
@@ -217,9 +232,9 @@ class Profesores
     }
 
     /**
-     * Get idUsuario
+     * Permite obtener el idUsuario.
      *
-     * @return \AppBundle\Entity\Usuarios
+     * @return int
      */
     public function getIdUsuario()
     {

@@ -1,12 +1,21 @@
 <?php
+/**
+ * @User: Guillermo Boquizo Sánchez (GUBS), Rafael García Zurita (RAGZ).
+ * @File: Alumno.php
+ * @Updated: 2019
+ * @Description: Entidad para el alumno.
+ *
+ * @license http://opensource.org/licenses/gpl-license.php  GNU Public License
+ */
 
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
- * Alumno
+ * Class Alumno.
  *
  * @ORM\Table(name="alumno")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\AlumnoRepository")
@@ -14,8 +23,9 @@ use Symfony\Component\Validator\Constraints as Assert;
 class Alumno
 {
     /**
-     * @var int
+     * Id principal de la clase.
      *
+     * @var int
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
@@ -23,54 +33,62 @@ class Alumno
     private $id;
 
     /**
-     * @var string
+     * Nombre del alumno.
      *
+     * @var string
      * @ORM\Column(name="nombre", type="string", length=255)
      * @Assert\NotBlank()
      */
     private $nombre;
 
     /**
-     * @var int
+     * IdUsuario del alumno.
      *
+     * @var int
      * @ORM\ManyToOne(targetEntity="Usuarios", inversedBy="alumno")
      * @ORM\JoinColumn(name="idUsuario", referencedColumnName="id", onDelete="CASCADE")
      */
     private $idUsuario;
 
     /**
+     * idTutor del alumno.
+     *
      * @var int
      * @ORM\ManyToMany(targetEntity="Tutores")
      * @ORM\JoinColumn(name="idTutor", referencedColumnName="id")
      */
     private $idTutor;
 
-
     /**
-     * @var string
+     * Primer apellido del alumno.
      *
+     * @var string
      * @ORM\Column(name="apellido1", type="string", length=255)
      * @Assert\NotBlank()
      */
     private $apellido1;
 
     /**
-     * @var string
+     * Segundo apellido del alumno.
      *
+     * @var string
      * @ORM\Column(name="apellido2", type="string", length=255)
      * @Assert\NotBlank()
      */
     private $apellido2;
 
     /**
-     * @var int
+     * Nie del alumno.
      *
+     * @var int
      * @ORM\Column(name="nie", type="integer", nullable=true)
      * @Assert\NotBlank()
      */
     private $nie;
 
     /**
+     * IdCurso del alumno.
+     *
      * @var string
      * @ORM\ManyToOne(targetEntity="Cursos")
      * @ORM\JoinColumn(name="idCurso", referencedColumnName="id")
@@ -78,16 +96,18 @@ class Alumno
     private $idCurso;
 
     /**
-     * @var string
+     * Teléfono del alumno.
      *
+     * @var string
      * @ORM\Column(name="telefono", type="string", length=70)
      * @Assert\NotBlank()
      */
     private $telefono;
 
     /**
-     * @var string
+     * Email del alumno.
      *
+     * @var string
      * @ORM\Column(name="email", type="string", length=150)
      * @Assert\Email(
      *      message = "The email '{{ value }}' is not a valid email.",
@@ -97,108 +117,124 @@ class Alumno
     private $email;
 
     /**
-     * @var string
+     * Dirección del alumno.
      *
+     * @var string
      * @ORM\Column(name="direccion", type="string", length=100)
      * @Assert\NotBlank()
      */
     private $direccion;
 
     /**
-     * @var string
+     * Código postal del alumno.
      *
+     * @var string
      * @ORM\Column(name="codpostal", type="string", length=5)
      * @Assert\NotBlank()
      */
     private $codigoPostal;
 
     /**
-     * @var string
+     * Foto del alumno.
      *
+     * @var string
      * @ORM\Column(name="foto", type="string", length=255, nullable=true)
      */
     private $foto;
 
     /**
-     * @var int
+     * Puntos del alumno.
      *
+     * @var int
      * @ORM\Column(name="puntos", type="integer")
      */
     private $puntos;
 
     /**
-     * @var int
+     * Puntos iniciales del alumno.
      *
+     * @var int
      * @ORM\Column(name="puntosIniciales", type="integer")
      */
     private $puntosIniciales;
 
     /**
+     * Nombre del primer tutor legal del alumno.
+     *
      * @var string
-     *
      * @ORM\Column(name="tutorL1", type="string", length=60)
-     *
      */
     private $tutorL1;
 
     /**
+     * Nombre del segundo tutor legal del alumno.
+     *
      * @var string
-     *
      * @ORM\Column(name="tutorL2", type="string", length=60)
-     *
      */
     private $tutorL2;
 
     /**
-     * @var int
+     * Teléfono del primer tutor legal del alumno.
      *
+     * @var int
      * @ORM\Column(name="telefonoTL1", type="integer")
      */
     private $telefonoTL1;
 
     /**
-     * @var int
+     * Teléfono del segundo tutor legal del alumno.
      *
+     * @var int
      * @ORM\Column(name="telefonoTL2", type="integer")
      */
     private $telefonoTL2;
 
     /**
-     * @var boolean
+     * Permitir envío de sms al primer tutor legal del alumno.
      *
+     * @var bool
      * @ORM\Column(name="msgTL1", type="boolean")
      */
     private $msgTL1;
 
     /**
-     * @var boolean
+     * Permitir envío de sms al segundo tutor legal del alumno.
      *
+     * @var bool
      * @ORM\Column(name="msgTL2", type="boolean")
      */
     private $msgTL2;
 
     /**
-     * Función que devuelve el nombre completo del alumno
-     * @return string
+     * Función que devuelve el nombre completo del alumno.
+     *
+     * @return string nombre completo del alumno
      */
     public function getNombreCompleto()
     {
-        return $this->getNombre() . ' ' . $this->getApellido1() . ' ' . $this->getApellido2();
-    }
-
-    public function getNombreCompletoYCurso()
-    {
-        if ($this->getIdCurso() != null && $this->getIdCurso()->getGrupo())
-            return $this->getNombre() . ' ' . $this->getApellido1()
-                . ' ' . $this->getApellido2() . ' - ' . $this->getIdCurso()->getGrupo();
-        else
-            return $this->getNombreCompleto();
+        return $this->getNombre().' '.$this->getApellido1().' '.$this->getApellido2();
     }
 
     /**
-     * Get id
+     * Función que devuelve el nombre completo y curso del alumno.
      *
-     * @return int
+     * @return string el nombre completo y curso del alumno
+     */
+    public function getNombreCompletoYCurso()
+    {
+        if (null != $this->getIdCurso() && $this->getIdCurso()->getGrupo()) {
+            return $this->getNombre().' '.$this->getApellido1().' '.
+                $this->getApellido2().' - '.$this->getIdCurso()->getGrupo();
+        } else {
+            return $this->getNombreCompleto();
+        }
+    }
+
+    /**
+     * Permite obtener el id.
+     *
+     * @return int id el id
      */
     public function getId()
     {
@@ -206,9 +242,9 @@ class Alumno
     }
 
     /**
-     * Set nombre
+     * Permite establecer el nombre.
      *
-     * @param string $nombre
+     * @param string $nombre el nombre
      *
      * @return Alumno
      */
@@ -220,9 +256,9 @@ class Alumno
     }
 
     /**
-     * Get nombre
+     * Permite obtener el nombre.
      *
-     * @return string
+     * @return string el nombre
      */
     public function getNombre()
     {
@@ -230,9 +266,9 @@ class Alumno
     }
 
     /**
-     * Set apellido1
+     * Permite establecer el apellido1.
      *
-     * @param string $apellido1
+     * @param string $apellido1 el primer apellido
      *
      * @return Alumno
      */
@@ -244,20 +280,18 @@ class Alumno
     }
 
     /**
-     * Get apellido1
+     * Permite obtener el apellido1.
      *
-     * @return string
+     * @return string apellido1
      */
     public function getApellido1()
     {
         return $this->apellido1;
     }
 
-    /**
-     * Set apellido2
-     *
-     * @param string $apellido2
-     *
+    /**.
+     * Permite establecer el apellido2
+     * @param string $apellido2 el segundo apellido
      * @return Alumno
      */
     public function setApellido2($apellido2)
@@ -268,9 +302,9 @@ class Alumno
     }
 
     /**
-     * Get apellido2
+     * Permite obtener el apellido2.
      *
-     * @return string
+     * @return string apellido2
      */
     public function getApellido2()
     {
@@ -278,9 +312,9 @@ class Alumno
     }
 
     /**
-     * Set nie
+     * Permite establecer el nie.
      *
-     * @param integer $nie
+     * @param int $nie
      *
      * @return Alumno
      */
@@ -292,9 +326,9 @@ class Alumno
     }
 
     /**
-     * Get nie
+     * Permite obtener el nie.
      *
-     * @return int
+     * @return int nie
      */
     public function getNie()
     {
@@ -302,10 +336,8 @@ class Alumno
     }
 
     /**
-     * Set idCurso
-     *
-     * @param string $idCurso
-     *
+     * Permite establecer el idCurso.
+     * @param string $idCurso el id del curso
      * @return Alumno
      */
     public function setIdCurso($idCurso)
@@ -316,9 +348,8 @@ class Alumno
     }
 
     /**
-     * Get idCurso
-     *
-     * @return string
+     * Permite obtener el idCurso.
+     * @return string idCurso
      */
     public function getIdCurso()
     {
@@ -326,7 +357,9 @@ class Alumno
     }
 
     /**
-     * @return int
+     * Permite obtener el idTutor.
+     *
+     * @return int idTutor
      */
     public function getIdTutor()
     {
@@ -334,6 +367,7 @@ class Alumno
     }
 
     /**
+     * Permite establecer el idTutor.
      * @param int $idTutor
      */
     public function setIdTutor($idTutor)
@@ -342,10 +376,8 @@ class Alumno
     }
 
     /**
-     * Set telefono
-     *
-     * @param string $telefono
-     *
+     * Permite establecer el telefono.
+     * @param string $telefono el teléfono
      * @return Alumno
      */
     public function setTelefono($telefono)
@@ -356,9 +388,8 @@ class Alumno
     }
 
     /**
-     * Get telefono
-     *
-     * @return string
+     * Permite obtener el telefono.
+     * @return string telefono
      */
     public function getTelefono()
     {
@@ -366,10 +397,8 @@ class Alumno
     }
 
     /**
-     * Set email
-     *
-     * @param string $email
-     *
+     * Permite establecer el email.
+     * @param string $email el email
      * @return Alumno
      */
     public function setEmail($email)
@@ -380,9 +409,8 @@ class Alumno
     }
 
     /**
-     * Get email
-     *
-     * @return string
+     * Permite obtener el email.
+     * @return string email
      */
     public function getEmail()
     {
@@ -390,10 +418,8 @@ class Alumno
     }
 
     /**
-     * Set direccion
-     *
-     * @param string $direccion
-     *
+     * Permite establecer la dirección.
+     * @param string $direccion la dirección
      * @return Alumno
      */
     public function setDireccion($direccion)
@@ -404,9 +430,8 @@ class Alumno
     }
 
     /**
-     * Get direccion
-     *
-     * @return string
+     * Permite obtener la dirección.
+     * @return string direccion
      */
     public function getDireccion()
     {
@@ -414,10 +439,8 @@ class Alumno
     }
 
     /**
-     * Set puntos
-     *
-     * @param integer $puntos
-     *
+     * Permite establecer los puntos.
+     * @param int $puntos los puntos
      * @return Alumno
      */
     public function setPuntos($puntos)
@@ -428,9 +451,8 @@ class Alumno
     }
 
     /**
-     * Get puntos
-     *
-     * @return int
+     * Permite obtener los puntos.
+     * @return int puntos
      */
     public function getPuntos()
     {
@@ -438,13 +460,11 @@ class Alumno
     }
 
     /**
-     * Set idUsuario
-     *
-     * @param \AppBundle\Entity\Usuarios $idUsuario
-     *
+     * Permite establecer el idUsuario.
+     * @param Usuarios $idUsuario el idUsuario
      * @return Alumno
      */
-    public function setIdUsuario(\AppBundle\Entity\Usuarios $idUsuario = null)
+    public function setIdUsuario(Usuarios $idUsuario = null)
     {
         $this->idUsuario = $idUsuario;
 
@@ -452,9 +472,8 @@ class Alumno
     }
 
     /**
-     * Get idUsuario
-     *
-     * @return \AppBundle\Entity\Usuarios
+     * Permite obtener el idUsuario.
+     * @return int idUsuario
      */
     public function getIdUsuario()
     {
@@ -462,7 +481,8 @@ class Alumno
     }
 
     /**
-     * @return string
+     * Permite obtener el código postal.
+     * @return string codigoPostal
      */
     public function getCodigoPostal()
     {
@@ -470,7 +490,8 @@ class Alumno
     }
 
     /**
-     * @param string $codigoPostal
+     * Permite establecer el código postal.
+     * @param string $codigoPostal el código postal
      */
     public function setCodigoPostal($codigoPostal)
     {
@@ -478,7 +499,8 @@ class Alumno
     }
 
     /**
-     * @return string
+     * Permite obtener la foto.
+     * @return string foto
      */
     public function getFoto()
     {
@@ -486,7 +508,8 @@ class Alumno
     }
 
     /**
-     * @param string $foto
+     * Permite establecer la foto.
+     * @param string $foto la foto
      */
     public function setFoto($foto)
     {
@@ -494,7 +517,8 @@ class Alumno
     }
 
     /**
-     * @return int
+     * Permite obtener el teléfono de TL1.
+     * @return int telefonoTL1
      */
     public function getTelefonoTL1()
     {
@@ -502,7 +526,9 @@ class Alumno
     }
 
     /**
-     * @param int $telefonoTL1
+     * Permite establecer el teléfono de TL1.
+     * @param int $telefonoTL1 el teléfono de TL1
+     * @return Alumno
      */
     public function setTelefonoTL1($telefonoTL1)
     {
@@ -512,7 +538,8 @@ class Alumno
     }
 
     /**
-     * @return int
+     * Permite obtener el teléfono de TL2.
+     * @return int telefonoTL2
      */
     public function getTelefonoTL2()
     {
@@ -520,7 +547,9 @@ class Alumno
     }
 
     /**
-     * @param int $telefonoTL2
+     * Permite establecer el teléfono de TL2.
+     * @param int $telefonoTL2 el teléfono de TL2
+     * @return Alumno
      */
     public function setTelefonoTL2($telefonoTL2)
     {
@@ -530,7 +559,8 @@ class Alumno
     }
 
     /**
-     * @return boolean
+     * Permite obtener la comprobación del envío de sms al TL1.
+     * @return bool true si está activo, false en caso contrario
      */
     public function getMsgTL1()
     {
@@ -538,7 +568,9 @@ class Alumno
     }
 
     /**
-     * @param boolean $msgTL1
+     * Permite establecer la comprobación del envío de sms al TL1.
+     * @param bool $msgTL1
+     * @return Alumno
      */
     public function setMsgTL1($msgTL1)
     {
@@ -548,7 +580,8 @@ class Alumno
     }
 
     /**
-     * @return boolean
+     * Permite obtener la comprobación del envío de sms al TL2.
+     * @return bool true si está activo, false en caso contrario
      */
     public function getMsgTL2()
     {
@@ -556,7 +589,9 @@ class Alumno
     }
 
     /**
-     * @param boolean $msgTL2
+     * Permite establecer la comprobación del envío de sms al TL2.
+     * @param bool $msgTL2
+     * @return Alumno
      */
     public function setMsgTL2($msgTL2)
     {
@@ -566,7 +601,8 @@ class Alumno
     }
 
     /**
-     * @return string
+     * Permite obtener el nombre del TL1.
+     * @return string tutorL1
      */
     public function getTutorL1()
     {
@@ -574,7 +610,9 @@ class Alumno
     }
 
     /**
-     * @param string $tutorL1
+     * Permite establecer el nombre del TL1.
+     * @param string $tutorL1 el nombre del TL1
+     * @return Alumno
      */
     public function setTutorL1($tutorL1)
     {
@@ -584,7 +622,8 @@ class Alumno
     }
 
     /**
-     * @return string
+     * Permite obtener el nombre del TL2.
+     * @return string tutorL1
      */
     public function getTutorL2()
     {
@@ -592,7 +631,9 @@ class Alumno
     }
 
     /**
-     * @param string $tutorL2
+     * Permite establecer el nombre del TL2.
+     * @param string $tutorL2 el nombre del TL2
+     * @return Alumno
      */
     public function setTutorL2($tutorL2)
     {
@@ -601,12 +642,9 @@ class Alumno
         return $this;
     }
 
-
     /**
-     * Set puntosIniciales
-     *
-     * @param integer $puntosIniciales
-     *
+     * Permite establecer los puntosIniciales.
+     * @param int $puntosIniciales puntos iniciales
      * @return Alumno
      */
     public function setPuntosIniciales($puntosIniciales)
@@ -617,30 +655,30 @@ class Alumno
     }
 
     /**
-     * Get puntosIniciales
-     *
-     * @return integer
+     * Permite obtener los puntos iniciales.
+     * @return int puntosIniciales
      */
     public function getPuntosIniciales()
     {
         return $this->puntosIniciales;
     }
+
     /**
-     * Constructor
+     * Constructor.
      */
     public function __construct()
     {
-        $this->idTutor = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->idTutor = new ArrayCollection();
     }
 
     /**
-     * Add idTutor
+     * Añade un idTutor.
      *
-     * @param \AppBundle\Entity\Tutores $idTutor
+     * @param Tutores $idTutor
      *
      * @return Alumno
      */
-    public function addIdTutor(\AppBundle\Entity\Tutores $idTutor)
+    public function addIdTutor(Tutores $idTutor)
     {
         $this->idTutor[] = $idTutor;
 
@@ -648,11 +686,11 @@ class Alumno
     }
 
     /**
-     * Remove idTutor
+     * Elimina un idTutor.
      *
-     * @param \AppBundle\Entity\Tutores $idTutor
+     * @param Tutores $idTutor
      */
-    public function removeIdTutor(\AppBundle\Entity\Tutores $idTutor)
+    public function removeIdTutor(Tutores $idTutor)
     {
         $this->idTutor->removeElement($idTutor);
     }

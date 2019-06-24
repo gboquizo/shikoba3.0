@@ -1,11 +1,20 @@
 <?php
+/**
+ * @User: Guillermo Boquizo Sánchez (GUBS), Rafael García Zurita (RAGZ).
+ * @File: Tutores.php
+ * @Updated: 2019
+ * @Description: Entidad para los tutores (por definir).
+ *
+ * @license http://opensource.org/licenses/gpl-license.php  GNU Public License
+ */
 
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
- * Tutores
+ * Class Tutores.
  *
  * @ORM\Table(name="tutores")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\TutoresRepository")
@@ -13,6 +22,7 @@ use Doctrine\ORM\Mapping as ORM;
 class Tutores
 {
     /**
+     * Id principal de la clase.
      * @var int
      *
      * @ORM\Column(name="id", type="integer")
@@ -22,6 +32,7 @@ class Tutores
     private $id;
 
     /**
+     * idUsuario.
      * @var int
      *
      * @ORM\ManyToOne(targetEntity="Usuarios")
@@ -30,6 +41,7 @@ class Tutores
     private $idUsuario;
 
     /**
+     * idAlumno.
      * @var int
      * @ORM\ManyToMany(targetEntity="Alumno")
      * @ORM\JoinColumn(name="idAlumno", referencedColumnName="id")
@@ -37,6 +49,7 @@ class Tutores
     private $idAlumno;
 
     /**
+     * Nombre.
      * @var string
      *
      * @ORM\Column(name="nombre", type="string", length=255)
@@ -44,6 +57,7 @@ class Tutores
     private $nombre;
 
     /**
+     * Primer apellido.
      * @var string
      *
      * @ORM\Column(name="apellido1", type="string", length=255)
@@ -51,6 +65,7 @@ class Tutores
     private $apellido1;
 
     /**
+     * Segundo apellido.
      * @var string
      *
      * @ORM\Column(name="apellido2", type="string", length=255)
@@ -58,6 +73,7 @@ class Tutores
     private $apellido2;
 
     /**
+     * Teléfono.
      * @var int
      *
      * @ORM\Column(name="telefono", type="integer", unique=true)
@@ -65,15 +81,15 @@ class Tutores
     private $telefono;
 
     /**
+     * Email.
      * @var string
      *
      * @ORM\Column(name="email", type="string", length=50)
      */
     private $email;
 
-
     /**
-     * Get id
+     * Permite obtener el id.
      *
      * @return int
      */
@@ -83,7 +99,7 @@ class Tutores
     }
 
     /**
-     * Set nombre
+     * Establece el nombre.
      *
      * @param string $nombre
      *
@@ -97,7 +113,7 @@ class Tutores
     }
 
     /**
-     * Get nombre
+     * Permite obtener el nombre.
      *
      * @return string
      */
@@ -107,7 +123,7 @@ class Tutores
     }
 
     /**
-     * Set apellido1
+     * Establece el apellido1.
      *
      * @param string $apellido1
      *
@@ -121,7 +137,7 @@ class Tutores
     }
 
     /**
-     * Get apellido1
+     * Permite obtener el apellido1.
      *
      * @return string
      */
@@ -131,7 +147,7 @@ class Tutores
     }
 
     /**
-     * Set apellido2
+     * Establece el apellido2.
      *
      * @param string $apellido2
      *
@@ -145,7 +161,7 @@ class Tutores
     }
 
     /**
-     * Get apellido2
+     * Permite obtener el apellido2.
      *
      * @return string
      */
@@ -155,9 +171,9 @@ class Tutores
     }
 
     /**
-     * Set telefono
+     * Establece el teléfono.
      *
-     * @param integer $telefono
+     * @param int $telefono
      *
      * @return Tutores
      */
@@ -169,7 +185,7 @@ class Tutores
     }
 
     /**
-     * Get telefono
+     * Permite obtener el telefono.
      *
      * @return int
      */
@@ -179,7 +195,7 @@ class Tutores
     }
 
     /**
-     * Set email
+     * Establece el email.
      *
      * @param string $email
      *
@@ -193,6 +209,7 @@ class Tutores
     }
 
     /**
+     * Permite obtener el idAlumno.
      * @return int
      */
     public function getIdAlumno()
@@ -201,6 +218,7 @@ class Tutores
     }
 
     /**
+     * Establece el idAlumno.
      * @param int $idAlumno
      */
     public function setIdAlumno($idAlumno)
@@ -209,7 +227,7 @@ class Tutores
     }
 
     /**
-     * Get email
+     * Permite obtener el email.
      *
      * @return string
      */
@@ -218,21 +236,21 @@ class Tutores
         return $this->email;
     }
     /**
-     * Constructor
+     * Constructor.
      */
     public function __construct()
     {
-        $this->idAlumno = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->idAlumno = new ArrayCollection();
     }
 
     /**
-     * Set idUsuario
+     * Set idUsuario.
      *
-     * @param \AppBundle\Entity\Usuarios $idUsuario
+     * @param Usuarios $idUsuario
      *
      * @return Tutores
      */
-    public function setIdUsuario(\AppBundle\Entity\Usuarios $idUsuario = null)
+    public function setIdUsuario(Usuarios $idUsuario = null)
     {
         $this->idUsuario = $idUsuario;
 
@@ -240,9 +258,9 @@ class Tutores
     }
 
     /**
-     * Get idUsuario
+     * Get idUsuario.
      *
-     * @return \AppBundle\Entity\Usuarios
+     * @return int
      */
     public function getIdUsuario()
     {
@@ -250,13 +268,13 @@ class Tutores
     }
 
     /**
-     * Add idAlumno
+     * Add idAlumno.
      *
-     * @param \AppBundle\Entity\Alumno $idAlumno
+     * @param Alumno $idAlumno
      *
      * @return Tutores
      */
-    public function addIdAlumno(\AppBundle\Entity\Alumno $idAlumno)
+    public function addIdAlumno(Alumno $idAlumno)
     {
         $this->idAlumno[] = $idAlumno;
 
@@ -264,14 +282,12 @@ class Tutores
     }
 
     /**
-     * Remove idAlumno
+     * Remove idAlumno.
      *
      * @param \AppBundle\Entity\Alumno $idAlumno
      */
-    public function removeIdAlumno(\AppBundle\Entity\Alumno $idAlumno)
+    public function removeIdAlumno(Alumno $idAlumno)
     {
         $this->idAlumno->removeElement($idAlumno);
     }
-
-
 }

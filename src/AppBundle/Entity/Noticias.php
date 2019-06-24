@@ -1,72 +1,93 @@
 <?php
+/**
+ * @User: Guillermo Boquizo Sánchez (GUBS), Rafael García Zurita (RAGZ).
+ * @File: Noticias.php
+ * @Updated: 2019
+ * @Description: Entidad para las noticias.
+ *
+ * @license http://opensource.org/licenses/gpl-license.php  GNU Public License
+ */
 
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Validator\Constraints as Assert;
+use Exception;
+use DateTime;
+
+//use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * Noticias
+ * Class Noticias.
  * @ORM\Table(name="noticias")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\NoticiasRepository")
  */
 class Noticias
 {
     /**
-     * @var \DateTime
+     * Fecha.
+     * @var DateTime
      * @ORM\Column(name="fecha", type="datetime", options={"default"="CURRENT_TIMESTAMP"})
      */
     private $fecha;
 
+    /**
+     * Noticias constructor.
+     * @throws Exception
+     */
     public function __construct()
     {
-        $this->fecha = new \DateTime();
+        $this->fecha = new DateTime();
         //$this->fechaInicio(new \DateTime());
     }
+
     /**
-     * @var \DateTime
+     * Fecha de inicio.
+     * @var DateTime
      * @ORM\Column(name="fechaInicio", type="datetime", options={"default"="CURRENT_TIMESTAMP"})
      */
     private $fechaInicio;
 
     /**
-     * @var \DateTime
+     * Fecha final.
+     * @var DateTime
      * @ORM\Column(name="fechaFinal", type="datetime", options={"default"="CURRENT_TIMESTAMP"})
      */
     private $fechaFinal;
+
     /**
+     * Puntos.
      * @var int
      *
      * @ORM\Column(name="puntos", type="integer", options={"default"="0"})
      */
     private $puntos;
+
     /**
+     * Id principal de la clase.
      * @var int
      * @ORM\Id
      * @ORM\Column(name="id", type="integer", nullable=false)
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-
     private $id;
 
     /**
+     * Texto de la noticia.
      * @ORM\Column(name="noticia_texto", type="text")
      * @var string
      */
     private $noticia_texto;
 
-
     /**
+     * idCurso.
      * @var int
      * @ORM\ManyToOne(targetEntity="Cursos")
      * @ORM\JoinColumn(name="idCurso", referencedColumnName="id")
      */
     private $idCurso;
 
-
-
     /**
-     * Get id
+     * Permite obtener el id.
      *
      * @return int
      */
@@ -75,31 +96,32 @@ class Noticias
         return $this->id;
     }
 
-    /**
-     * Set noticia_texto
-     *
-     * @param string $noticia_texto
-     *
-     * @return Noticias
-     */
-    public function setNoticia_texto($noticia_texto)
-    {
-        $this->noticia_texto = $noticia_texto;
+//    /**
+//     * Establece la noticia_texto.
+//     *
+//     * @param string $noticia_texto
+//     *
+//     * @return Noticias
+//     */
+//    public function setNoticia_texto($noticia_texto)
+//    {
+//        $this->noticia_texto = $noticia_texto;
+//
+//        return $this;
+//    }
+//
+//    /**
+//     * Permite obtener la noticia_texto.
+//     *
+//     * @return string
+//     */
+//    public function getNoticia_texto()
+//    {
+//        return $this->noticia_texto;
+//    }
 
-        return $this;
-    }
-
     /**
-     * Get noticia_texto
-     *
-     * @return string
-     */
-    public function getNoticia_texto()
-    {
-        return $this->noticia_texto;
-    }
-    /**
-     * Set noticiaTexto
+     * Establece la noticiaTexto.
      *
      * @param string $noticia_texto
      *
@@ -113,7 +135,7 @@ class Noticias
     }
 
     /**
-     * Get noticiaTexto
+     * Permite obtener la noticiaTexto.
      *
      * @return string
      */
@@ -121,12 +143,13 @@ class Noticias
     {
         return $this->noticia_texto;
     }
+
     /**
-     * Set puntos
+     * Establece los puntos.
      *
-     * @param integer $puntos
+     * @param int $puntos
      *
-     * @return Alumno
+     * @return Noticias
      */
     public function setPuntos($puntos)
     {
@@ -136,7 +159,7 @@ class Noticias
     }
 
     /**
-     * Get puntos
+     * Permite obtener los puntos.
      *
      * @return int
      */
@@ -144,8 +167,9 @@ class Noticias
     {
         return $this->puntos;
     }
+
     /**
-     * Set fecha
+     * Establece la fecha.
      *
      * @param string $fecha
      *
@@ -159,7 +183,7 @@ class Noticias
     }
 
     /**
-     * Get fecha
+     * Permite obtener la fecha.
      *
      * @return string
      */
@@ -168,7 +192,7 @@ class Noticias
         return $this->fecha;
     }
     /**
-     * Set fechaInicio
+     * Establece la fechaInicio.
      *
      * @param string $fechaInicio
      *
@@ -182,7 +206,7 @@ class Noticias
     }
 
     /**
-     * Get fechaInicio
+     * Permite obtener la fechaInicio.
      *
      * @return string
      */
@@ -191,7 +215,7 @@ class Noticias
         return $this->fechaInicio;
     }
     /**
-     * Set fechaFinal
+     * Establece la fechaFinal.
      *
      * @param string $fechaFinal
      *
@@ -205,7 +229,7 @@ class Noticias
     }
 
     /**
-     * Get fechaFinal
+     * Permite obtener la fechaFinal.
      *
      * @return string
      */
@@ -215,9 +239,9 @@ class Noticias
     }
 
     /**
-     * Set idCurso
+     * Establece el idCurso.
      *
-     * @param integer $idCurso
+     * @param int $idCurso
      *
      * @return Noticias
      */
@@ -229,7 +253,7 @@ class Noticias
     }
 
     /**
-     * Get idCurso
+     * Permite obtener el idCurso.
      *
      * @return int
      */
@@ -238,4 +262,3 @@ class Noticias
         return $this->idCurso;
     }
 }
-
