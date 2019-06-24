@@ -1,14 +1,18 @@
 <?php
+/**
+ * @User: Guillermo Boquizo Sánchez (GUBS), Rafael García Zurita (RAGZ).
+ * @File: CsvResponse.php
+ * @Updated: 2019
+ * @Description: Clase para la gestión de los csv.
+ * @license http://opensource.org/licenses/gpl-license.php  GNU Public License
+ */
 
 namespace AppBundle\Utils;
 
 use Symfony\Component\HttpFoundation\Response;
 
 /**
- * Created by PhpStorm.
- * User: maze
- * Date: 7/06/17
- * Time: 17:03
+ * Class CsvResponse.
  */
 class CsvResponse extends Response
 {
@@ -49,10 +53,7 @@ class CsvResponse extends Response
 
     protected function update()
     {
-        $this->headers->set(
-            'Content-Disposition',
-            sprintf('attachment; filename="%s"', $this->filename));
-        
+        $this->headers->set('Content-Disposition', sprintf('attachment; filename="%s"', $this->filename));
         if (!$this->headers->has('Content-Type')) {
             $this->headers->set('Content-Type', 'application/vnd.ms-excel;charset=utf-8');
         }

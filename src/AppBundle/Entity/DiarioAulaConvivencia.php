@@ -1,11 +1,20 @@
 <?php
+/**
+ * @User: Guillermo Boquizo Sánchez (GUBS), Rafael García Zurita (RAGZ).
+ * @File: DiarioAulaConvivencia.php
+ * @Updated: 2019
+ * @Description: Entidad para el diario del aula de convivencia.
+ *
+ * @license http://opensource.org/licenses/gpl-license.php  GNU Public License
+ */
 
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use DateTime;
 
 /**
- * DiarioAulaConvivencia
+ * Class DiarioAulaConvivencia.
  *
  * @ORM\Table(name="diario_aula_convivencia")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\DiarioAulaConvivenciaRepository")
@@ -13,6 +22,7 @@ use Doctrine\ORM\Mapping as ORM;
 class DiarioAulaConvivencia
 {
     /**
+     * Id principal de la clase.
      * @var int
      *
      * @ORM\Column(name="id", type="integer")
@@ -22,13 +32,15 @@ class DiarioAulaConvivencia
     private $id;
 
     /**
-     * @var \DateTime
+     * Fecha.
+     * @var DateTime
      *
      * @ORM\Column(name="fecha", type="datetime")
      */
     private $fecha;
 
     /**
+     * Hora.
      * @var int
      *
      * @ORM\Column(name="hora", type="integer")
@@ -36,6 +48,7 @@ class DiarioAulaConvivencia
     private $hora;
 
     /**
+     * Observaciones.
      * @var string
      *
      * @ORM\Column(name="observaciones", type="string", length=255, nullable=true)
@@ -43,6 +56,7 @@ class DiarioAulaConvivencia
     private $observaciones;
 
     /**
+     * Actitud.
      * @var string
      *
      * @ORM\Column(name="actitud", type="string", length=255, columnDefinition="enum('A', 'B', 'C')", nullable=true)
@@ -50,14 +64,15 @@ class DiarioAulaConvivencia
     private $actitud;
 
     /**
+     * Trabajo.
      * @var string
      *
      * @ORM\Column(name="trabajo", type="string", length=255, columnDefinition="enum('A', 'B', 'C')", nullable=true)
      */
     private $trabajo;
 
-
     /**
+     * Id del profesor del aula.
      * @var int
      *
      * @ORM\ManyToOne(targetEntity="Profesores")
@@ -66,6 +81,7 @@ class DiarioAulaConvivencia
     private $idProfesor;
 
     /**
+     * Id de la sanción.
      * @var int
      *
      * @ORM\ManyToOne(targetEntity="Sanciones")
@@ -74,6 +90,7 @@ class DiarioAulaConvivencia
     private $idSancion;
 
     /**
+     * Asistencia.
      * @var int
      *
      * @ORM\Column(name="asiste", type="integer")
@@ -81,22 +98,25 @@ class DiarioAulaConvivencia
     private $asiste;
 
     /**
+     * Recuperación de puntos.
      * @var int
      * @ORM\Column(name="recupera", type="integer")
      */
     private $recupera;
 
-
-    function __construct()
+    /**
+     * DiarioAulaConvivencia constructor.
+     */
+    public function __construct()
     {
         $this->asiste = 0;
         $this->recupera = 0;
     }
 
     /**
-     * Get id
+     * Obtiene el id.
      *
-     * @return int
+     * @return int id
      */
     public function getId()
     {
@@ -104,9 +124,9 @@ class DiarioAulaConvivencia
     }
 
     /**
-     * Set fecha
+     * Establece la fecha.
      *
-     * @param \DateTime $fecha
+     * @param DateTime $fecha la fecha
      *
      * @return DiarioAulaConvivencia
      */
@@ -118,9 +138,9 @@ class DiarioAulaConvivencia
     }
 
     /**
-     * Get fecha
+     * Obtiene la fecha.
      *
-     * @return \DateTime
+     * @return DateTime
      */
     public function getFecha()
     {
@@ -128,9 +148,9 @@ class DiarioAulaConvivencia
     }
 
     /**
-     * Set hora
+     * Establece la hora.
      *
-     * @param integer $hora
+     * @param int $hora la hora
      *
      * @return DiarioAulaConvivencia
      */
@@ -142,9 +162,9 @@ class DiarioAulaConvivencia
     }
 
     /**
-     * Get hora
+     * Obtiene la hora.
      *
-     * @return int
+     * @return int hora
      */
     public function getHora()
     {
@@ -152,7 +172,7 @@ class DiarioAulaConvivencia
     }
 
     /**
-     * Set observaciones
+     * Establece las observaciones.
      *
      * @param string $observaciones
      *
@@ -166,7 +186,7 @@ class DiarioAulaConvivencia
     }
 
     /**
-     * Get observaciones
+     * Obtiene las observaciones.
      *
      * @return string
      */
@@ -176,7 +196,7 @@ class DiarioAulaConvivencia
     }
 
     /**
-     * Set actitud
+     * Establece la actitud.
      *
      * @param string $actitud
      *
@@ -190,7 +210,7 @@ class DiarioAulaConvivencia
     }
 
     /**
-     * Get actitud
+     * Obtiene la actitud.
      *
      * @return string
      */
@@ -200,7 +220,7 @@ class DiarioAulaConvivencia
     }
 
     /**
-     * Set trabajo
+     * Establece el trabajo.
      *
      * @param string $trabajo
      *
@@ -214,7 +234,7 @@ class DiarioAulaConvivencia
     }
 
     /**
-     * Get trabajo
+     * Obtiene el trabajo.
      *
      * @return string
      */
@@ -224,9 +244,9 @@ class DiarioAulaConvivencia
     }
 
     /**
-     * Set idProfesor
+     * Establece el idProfesor.
      *
-     * @param integer $idProfesor
+     * @param int $idProfesor
      *
      * @return DiarioAulaConvivencia
      */
@@ -238,9 +258,9 @@ class DiarioAulaConvivencia
     }
 
     /**
-     * Get idProfesor
+     * Obtiene el idProfesor.
      *
-     * @return int
+     * @return int idProfesor
      */
     public function getIdProfesor()
     {
@@ -248,13 +268,13 @@ class DiarioAulaConvivencia
     }
 
     /**
-     * Set idSancion
+     * Establece el idSancion.
      *
-     * @param \AppBundle\Entity\Sanciones $idSancion
+     * @param Sanciones $idSancion el idSancion
      *
      * @return DiarioAulaConvivencia
      */
-    public function setIdSancion(\AppBundle\Entity\Sanciones $idSancion = null)
+    public function setIdSancion(Sanciones $idSancion = null)
     {
         $this->idSancion = $idSancion;
 
@@ -262,9 +282,9 @@ class DiarioAulaConvivencia
     }
 
     /**
-     * Get idSancion
+     * Obtiene el idSancion.
      *
-     * @return \AppBundle\Entity\Sanciones
+     * @return int
      */
     public function getIdSancion()
     {
@@ -272,9 +292,9 @@ class DiarioAulaConvivencia
     }
 
     /**
-     * Set asiste
+     * Establece si asiste.
      *
-     * @param integer $asiste
+     * @param int $asiste
      *
      * @return DiarioAulaConvivencia
      */
@@ -286,9 +306,9 @@ class DiarioAulaConvivencia
     }
 
     /**
-     * Get asiste
+     * Obtiene si asiste.
      *
-     * @return integer
+     * @return int
      */
     public function getAsiste()
     {
@@ -296,9 +316,9 @@ class DiarioAulaConvivencia
     }
 
     /**
-     * Set recupera
+     * Establece si recupera puntos.
      *
-     * @param integer $recupera
+     * @param int $recupera
      *
      * @return DiarioAulaConvivencia
      */
@@ -310,9 +330,9 @@ class DiarioAulaConvivencia
     }
 
     /**
-     * Get recupera
+     * Obtiene si recupera puntos.
      *
-     * @return integer
+     * @return int
      */
     public function getRecupera()
     {

@@ -1,28 +1,42 @@
 <?php
+/**
+ * @User: Guillermo Boquizo Sánchez (GUBS), Rafael García Zurita (RAGZ).
+ * @File: Sanciones.php
+ * @Updated: 2019
+ * @Description: Entidad para las sanciones.
+ *
+ * @license http://opensource.org/licenses/gpl-license.php  GNU Public License
+ */
 
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Exception;
+use DateTime;
 
 /**
- * Sanciones
+ * Class Sanciones.
  *
  * @ORM\Table(name="sanciones")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\SancionesRepository")
  */
 class Sanciones
 {
-
-    function __construct()
+    /**
+     * Sanciones constructor.
+     * @throws Exception
+     */
+    public function __construct()
     {
-        $this->fecha = new \DateTime();
-        $this->fechaFinal = new \DateTime();
-        $this->fechaInicio = new \DateTime();
+        $this->fecha = new DateTime();
+        $this->fechaFinal = new DateTime();
+        $this->fechaInicio = new DateTime();
         $this->fechaComunicacion = null;
         $this->fechaConfirmacion = null;
     }
 
     /**
+     * Id principal de la clase.
      * @var int
      *
      * @ORM\Column(name="id", type="integer")
@@ -32,27 +46,31 @@ class Sanciones
     private $id;
 
     /**
-     * @var \DateTime
+     * Fecha.
+     * @var DateTime
      *
      * @ORM\Column(name="fecha", type="datetime")
      */
     private $fecha;
 
     /**
-     * @var \DateTime
+     * Fecha de inicio.
+     * @var DateTime
      *
      * @ORM\Column(name="fechaInicio", type="datetime")
      */
     private $fechaInicio;
 
     /**
-     * @var \DateTime
+     * Fecha final.
+     * @var DateTime
      *
      * @ORM\Column(name="fechaFinal", type="datetime")
      */
     private $fechaFinal;
 
     /**
+     * Sanción.
      * @var string
      *
      * @ORM\Column(name="sancion", type="string", length=255)
@@ -60,6 +78,7 @@ class Sanciones
     private $sancion;
 
     /**
+     * Observaciones.
      * @var string
      *
      * @ORM\Column(name="observaciones", type="string", length=255, nullable=true)
@@ -67,6 +86,7 @@ class Sanciones
     private $observaciones;
 
     /**
+     * Evaluación.
      * @var string
      *
      * @ORM\Column(name="evaluacion", type="string", length=255, nullable=true)
@@ -74,6 +94,7 @@ class Sanciones
     private $evaluacion;
 
     /**
+     * Puntos recuperados.
      * @var int
      *
      * @ORM\Column(name="puntosRecuperados", type="integer", nullable=true)
@@ -81,6 +102,7 @@ class Sanciones
     private $puntosRecuperados = 0;
 
     /**
+     * Fecha de confirmación.
      * @var string
      *
      * @ORM\Column(name="fechaConfirmacion", type="string", nullable=true)
@@ -88,6 +110,7 @@ class Sanciones
     private $fechaConfirmacion;
 
     /**
+     * Fecha de comunicación.
      * @var string
      *
      * @ORM\Column(name="fechaComunicacion", type="string", nullable=true)
@@ -95,14 +118,16 @@ class Sanciones
     private $fechaComunicacion;
 
     /**
+     * idTipo.
      * @var int
      *
-         * @ORM\ManyToOne(targetEntity="TipoSancion")
-         * @ORM\JoinColumn(name="idTipo", referencedColumnName="id")
+     * @ORM\ManyToOne(targetEntity="TipoSancion")
+     * @ORM\JoinColumn(name="idTipo", referencedColumnName="id")
      */
     private $idTipo;
 
     /**
+     * idEstado.
      * @var int
      *
      * @ORM\ManyToOne(targetEntity="EstadosSancion")
@@ -111,6 +136,7 @@ class Sanciones
     private $idEstado;
 
     /**
+     * idAlumno.
      * @var int
      *
      * @ORM\ManyToOne(targetEntity="Alumno")
@@ -119,6 +145,7 @@ class Sanciones
     private $idAlumno;
 
     /**
+     * idParte.
      * @var int
      *
      * @ORM\ManyToMany(targetEntity="Partes", inversedBy="sancion", cascade={"remove", "persist"})
@@ -127,7 +154,7 @@ class Sanciones
     private $idParte;
 
     /**
-     * Get id
+     * Permite obtener el id.
      *
      * @return int
      */
@@ -137,9 +164,9 @@ class Sanciones
     }
 
     /**
-     * Set fecha
+     * Establece la fecha.
      *
-     * @param \DateTime $fecha
+     * @param DateTime $fecha
      *
      * @return Sanciones
      */
@@ -151,9 +178,9 @@ class Sanciones
     }
 
     /**
-     * Get fecha
+     * Permite obtener la fecha.
      *
-     * @return \DateTime
+     * @return DateTime
      */
     public function getFecha()
     {
@@ -161,9 +188,9 @@ class Sanciones
     }
 
     /**
-     * Set fechaInicio
+     * Establece la fechaInicio.
      *
-     * @param \DateTime $fechaInicio
+     * @param DateTime $fechaInicio
      *
      * @return Sanciones
      */
@@ -175,9 +202,9 @@ class Sanciones
     }
 
     /**
-     * Get fechaInicio
+     * Permite obtener la fechaInicio.
      *
-     * @return \DateTime
+     * @return DateTime
      */
     public function getFechaInicio()
     {
@@ -185,9 +212,9 @@ class Sanciones
     }
 
     /**
-     * Set fechaFinal
+     * Establece la fechaFinal.
      *
-     * @param \DateTime $fechaFinal
+     * @param DateTime $fechaFinal
      *
      * @return Sanciones
      */
@@ -199,9 +226,9 @@ class Sanciones
     }
 
     /**
-     * Get fechaFinal
+     * Permite obtener la fechaFinal.
      *
-     * @return \DateTime
+     * @return DateTime
      */
     public function getFechaFinal()
     {
@@ -209,7 +236,7 @@ class Sanciones
     }
 
     /**
-     * Set sancion
+     * Establece la sanción.
      *
      * @param string $sancion
      *
@@ -223,7 +250,7 @@ class Sanciones
     }
 
     /**
-     * Get sancion
+     * Permite obtener la sanción.
      *
      * @return string
      */
@@ -233,7 +260,7 @@ class Sanciones
     }
 
     /**
-     * Set observaciones
+     * Establece las observaciones.
      *
      * @param string $observaciones
      *
@@ -247,7 +274,7 @@ class Sanciones
     }
 
     /**
-     * Get observaciones
+     * Permite obtener las observaciones.
      *
      * @return string
      */
@@ -257,7 +284,7 @@ class Sanciones
     }
 
     /**
-     * Set evaluacion
+     * Establece la evaluación.
      *
      * @param string $evaluacion
      *
@@ -271,7 +298,7 @@ class Sanciones
     }
 
     /**
-     * Get evaluacion
+     * Permite obtener la evaluacion.
      *
      * @return string
      */
@@ -281,9 +308,9 @@ class Sanciones
     }
 
     /**
-     * Set puntosRecuperados
+     * Establece los puntosRecuperados.
      *
-     * @param integer $puntosRecuperados
+     * @param int $puntosRecuperados
      *
      * @return Sanciones
      */
@@ -295,7 +322,7 @@ class Sanciones
     }
 
     /**
-     * Get puntosRecuperados
+     * Permite obtener los puntosRecuperados.
      *
      * @return int
      */
@@ -305,6 +332,7 @@ class Sanciones
     }
 
     /**
+     * Permite obtener el idTipo.
      * @return int
      */
     public function getIdTipo()
@@ -313,6 +341,7 @@ class Sanciones
     }
 
     /**
+     * Establece el idTipo.
      * @param int $idTipo
      */
     public function setIdTipo($idTipo)
@@ -321,6 +350,7 @@ class Sanciones
     }
 
     /**
+     * Permite obtener el idEstado.
      * @return int
      */
     public function getIdEstado()
@@ -329,6 +359,7 @@ class Sanciones
     }
 
     /**
+     * Establece el idEstado.
      * @param int $idEstado
      */
     public function setIdEstado($idEstado)
@@ -337,9 +368,9 @@ class Sanciones
     }
 
     /**
-     * Set idAlumno
+     * Establece el idAlumno.
      *
-     * @param integer $idAlumno
+     * @param int $idAlumno
      *
      * @return Sanciones
      */
@@ -351,7 +382,7 @@ class Sanciones
     }
 
     /**
-     * Get idAlumno
+     * Permite obtener el idAlumno.
      *
      * @return int
      */
@@ -361,6 +392,7 @@ class Sanciones
     }
 
     /**
+     * Permite obtener el idParte.
      * @return int
      */
     public function getIdParte()
@@ -369,7 +401,9 @@ class Sanciones
     }
 
     /**
+     * Establece el idParte.
      * @param int $idParte
+     * @return Sanciones
      */
     public function setIdParte($idParte)
     {
@@ -378,13 +412,13 @@ class Sanciones
     }
 
     /**
-     * Add idParte
+     * Añade el idParte.
      *
-     * @param \AppBundle\Entity\Partes $idParte
+     * @param Partes $idParte
      *
      * @return Sanciones
      */
-    public function addIdParte(\AppBundle\Entity\Partes $idParte)
+    public function addIdParte(Partes $idParte)
     {
         $idParte->addSancion($this);
         $this->idParte[] = $idParte;
@@ -393,17 +427,17 @@ class Sanciones
     }
 
     /**
-     * Remove idParte
+     * Borra el idParte.
      *
-     * @param \AppBundle\Entity\Partes $idParte
+     * @param Partes $idParte
      */
-    public function removeIdParte(\AppBundle\Entity\Partes $idParte)
+    public function removeIdParte(Partes $idParte)
     {
         $this->idParte->removeElement($idParte);
     }
 
     /**
-     * Set fechaConfirmacion
+     * Establece la fechaConfirmacion.
      *
      * @param string $fechaConfirmacion
      *
@@ -417,7 +451,7 @@ class Sanciones
     }
 
     /**
-     * Get fechaConfirmacion
+     * Permite obtener la fechaConfirmacion.
      *
      * @return string
      */
@@ -427,7 +461,7 @@ class Sanciones
     }
 
     /**
-     * Set fechaComunicacion
+     * Establece la fechaComunicacion.
      *
      * @param string $fechaComunicacion
      *
@@ -441,7 +475,7 @@ class Sanciones
     }
 
     /**
-     * Get fechaComunicacion
+     * Permite obtener la fechaComunicacion.
      *
      * @return string
      */

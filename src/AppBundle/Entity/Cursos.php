@@ -1,18 +1,25 @@
 <?php
+/**
+ * @User: Guillermo Boquizo Sánchez (GUBS), Rafael García Zurita (RAGZ).
+ * @File: Cursos.php
+ * @Updated: 2019
+ * @Description: Entidad para los cursos.
+ * @license http://opensource.org/licenses/gpl-license.php  GNU Public License
+ */
 
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Cursos
- *
+ * Class Cursos.
  * @ORM\Table(name="cursos")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\CursosRepository")
  */
 class Cursos
 {
     /**
+     * Id principal de la clase.
      * @var int
      *
      * @ORM\Column(name="id", type="integer")
@@ -22,6 +29,7 @@ class Cursos
     private $id;
 
     /**
+     * Curso.
      * @var string
      *
      * @ORM\Column(name="curso", type="string", length=100)
@@ -29,14 +37,15 @@ class Cursos
     private $curso;
 
     /**
+     * Grupo.
      * @var string
      *
      * @ORM\Column(name="grupo", type="string", length=100)
      */
     private $grupo;
 
-
     /**
+     * Aula.
      * @var string
      *
      * @ORM\Column(name="aula", type="string", length=5)
@@ -44,18 +53,18 @@ class Cursos
     private $aula;
 
     /**
-     * @var integer
+     * IdTutor.
+     * @var int
      *
      * @ORM\ManyToOne(targetEntity="Profesores")
      * @ORM\JoinColumn(name="idtutor", referencedColumnName="id")
      */
     private $idTutor;
 
-
     /**
-     * Get id
+     * Permite obtener el id.
      *
-     * @return int
+     * @return int id
      */
     public function getId()
     {
@@ -63,9 +72,9 @@ class Cursos
     }
 
     /**
-     * Set curso
+     * Permite establecer el curso.
      *
-     * @param string $curso
+     * @param string $curso el curso
      *
      * @return Cursos
      */
@@ -77,9 +86,9 @@ class Cursos
     }
 
     /**
-     * Get curso
+     * Permite obtener el curso.
      *
-     * @return string
+     * @return string curso
      */
     public function getCurso()
     {
@@ -87,7 +96,8 @@ class Cursos
     }
 
     /**
-     * @return string
+     * Permite obtener el aula.
+     * @return string aula
      */
     public function getAula()
     {
@@ -95,7 +105,8 @@ class Cursos
     }
 
     /**
-     * @param string $aula
+     * Permite establecer el aula.
+     * @param string $aula el aula
      */
     public function setAula($aula)
     {
@@ -103,7 +114,8 @@ class Cursos
     }
 
     /**
-     * @return int
+     * Permite obtener el idTutor.
+     * @return int idTutor
      */
     public function getIdTutor()
     {
@@ -111,19 +123,18 @@ class Cursos
     }
 
     /**
-     * @param int $idTutor
+     * Permite establecer el idTutor.
+     * @param int $idTutor el idTutor
      */
     public function setIdTutor($idTutor)
     {
         $this->idTutor = $idTutor;
     }
 
-
-
     /**
-     * Set grupo
+     * Permite establecer el grupo.
      *
-     * @param string $grupo
+     * @param string $grupo el grupo
      *
      * @return Cursos
      */
@@ -135,23 +146,12 @@ class Cursos
     }
 
     /**
-     * Get grupo
+     * Permite obtener el grupo.
      *
-     * @return string
+     * @return string grupo
      */
     public function getGrupo()
     {
-        return $this->grupo;
-    }
-
-    /**
-     * Get grupo
-     *
-     * @return string
-     */
-    public function getGrupoSinTutor()
-    {
-        if ($this->getIdTutor() === null)
         return $this->grupo;
     }
 }

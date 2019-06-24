@@ -1,16 +1,24 @@
 <?php
+/**
+ * @User: Guillermo Boquizo Sánchez (GUBS), Rafael García Zurita (RAGZ).
+ * @File: PartesController.php
+ * @Updated: 2019
+ * @Description: Controlador de los partes.
+ * @license http://opensource.org/licenses/gpl-license.php  GNU Public License
+ */
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\AccionEstadoParte;
 use AppBundle\Entity\Alumno;
 use AppBundle\Entity\Conductas;
 use AppBundle\Entity\Cursos;
 use AppBundle\Entity\EstadosParte;
 use AppBundle\Entity\Partes;
 use AppBundle\Entity\Profesores;
-use AppBundle\Entity\Sanciones;
+//use AppBundle\Entity\Sanciones;
 use AppBundle\Entity\TipoParte;
-use AppBundle\Form\ParteExportFormType;
+//use AppBundle\Form\ParteExportFormType;
 use AppBundle\Form\ParteFormType;
 use AppBundle\Repository\AlumnoRepository;
 use AppBundle\Repository\CursosRepository;
@@ -34,19 +42,25 @@ use AppBundle\Config\SmsMessage;
 
 class PartesController extends Controller
 {
-
+    /**
+     * Constante para el estado inicial del parte.
+     */
     const ESTADO_INICIADO = 'Iniciado';
 
     /**
+     * Muestra los partes
      * @Route("/partes", name="gestion_partes")
      * @Method({"GET", "POST"})
+     * @param Request $request la petición a realizar.
+     * @return Response la vista a renderizar.
      */
     public function showGestionPartes(Request $request)
     {
-
         $em = $this->getDoctrine()->getManager();
+
         /** @var PartesRepository $repositoryPartes */
         $repositoryPartes = $em->getRepository("AppBundle:Partes");
+
         if ($request->query->has('like')) {
             if ($request->get('historico') != null)
                 $query = $repositoryPartes->getPartesLike($request->get('like'), true);
@@ -67,33 +81,53 @@ class PartesController extends Controller
     }
 
     /**
+     * Permite crear un parte.
      * @Route("/nuevoParte", name="nuevoParte")
      * @Method({"GET", "POST"})
+     * @param Request $request la petición a realizar.
+     * @throws \Exception
+     * @return Response la vista a renderizar.
      */
     public function crearParteAction(Request $request)
     {
         $recupera = false;
+
+        /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
+
         /** @var AlumnoHelper $alumnoHelper */
         $alumnoHelper = $this->get('app.alumnoHelper');
+
         /** @var PartesHelper $parteHelper */
         $parteHelper = $this->get('app.partesHelper');
+
         /** @var SmsHelper $smsHelper */
         $smsHelper = $this->get('app.smsHelper');
+
+        /** @var AccionEstadoParte $repositoryAccionPartes */
         $repositoryAccionPartes = $em->getRepository('AppBundle:AccionEstadoParte');
+
         /** @var CursosRepository $repositoryACursos */
         $repositoryACursos = $em->getRepository('AppBundle:Cursos');
+
         /** @var ConductasRepository $repositoryAConductas */
         $repositoryAConductas = $em->getRepository('AppBundle:Conductas');
+
         /** @var SancionesRepository $repositorySanciones */
         $repositorySanciones = $em->getRepository('AppBundle:Sanciones');
+
         /** @var Cursos $curso */
         $cursos = $repositoryACursos->getCursosGroupByCursos();
+
         /** @var Conductas $conductas */
         $conductas = $repositoryAConductas->getConductas();
+
         /** @var Alumno $alumnos */
         $alumnos = $alumnoHelper->getAlumnosByRequest($request);
+
+        /** @var Partes $parte */
         $parte = $parteHelper->getParteFromRequest($request);
+
         if ($request->query->has('idParte')) {
             if ((!in_array('ROLE_ADMIN', $this->getUser()->getRoles()) &&
                     in_array('ROLE_PROFESOR', $this->getUser()->getRoles())) &&
@@ -119,15 +153,22 @@ class PartesController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
                 $fechaParte = \DateTime::createFromFormat('d/m/Y', $request->get('fecha'));
                 $parte->setFecha($fechaParte);
+
            if ($parte->getDescripcion() == null || $parte->getIdAlumno() == null
                 || $parte->getIdProfesor() == null || $parte->getIdConducta()->isEmpty()) {
+
                $this->addFlash("parteError", "Error al generar el parte");
+
                return $this->redirectToRoute("nuevoParte");
+
             } else {
+
                 $em->persist($parte);
                 $em->flush();
+
                 //Comprobacion del checkbox de envio del sms
                 if ($request->get('envioSMS') != null) {
                     $telefonos = array();
@@ -140,6 +181,7 @@ class PartesController extends Controller
                         $telefonos[] = $parte->getIdAlumno()->getTelefonoTL2();
                     }
 
+                    //Redacto el mensaje, empleando la clase Config\SmsMessage y el nombre del alumno.
                     $pre = SmsMessage::getMessagePre();
                     $post = SmsMessage::getMessagePost();
                     $smsHelper->sendSms($telefonos, $pre . ' ' . $parte->getIdAlumno()->getNombreCompleto() . ' ' .$post);
@@ -168,8 +210,11 @@ class PartesController extends Controller
 
 
     /**
+     * Permite imprimir el parte.
      * @Route("/imprimirParte", name="printParte")
      * @Method({"GET", "POST"})
+     * @param Request $request la petición a realizar.
+     * @return Response la vista a renderizar.
      */
     public function printParteAction(Request $request)
     {
@@ -180,10 +225,12 @@ class PartesController extends Controller
         $html = $this->renderView('convivencia/partes/imprimirParte.html.twig', array(
             'partes' => $parte,
         ));
+
         $snappy = $this->get('knp_snappy.pdf');
         $snappy->setOption('no-outline', true);
         $snappy->setOption('page-size', 'LETTER');
         $snappy->setOption('encoding', 'UTF-8');
+
         $titulo = $parte->getIdAlumno()->getApellido1() . $parte->getIdAlumno()->getApellido2() . $parte->getIdAlumno()->getNombre();
         $filename = 'Parte' . $titulo;
         return new Response(
@@ -197,8 +244,12 @@ class PartesController extends Controller
     }
 
     /**
+     * Permite borrar el parte.
      * @Route("/borrarParte/{id}", name="borrar_parte")
      * @Method({"GET"})
+     * @param Partes $parte el parte a borrar.
+     * @throws \Exception
+     * @return Response la vista a renderizar.
      */
     public function removeParte(Partes $parte)
     {
@@ -208,13 +259,19 @@ class PartesController extends Controller
         )
             return $this->redirectToRoute('index');
 
-        $em = $this->getDoctrine()->getEntityManager();
+        /** @var EntityManager $em */
+        $em = $this->getDoctrine()->getManager();
+
         /** @var SancionesRepository $repositorySanciones */
         $repositorySanciones = $em->getRepository('AppBundle:Sanciones');
 
         try {
+
+            /** @var EntityManager $em */
             $em = $this->getDoctrine()->getManager();
+
             $em->remove($parte);
+
             $sanciones = $repositorySanciones->getSancionesByPartes($parte);
             foreach ($sanciones as $sancion)
                 $em->remove($sancion);
@@ -226,129 +283,158 @@ class PartesController extends Controller
         return $this->redirectToRoute("gestion_partes");
     }
 
-    /**
-     * @Route("/exportPartes", name="admin_export_partes")
-     */
-    public function exportPartes(Request $request)
-    {
-        try {
-            /** @var EntityManager $em */
-            $em = $this->get('doctrine.orm.entity_manager');
-            $alumnosSeleccionados = $request->get('alumnos');
-            $cursoSeleccionado = $request->get('curso');
-            $profesoresSeleccionados = $request->get('profesores');
-            $fechaSeleccionada = $request->get('fecha');
-            /** @var AlumnoRepository $repositoryAlumnos */
-            $repositoryAlumnos = $em->getRepository('AppBundle:Alumno');
-            $repositoryCursos = $em->getRepository('AppBundle:Cursos');
-            /** @var ProfesoresRepository $repositoryProfesores */
-            $repositoryProfesores = $em->getRepository('AppBundle:Profesores');
-            if ($alumnosSeleccionados == "Todos") {
-                $alumnos = $repositoryAlumnos->findAll();
-            } else {
-                $alumnos = $repositoryAlumnos->findById($alumnosSeleccionados);
-            }
-            if ($cursoSeleccionado == "Todos") {
-                $curso = $repositoryCursos->findAll();
-            } else {
-                $curso = $repositoryCursos->findById($cursoSeleccionado);
-            }
-            if ($profesoresSeleccionados == "Todos") {
-                $profesores = $repositoryProfesores->findAll();
-            } else {
-                $profesores = $repositoryProfesores->findById($profesoresSeleccionados);
-            }
-            /** @var PartesRepository $repositoryPartes */
-            $repositoryPartes = $em->getRepository('AppBundle:Partes');
-            $data = $repositoryPartes->getPartesExportar($fechaSeleccionada, $alumnos, $profesores, $curso);
-            $arrData = [];
-            $arrData[] = ['Id', 'Fecha', 'Descripción', 'Tareas', 'Hora Salida Aula', 'Hora Llegada Jefatura', 'Formato', 'Observación', 'Puntos', 'Estado', 'Tipo', 'Alumno', 'Profesor', 'Recupera Punto', 'Fecha Confirmacion', 'Fecha Comunicación'];
-            foreach ($data as $parte) {
-                $parteArray = (array)$parte;
-                $parteCsv = [];
-                foreach ($parteArray as $parteValue)
-                    if ($parteValue instanceof Profesores || $parteValue instanceof Alumno)
-                        $parteCsv[] = $parteValue->getNombreCompleto();
-                    elseif ($parteValue instanceof TipoParte)
-                        $parteCsv[] = $parteValue->getTipo();
-                    elseif ($parteValue instanceof EstadosParte)
-                        $parteCsv[] = $parteValue->getEstado();
-                    elseif ($parteValue instanceof \DateTime) {
-                        $year = $parteValue->format('Y');
-                        if ($parteValue == null)
-                            $fecha = "Sin fecha";
-                        elseif ($year == '1970')
-                            $fecha = $parteValue->format('H:i:s');
-                        else
-                            $fecha = $parteValue->format('Y-m-d H:i:s');
-                        $parteCsv[] = $fecha;
-                    } elseif (!$parteValue instanceof PersistentCollection)
-                        $parteCsv[] = $parteValue;
-                $arrData[$parte->getId()] = $parteCsv;
-            }
-            $response = new CsvResponse($arrData, 200);
-            $response->setFilename("Partes.xls");
-            return $response;
-        } catch (\Exception $e) {
-            $this->addFlash('exportarError', 'No se ha podido exportar');
-            return $this->redirectToRoute('export_form_partes');
-        }
-    }
+//    /**
+////     * Permite la exportación de los partes.
+////     * @Route("/exportPartes", name="admin_export_partes")
+////     * @param Request $request la petición a realizar.
+////     * @return Response la vista a renderizar.
+////     */
+////    public function exportPartes(Request $request)
+////    {
+////        try {
+////
+////            /** @var EntityManager $em */
+////            $em = $this->getDoctrine()->getManager();
+////
+////            $alumnosSeleccionados = $request->get('alumnos');
+////
+////            $cursoSeleccionado = $request->get('curso');
+////
+////            $profesoresSeleccionados = $request->get('profesores');
+////
+////            $fechaSeleccionada = $request->get('fecha');
+////
+////            /** @var AlumnoRepository $repositoryAlumnos */
+////            $repositoryAlumnos = $em->getRepository('AppBundle:Alumno');
+////
+////            /** @var CursosRepository $repositoryCursos */
+////            $repositoryCursos = $em->getRepository('AppBundle:Cursos');
+////
+////            /** @var ProfesoresRepository $repositoryProfesores */
+////            $repositoryProfesores = $em->getRepository('AppBundle:Profesores');
+////
+////            if ($alumnosSeleccionados == "Todos") {
+////                $alumnos = $repositoryAlumnos->findAll();
+////            } else {
+////                $alumnos = $repositoryAlumnos->findById($alumnosSeleccionados);
+////            }
+////            if ($cursoSeleccionado == "Todos") {
+////                $curso = $repositoryCursos->findAll();
+////            } else {
+////                $curso = $repositoryCursos->findById($cursoSeleccionado);
+////            }
+////            if ($profesoresSeleccionados == "Todos") {
+////                $profesores = $repositoryProfesores->findAll();
+////            } else {
+////                $profesores = $repositoryProfesores->findById($profesoresSeleccionados);
+////            }
+////            /** @var PartesRepository $repositoryPartes */
+////            $repositoryPartes = $em->getRepository('AppBundle:Partes');
+////
+////            $data = $repositoryPartes->getPartesExportar($fechaSeleccionada, $alumnos, $profesores, $curso);
+////            $arrData = [];
+////            $arrData[] = ['Id', 'Fecha', 'Descripción', 'Tareas', 'Hora Salida Aula', 'Hora Llegada Jefatura', 'Formato', 'Observación', 'Puntos', 'Estado', 'Tipo', 'Alumno', 'Profesor', 'Recupera Punto', 'Fecha Confirmacion', 'Fecha Comunicación'];
+////            foreach ($data as $parte) {
+////                $parteArray = (array)$parte;
+////                $parteCsv = [];
+////                foreach ($parteArray as $parteValue)
+////                    if ($parteValue instanceof Profesores || $parteValue instanceof Alumno)
+////                        $parteCsv[] = $parteValue->getNombreCompleto();
+////                    elseif ($parteValue instanceof TipoParte)
+////                        $parteCsv[] = $parteValue->getTipo();
+////                    elseif ($parteValue instanceof EstadosParte)
+////                        $parteCsv[] = $parteValue->getEstado();
+////                    elseif ($parteValue instanceof \DateTime) {
+////                        $year = $parteValue->format('Y');
+////                        if ($parteValue == null)
+////                            $fecha = "Sin fecha";
+////                        elseif ($year == '1970')
+////                            $fecha = $parteValue->format('H:i:s');
+////                        else
+////                            $fecha = $parteValue->format('Y-m-d H:i:s');
+////                        $parteCsv[] = $fecha;
+////                    } elseif (!$parteValue instanceof PersistentCollection)
+////                        $parteCsv[] = $parteValue;
+////                $arrData[$parte->getId()] = $parteCsv;
+////            }
+////            $response = new CsvResponse($arrData, 200);
+////            $response->setFilename("Partes.xls");
+////            return $response;
+////        } catch (\Exception $e) {
+////            $this->addFlash('exportarError', 'No se ha podido exportar');
+////            return $this->redirectToRoute('export_form_partes');
+////        }
+////    }
+
+//    /**
+//     * Formulario para la exportación de partes.
+//     * @Route("/exportFormPartes", name="export_form_partes")
+//     * @return Response la vista a renderizar
+//     */
+//    public function exportForm()
+//    {
+//        /** @var EntityManager $em */
+//        $em = $this->getDoctrine()->getManager();
+//
+//        /** @var AlumnoRepository $repositoryAlumnos */
+//        $repositoryAlumnos = $em->getRepository('AppBundle:Alumno');
+//
+//        /** @var CursosRepository $repositoryCursos */
+//        $repositoryCursos = $em->GetRepository('AppBundle:Cursos');
+//
+//        /** @var ProfesoresRepository $repositoryProfesores */
+//        $repositoryProfesores = $em->getRepository('AppBundle:Profesores');
+//
+//        $alumnos = $repositoryAlumnos->findAll();
+//        $cursos = $repositoryCursos->findAll();
+//        $profesores = $repositoryProfesores->findAll();
+//
+//        return $this->render('convivencia/exportPartes.html.twig', array(
+//            'alumnos' => $alumnos,
+//            'profesores' => $profesores,
+//            'cursos' => $cursos
+//        ));
+//    }
 
     /**
-     * @Route("/exportFormPartes", name="export_form_partes")
-     */
-    public function exportForm()
-    {
-        $em = $this->getDoctrine()->getManager();
-        /** @var AlumnoRepository $repositoryAlumnos */
-        $repositoryAlumnos = $em->getRepository('AppBundle:Alumno');
-        $repositoryCursos = $em->GetRepository('AppBundle:Cursos');
-        /** @var ProfesoresRepository $repositoryProfesores */
-        $repositoryProfesores = $em->getRepository('AppBundle:Profesores');
-        $alumnos = $repositoryAlumnos->findAll();
-        $cursos = $repositoryCursos->findAll();
-        $profesores = $repositoryProfesores->findAll();
-
-        return $this->render('convivencia/exportPartes.html.twig', array(
-            'alumnos' => $alumnos,
-            'profesores' => $profesores,
-            'cursos' => $cursos
-        ));
-    }
-
-    /**
+     * Permite generar el informe de partes por alumno.
      * @Route("/informePartesAlumno", name="partes_alumno_informe")
-     * @param Request $request the request to send.
-     * @return Response the page to redirect.
+     * @param Request $request la petición a realizar.
+     * @return Response la vista a renderizar.
      */
     public function partesAlumnoInforme(Request $request)
     {
+        /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
+
         /** @var PartesRepository $repositoryPartes */
         $repositoryPartes = $em->getRepository('AppBundle:Partes');
+
         $fechaI = $request->get('fechaI');
         $fechaF = $request->get('fechaF');
         $data = $repositoryPartes->getInformePartesAlumnos("$fechaI", "$fechaF");
-        //$fomateadaI = date("d/m/Y", strtotime($fechaI));
-        //$fomateadaF = date("d/m/Y", strtotime($fechaF));
+
         return $this->render('convivencia/informes/partesAlumnoInforme.html.twig', array(
             'data' => $data
         ));
     }
 
     /**
+     * Permite generar los informes de partes por profesor.
      * @Route("/informePartesProfesor", name="partes_profesor_informe")
-     * @param Request $request the request to send.
-     * @return Response the page to redirect.
+     * @param Request $request la petición a realizar.
+     * @return Response la vista a renderizar.
      */
     public function partesProfesorInforme(Request $request)
     {
+        /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
         /** @var PartesRepository $repositoryPartes */
         $repositoryPartes = $em->getRepository("AppBundle:Partes");
+
         $fechaI = $request->get('fechaI');
         $fechaF = $request->get('fechaF');
+
         $data = $repositoryPartes->getInformePartesProfesorado("$fechaI", "$fechaF");
 
         return $this->render('convivencia/informes/partesProfesorInforme.html.twig', array(
@@ -357,19 +443,21 @@ class PartesController extends Controller
     }
 
     /**
+     * Permite generar los informes de partes por grupos.
      * @Route("/informePartesGrupo", name="partes_grupos_informe")
-     * @param Request $request the request to send.
-     * @return Response the page to redirect.
+     * @param Request $request la petición a realizar.
+     * @return Response la vista a renderizar.
      */
     public function partesGruposInforme(Request $request)
     {
+        /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
+
         /** @var PartesRepository $repositoryPartes */
         $repositoryPartes = $em->getRepository("AppBundle:Partes");
+
         $fechaI = $request->get('fechaI');
         $fechaF = $request->get('fechaF');
-        $fomateadaI = date("d/m/Y", strtotime($fechaI));
-        $fomateadaF = date("d/m/Y", strtotime($fechaF));
         $data = $repositoryPartes->getInformePartesGrupo("$fechaI", "$fechaF");
 
         return $this->render('convivencia/informes/partesGruposInforme.html.twig', array(

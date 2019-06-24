@@ -1,18 +1,27 @@
 <?php
+/**
+ * @User: Guillermo Boquizo Sánchez (GUBS), Rafael García Zurita (RAGZ).
+ * @File: Conductas.php
+ * @Updated: 2019
+ * @Description: Entidad para las conductas.
+ * @license http://opensource.org/licenses/gpl-license.php  GNU Public License
+ */
 
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 
 /**
- * Conductas
- *
+ * Class Conductas.
  * @ORM\Table(name="conductas")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\ConductasRepository")
  */
 class Conductas
 {
     /**
+     * Id principal de la clase.
      * @var int
      *
      * @ORM\Column(name="id", type="integer")
@@ -22,6 +31,7 @@ class Conductas
     private $id;
 
     /**
+     * Conducta.
      * @var string
      *
      * @ORM\Column(name="conducta", type="string", length=255)
@@ -29,6 +39,7 @@ class Conductas
     private $conducta;
 
     /**
+     * Puntos.
      * @var int
      *
      * @ORM\Column(name="puntos", type="integer")
@@ -36,6 +47,7 @@ class Conductas
     private $puntos;
 
     /**
+     * Tipo.
      * @var string
      *
      * @ORM\Column(name="tipo", type="string", length=255)
@@ -48,15 +60,15 @@ class Conductas
 //    private $parteConducta;
 
     /**
+     * IdParte.
      * @ORM\ManyToMany(targetEntity="Partes", mappedBy="idConducta")
      */
     private $idParte;
 
-
     /**
-     * Get id
+     * Permite obtener el id.
      *
-     * @return int
+     * @return int id
      */
     public function getId()
     {
@@ -64,9 +76,9 @@ class Conductas
     }
 
     /**
-     * Set conducta
+     * Permite estblecer la conducta.
      *
-     * @param string $conducta
+     * @param string $conducta la conducta
      *
      * @return Conductas
      */
@@ -78,9 +90,8 @@ class Conductas
     }
 
     /**
-     * Get conducta
-     *
-     * @return string
+     * Permite obtener la conducta.
+     * @return string conducta
      */
     public function getConducta()
     {
@@ -88,17 +99,17 @@ class Conductas
     }
 
     /**
-     * @return string Una cadena que contiene los puntos y el nombre de la conducta.
+     * Función que devuelve el nombre y los puntos.
+     * @return string Una cadena que contiene los puntos y el nombre de la conducta
      */
-    public function getNombreAndPuntos(){
-        return '('. abs($this->getPuntos())  . ') - ' . $this->getConducta();
+    public function getNombreAndPuntos()
+    {
+        return '('.abs($this->getPuntos()).') - '.$this->getConducta();
     }
 
     /**
-     * Set puntos
-     *
-     * @param integer $puntos
-     *
+     * Permite establecer los puntos.
+     * @param int $puntos los puntos
      * @return Conductas
      */
     public function setPuntos($puntos)
@@ -109,9 +120,8 @@ class Conductas
     }
 
     /**
-     * Get puntos
-     *
-     * @return int
+     * Permite obtener los puntos.
+     * @return int puntos
      */
     public function getPuntos()
     {
@@ -119,9 +129,10 @@ class Conductas
     }
 
     /**
-     * Set tipo
      *
-     * @param string $tipo
+     * Permite establecer el tipo.
+     *
+     * @param string $tipo el tipo
      *
      * @return Conductas
      */
@@ -133,9 +144,9 @@ class Conductas
     }
 
     /**
-     * Get tipo
+     * Permite obtener el tipo.
      *
-     * @return string
+     * @return string tipo
      */
     public function getTipo()
     {
@@ -158,22 +169,24 @@ class Conductas
 //        $this->parteConducta = $parteConducta;
 //        return $this;
 //    }
+
     /**
-     * Constructor
+     * Constructor.
      */
     public function __construct()
     {
-        $this->idParte = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->idParte = new ArrayCollection();
     }
 
     /**
-     * Add idParte
      *
-     * @param \AppBundle\Entity\Partes $idParte
+     * Añade un idParte.
+     *
+     * @param Partes $idParte el idParte
      *
      * @return Conductas
      */
-    public function addIdParte(\AppBundle\Entity\Partes $idParte)
+    public function addIdParte(Partes $idParte)
     {
         $this->idParte[] = $idParte;
 
@@ -181,19 +194,19 @@ class Conductas
     }
 
     /**
-     * Remove idParte
+     * Elimina un idParte.
      *
-     * @param \AppBundle\Entity\Partes $idParte
+     * @param Partes $idParte el idParte
      */
-    public function removeIdParte(\AppBundle\Entity\Partes $idParte)
+    public function removeIdParte(Partes $idParte)
     {
         $this->idParte->removeElement($idParte);
     }
 
     /**
-     * Get idParte
+     * Permite obtener el idParte.
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return Collection
      */
     public function getIdParte()
     {

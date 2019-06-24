@@ -1,4 +1,12 @@
 <?php
+/**
+ * @User: Guillermo Boquizo Sánchez (GUBS), Rafael García Zurita (RAGZ).
+ * @File: DiarioAulaConvivenciaFormType.php
+ * @Updated: 2019
+ * @Description: Formulario para el diario del aula de convivencia.
+ *
+ * @license http://opensource.org/licenses/gpl-license.php  GNU Public License
+ */
 
 namespace AppBundle\Form;
 
@@ -9,10 +17,16 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
+/**
+ * Class DiarioAulaConvivenciaType.
+ */
 class DiarioAulaConvivenciaType extends AbstractType
 {
     /**
-     * {@inheritdoc}
+     * Permite generar el formulario.
+     *
+     * @param FormBuilderInterface $builder
+     * @param $options
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -30,58 +44,76 @@ class DiarioAulaConvivenciaType extends AbstractType
                     'data-placeholder' => 'Seleccione profesorado...',
                 ),
                 'label_attr' => array('class' => ''),
-                'empty_data' => null
-            ))
-            ->add('asiste', ChoiceType::class, array(
-                'choices' => array(
-                    'Pendiente' => '0',
-                    'Ha asistido' => '1',
-                ),
-                'attr' => array('class' => 'chosen-select',
-                    'data-placeholder' => 'Seleccione asistencia...',
-                ),
-                'label_attr' => array('class' => ''),
-                'empty_data' => null
-            ))
-            ->add('actitud', ChoiceType::class, array(
-                'choices' => array(
-                    'Actitud sin evaluar' => null,
-                    'Positiva - A' => 'A',
-                    'Normal - B' => 'B',
-                    'Negativa - C' => 'C',
-                ),
-                'attr' => array(
-                    'class' => '','data-placeholder' => 'Seleccione actitud...',
-                ),
                 'empty_data' => null,
             ))
-            ->add('trabajo', ChoiceType::class, array(
-                'choices' => array(
-                    'Trabajo sin evaluar' => null,
-                    'Positivo - A' => 'A',
-                    'Normal - B' => 'B',
-                    'Negativo - C' => 'C',
-                ),
-                'attr' => array(
-                    'class' => 'chosen-select','data-placeholder' => 'Seleccione trabajo...',
-                ),
-                'empty_data' => null,
-            ))
-            ->add('observaciones', TextType::class, array(
-                'required' =>false,
-                'empty_data' => '',
-                'attr' => array('class' => 'w3-select w3-border w3-light-grey'),
-                'label_attr' => array('class' => 'grey-text'),
-            ));
+            ->add(
+                'asiste',
+                ChoiceType::class,
+                array(
+                    'choices' => array(
+                        'Pendiente' => '0',
+                        'Ha asistido' => '1',
+                    ),
+                    'attr' => array('class' => 'chosen-select',
+                        'data-placeholder' => 'Seleccione asistencia...',
+                    ),
+                    'label_attr' => array('class' => ''),
+                    'empty_data' => null,
+                )
+            )
+            ->add(
+                'actitud',
+                ChoiceType::class,
+                array(
+                    'choices' => array(
+                        'Actitud sin evaluar' => null,
+                        'Positiva - A' => 'A',
+                        'Normal - B' => 'B',
+                        'Negativa - C' => 'C',
+                    ),
+                    'attr' => array(
+                        'class' => '', 'data-placeholder' => 'Seleccione actitud...',
+                    ),
+                    'empty_data' => null,
+                )
+            )
+            ->add(
+                'trabajo',
+                ChoiceType::class,
+                array(
+                    'choices' => array(
+                        'Trabajo sin evaluar' => null,
+                        'Positivo - A' => 'A',
+                        'Normal - B' => 'B',
+                        'Negativo - C' => 'C',
+                    ),
+                    'attr' => array(
+                        'class' => 'chosen-select', 'data-placeholder' => 'Seleccione trabajo...',
+                    ),
+                    'empty_data' => null,
+                )
+            )
+            ->add(
+                'observaciones',
+                TextType::class,
+                array(
+                    'required' => false,
+                    'empty_data' => '',
+                    'attr' => array('class' => 'w3-select w3-border w3-light-grey'),
+                    'label_attr' => array('class' => 'grey-text'),
+                )
+            );
     }
 
     /**
-     * {@inheritdoc}
+     * Configura las opciones del resolver.
+     *
+     * @param OptionsResolver $resolver
      */
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'AppBundle\Entity\DiarioAulaConvivencia'
+            'data_class' => 'AppBundle\Entity\DiarioAulaConvivencia',
         ));
     }
 
@@ -92,6 +124,4 @@ class DiarioAulaConvivenciaType extends AbstractType
     {
         return 'appbundle_diarioaulaconvivencia';
     }
-
-
 }

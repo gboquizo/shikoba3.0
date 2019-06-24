@@ -1,11 +1,18 @@
 <?php
+/**
+ * @User: Guillermo Boquizo Sánchez (GUBS), Rafael García Zurita (RAGZ).
+ * @File: EstadosParte.php
+ * @Updated: 2019
+ * @Description: Entidad para los estados de los partes.
+ * @license http://opensource.org/licenses/gpl-license.php  GNU Public License
+ */
 
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * EstadosParte
+ * Class EstadosParte.
  *
  * @ORM\Table(name="estados_parte")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\EstadosParteRepository")
@@ -13,6 +20,7 @@ use Doctrine\ORM\Mapping as ORM;
 class EstadosParte
 {
     /**
+     * Id principal de la clase.
      * @var int
      *
      * @ORM\Column(name="id", type="integer")
@@ -22,17 +30,17 @@ class EstadosParte
     private $id;
 
     /**
+     * Estado.
      * @var string
      *
      * @ORM\Column(name="estado", type="string", length=255)
      */
     private $estado;
 
-
     /**
-     * Get id
+     * Permite obtener el id.
      *
-     * @return int
+     * @return int id el id
      */
     public function getId()
     {
@@ -40,7 +48,7 @@ class EstadosParte
     }
 
     /**
-     * Set estado
+     * Permite establecer el estado.
      *
      * @param string $estado
      *
@@ -54,7 +62,7 @@ class EstadosParte
     }
 
     /**
-     * Get estado
+     * Permite obtener el estado.
      *
      * @return string
      */

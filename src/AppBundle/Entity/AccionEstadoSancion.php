@@ -1,18 +1,25 @@
 <?php
+/**
+ * @User: Guillermo Boquizo Sánchez (GUBS), Rafael García Zurita (RAGZ).
+ * @File: AccionEstadoSanciones.php
+ * @Updated: 2019
+ * @Description: Entidad para la acción y el estado de las sanciones.
+ * @license http://opensource.org/licenses/gpl-license.php  GNU Public License
+ */
 
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * AccionEstadoSancion
- *
+ * Class AccionEstadoSancion.
  * @ORM\Table(name="accion_estado_sancion")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\AccionEstadoSancionRepository")
  */
 class AccionEstadoSancion
 {
     /**
+     * Id principal de la tabla.
      * @var int
      *
      * @ORM\Column(name="id", type="integer")
@@ -22,6 +29,7 @@ class AccionEstadoSancion
     private $id;
 
     /**
+     * Estado.
      * @var string
      *
      * @ORM\ManyToOne(targetEntity="EstadosSancion")
@@ -30,17 +38,16 @@ class AccionEstadoSancion
     private $estado;
 
     /**
+     * Acción.
      * @var string
      *
      * @ORM\Column(name="accion", type="string", length=255)
      */
     private $accion;
 
-
     /**
-     * Get id
-     *
-     * @return int
+     * Permite obtener el id.
+     * @return int id el id
      */
     public function getId()
     {
@@ -48,10 +55,8 @@ class AccionEstadoSancion
     }
 
     /**
-     * Set estado
-     *
-     * @param string $estado
-     *
+     * Establece el estado.
+     * @param string $estado el estado
      * @return AccionEstadoSancion
      */
     public function setEstado($estado)
@@ -62,9 +67,8 @@ class AccionEstadoSancion
     }
 
     /**
-     * Get estado
-     *
-     * @return string
+     * Obtiene el estado.
+     * @return string estado el estado
      */
     public function getEstado()
     {
@@ -72,10 +76,8 @@ class AccionEstadoSancion
     }
 
     /**
-     * Set accion
-     *
-     * @param string $accion
-     *
+     * Establece la acción.
+     * @param string $accion la acción
      * @return AccionEstadoSancion
      */
     public function setAccion($accion)
@@ -86,16 +88,19 @@ class AccionEstadoSancion
     }
 
     /**
-     * Get accion
-     *
-     * @return string
+     * Obtiene la acción.
+     * @return string accion la acción
      */
     public function getAccion()
     {
         return $this->accion;
     }
 
-    function __toString()
+    /**
+     * Devuelve un string.
+     * @return string accion la acción
+     */
+    public function __toString()
     {
         return $this->accion;
     }

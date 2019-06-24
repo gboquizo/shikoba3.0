@@ -1,11 +1,18 @@
 <?php
+/**
+ * @User: Guillermo Boquizo Sánchez (GUBS), Rafael García Zurita (RAGZ).
+ * @File: EstadosSancion.php
+ * @Updated: 2019
+ * @Description: Entidad para los estados de las sanciones.
+ * @license http://opensource.org/licenses/gpl-license.php  GNU Public License
+ */
 
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * EstadosSancion
+ * Class EstadosSancion.
  *
  * @ORM\Table(name="estados_sancion")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\EstadosSancionRepository")
@@ -13,6 +20,7 @@ use Doctrine\ORM\Mapping as ORM;
 class EstadosSancion
 {
     /**
+     * Id principal de la clase.
      * @var int
      *
      * @ORM\Column(name="id", type="integer")
@@ -22,6 +30,7 @@ class EstadosSancion
     private $id;
 
     /**
+     * Estado.
      * @var string
      *
      * @ORM\Column(name="estado", type="string", length=255)
@@ -30,9 +39,9 @@ class EstadosSancion
 
 
     /**
-     * Get id
+     * Permite obtener el id.
      *
-     * @return int
+     * @return int id el id
      */
     public function getId()
     {
@@ -40,9 +49,9 @@ class EstadosSancion
     }
 
     /**
-     * Set estado
+     * Permite establecer el estado.
      *
-     * @param string $estado
+     * @param string $estado el estado
      *
      * @return EstadosSancion
      */
@@ -54,7 +63,7 @@ class EstadosSancion
     }
 
     /**
-     * Get estado
+     * Permite obtener el estado.
      *
      * @return string
      */

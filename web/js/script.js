@@ -1,7 +1,7 @@
 /**
  * Created by Josema on 04/10/2017.
  * Updated by GUBS, RAGZ on 2019.
- * @author Josema, GUBS, RAGZ.
+ * @author Josema, maze, GUBS, RAGZ.
  *
  */
 

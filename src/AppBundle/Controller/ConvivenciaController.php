@@ -1,83 +1,97 @@
 <?php
 /**
- * Created by PhpStorm.
- * User: maze
- * Date: 20/03/2017
- * Time: 17:01
+ * @User: Guillermo Boquizo Sánchez (GUBS), Rafael García Zurita (RAGZ), maze
+ * @File: ConvivenciaController.php
+ * @Date: 20/03/2017
+ * @Time: 17:01
+ * @Updated: 2019
+ * @Description: Controlador de convivencia.
+ * @license http://opensource.org/licenses/gpl-license.php  GNU Public License
  */
 
 namespace AppBundle\Controller;
 
-use AppBundle\Entity\Alumno;
-use AppBundle\Entity\Cursos;
-use AppBundle\Entity\EstadosParte;
-use AppBundle\Entity\EstadosSancion;
-use AppBundle\Entity\Profesores;
-use AppBundle\Entity\TipoParte;
-use AppBundle\Entity\TipoSancion;
 use AppBundle\Entity\Usuarios;
 use AppBundle\Form\ImportFormType;
-use AppBundle\Form\ProfesoresFormType;
+use AppBundle\Entity\Cursos;
 use AppBundle\Form\RegistroFormType;
 use AppBundle\Form\UsuarioFormType;
+use AppBundle\Repository\AlumnoRepository;
 use AppBundle\Repository\CursosRepository;
 use AppBundle\Repository\DiarioAulaConvivenciaRepository;
 use AppBundle\Repository\PartesRepository;
 use AppBundle\Repository\ProfesoresRepository;
 use AppBundle\Repository\SancionesRepository;
+use AppBundle\Repository\TutoresRepository;
 use AppBundle\Repository\UsuariosRepository;
 use AppBundle\Services\CrearSancionHelper;
 use AppBundle\Services\ImportHelper;
-use AppBundle\Services\PartesHelper;
-use AppBundle\Utils\CsvResponse;
+use Exception;
 use Doctrine\ORM\EntityManager;
-use Doctrine\ORM\PersistentCollection;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
-use Symfony\Component\Validator\Constraints\DateTime;
+use Swift_Message;
+
+/*use Symfony\Component\Validator\Constraints\DateTime;
+use AppBundle\Entity\Alumno;
+use AppBundle\Entity\EstadosParte;
+use AppBundle\Entity\EstadosSancion;
+use AppBundle\Entity\Profesores;
+use AppBundle\Entity\TipoParte;
+use AppBundle\Entity\TipoSancion;
+use AppBundle\Form\ProfesoresFormType;
+use AppBundle\Services\PartesHelper;
+use AppBundle\Utils\CsvResponse;
+use Doctrine\ORM\PersistentCollection;*/
 
 /**
- * Class ConvivenciaController
+ * Class ConvivenciaController.
  */
 class ConvivenciaController extends Controller
 {
-
     /**
+     * Muestra la vista correspondiente por defecto a cada rol de usuario.
      * @Route("/", name="index")
+     * @return Response la vista a la que redirige
      */
     public function indexAction()
     {
-        if (in_array("ROLE_ADMIN", $this->getUser()->getRoles()))
-            return $this->redirectToRoute("admin");
-        if (in_array("ROLE_TUTOR", $this->getUser()->getRoles()))
-            return $this->redirectToRoute("tutor");
-        if (in_array("ROLE_PROFESOR", $this->getUser()->getRoles()))
-            return $this->redirectToRoute("show_alumnosgrupo");
-        if (in_array("ROLE_CONVIVENCIA", $this->getUser()->getRoles()))
-            return $this->redirectToRoute("noticias");
-        if (in_array("ROLE_USER", $this->getUser()->getRoles()))
-            return $this->redirectToRoute("alumno");
-        return $this->redirectToRoute("login");
+        if (in_array('ROLE_ADMIN', $this->getUser()->getRoles())) {
+            return $this->redirectToRoute('admin');
+        }
+        if (in_array('ROLE_TUTOR', $this->getUser()->getRoles())) {
+            return $this->redirectToRoute('tutor');
+        }
+        if (in_array('ROLE_PROFESOR', $this->getUser()->getRoles())) {
+            return $this->redirectToRoute('show_alumnosgrupo');
+        }
+        if (in_array('ROLE_CONVIVENCIA', $this->getUser()->getRoles())) {
+            return $this->redirectToRoute('noticias');
+        }
+        if (in_array('ROLE_USER', $this->getUser()->getRoles())) {
+            return $this->redirectToRoute('alumno');
+        }
+        return $this->redirectToRoute('login');
     }
 
     /**
-     * Lists all perfil entities.
+     * Permite el logueo de cada perfil de usuario.
      *
      * @Route("/login", name="login")
      * @Method({"GET", "POST"})
+     * @return Response la vista a renderizar
      */
     public function loginAction()
     {
-
         if ($this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY')) {
-            return $this->redirectToRoute("alumno");
+            return $this->redirectToRoute('alumno');
         }
-
         // Recupera el servicio de autenticación
         $authenticationUtils = $this->get('security.authentication_utils');
 
@@ -92,22 +106,27 @@ class ConvivenciaController extends Controller
             'last_username' => $lastUsername,
             'error' => $error,
         ));
-
     }
 
     /**
+     * Permite registrar un usuario.
      * @Route("/registro", name="convivencia_registro")
      * @Method({"GET", "POST"})
+     * @param Request $request la petición a realizar
+     * @throws Exception
+     * @return Response la vista a renderizar
      */
     public function registroAction(Request $request)
     {
+        /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
         $usuario = new Usuarios();
         $form = $this->createForm(RegistroFormType::class, $usuario);
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            // Codificamos la contraseña en texto plano accediendo al 'encoder' que habíamos indicado en la configuración
+            // Codificamos la contraseña en texto plano accediendo al 'encoder'
+            // que habíamos indicado en la configuración
             $password = $this->get('security.password_encoder')
                 ->encodePassword($usuario, $usuario->getPlainPassword());
             // Establecemos la contraseña real ya codificada al usuario
@@ -128,19 +147,23 @@ class ConvivenciaController extends Controller
     }
 
     /**
+     * Permite el deslogueo de un perfil.
      * @Route("/logout", name="logout")
      */
     public function logoutAction()
     {
-
     }
 
 //    /**
+//     * Permite visualizar un profesor por id
 //     * @Route("/profesor/{id}", name="verProfesor", requirements={"id": "\d+"})
+//     * @param int $id el id del profesor.
+//     * @return Response la vista a renderizar.
 //     */
 //    public function showProfesorAction($id)
 //    {
-//        if (!in_array("ROLE_ADMIN", $this->getUser()->getRoles()) && !in_array("ROLE_CONVIVENCIA", $this->getUser()->getRoles()))
+//        if (!in_array("ROLE_ADMIN", $this->getUser()->getRoles())
+//              && !in_array('ROLE_CONVIVENCIA', $this->getUser()->getRoles()))
 //            return $this->redirectToRoute("index");
 //        $em = $this->getDoctrine()->getManager();
 //        $profesor = $em->getRepository("AppBundle:Profesores")->findOneById($id);
@@ -150,8 +173,11 @@ class ConvivenciaController extends Controller
 //            )
 //        );
 //    }
+
     /**
+     * Administra las copias de seguridad.
      * @Route("/admin/copias", name="admin_security")
+     * @return Response la vista a renderizar
      */
     public function securityAction()
     {
@@ -159,24 +185,35 @@ class ConvivenciaController extends Controller
     }
 
     /**
+     * Controla la funcionalidad para la vista admin.
      * @Route("/admin", name="admin")
+     * @throws Exception
+     * @return Response la vista a renderizar
      */
     public function adminAction()
     {
+        /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
+
         /** @var CrearSancionHelper $sancionHelper */
         $sancionHelper = $this->get('app.crearSancionHelper');
+
         /** @var PartesRepository $repositoryPartes */
         $repositoryPartes = $em->getRepository('AppBundle:Partes');
+
         /** @var SancionesRepository $repositorySanciones */
         $repositorySanciones = $em->getRepository('AppBundle:Sanciones');
+
         /** @var DiarioAulaConvivenciaRepository $repositoryDiario */
         $repositoryDiario = $em->getRepository('AppBundle:DiarioAulaConvivencia');
+
         $partesIniciados = $repositoryPartes->getPartesByEstado('Iniciado');
         $sancionesIniciadas = $repositorySanciones->getSancionesPorEstado();
+
         $fecha = new \DateTime();
         $hora = $sancionHelper->getHoraFromDate($fecha);
         $diarioNow = $repositoryDiario->getDiarioByFechaYHora($fecha, $hora);
+
         return $this->render('convivencia/admin/admin.html.twig', array(
             'partesIniciados' => count($partesIniciados),
             'sancionesIniciadas' => count($sancionesIniciadas),
@@ -185,19 +222,26 @@ class ConvivenciaController extends Controller
     }
 
     /**
+     * Controla la vista del diario del aula de convivencia.
      * @Route("/diario", name="admin_diario_aula")
+     * @return Response la vista a renderizar
      */
     public function gestionDiarioAula()
     {
-        return $this->render("convivencia/diarioAulaConvivencia/diarioAula.html.twig");
+        return $this->render('convivencia/diarioAulaConvivencia/diarioAula.html.twig');
     }
 
     /**
+     * Permite cambiar la contraseña.
      * @Route("/changePassword", name="change_password")
      * @Method({"GET", "POST"})
+     * @param Request $request la petición a realizar
+     * @return Response la vista a renderizar
+     * @throws Exception
      */
     public function changePassword(Request $request)
     {
+        /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
         $usuario = new Usuarios();
         $form = $this->createForm(UsuarioFormType::class, $usuario);
@@ -205,11 +249,14 @@ class ConvivenciaController extends Controller
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             /** @var UsuariosRepository $repositoryUser */
-            $repositoryUser = $em->getRepository("AppBundle:Usuarios");
+            $repositoryUser = $em->getRepository('AppBundle:Usuarios');
+
             $password = $this->get('security.password_encoder')
                 ->encodePassword($usuario, $usuario->getPlainPassword());
+
             /** @var Usuarios $usuario */
             $usuario = $repositoryUser->findOneById($this->getUser());
+
             $usuario->setPassword($password);
             $usuario->setHash($password);
 
@@ -227,14 +274,17 @@ class ConvivenciaController extends Controller
                 'La contraseña no se ha podido cambiar'
             );
         }
-        return $this->render("convivencia/changePassword.html.twig", array(
+        return $this->render('convivencia/changePassword.html.twig', array(
             'form' => $form->createView(),
         ));
     }
 
     /**
+     * Permite importar alumnos desde un fichero.
      * @Route("/admin/importAlumno", name="admin_import")
      * @Security("has_role('ROLE_ADMIN')")
+     * @param Request $request la petición a realizar
+     * @return Response la vista a renderizar
      */
     public function importAlumnoAction(Request $request)
     {
@@ -244,8 +294,10 @@ class ConvivenciaController extends Controller
             if ($form->isSubmitted() && $form->isValid()) {
                 /** @var File $file */
                 $file = $form['importar']->getData();
+
                 /** @var ImportHelper $importHelper */
                 $importHelper = $this->get('app.importHelper');
+
                 $importHelper->importarAlumnos($file);
                 $this->addFlash(
                     'alumnos',
@@ -253,8 +305,6 @@ class ConvivenciaController extends Controller
                 );
             }
         } catch (\Exception $e) {
-            /*dump($e);
-            die();*/
             $this->addFlash(
                 'alumnosError',
                 'El fichero no se ha podido importar'
@@ -267,8 +317,11 @@ class ConvivenciaController extends Controller
     }
 
     /**
+     * Permite importar profesores desde un archivo.
      * @Route("/admin/importProfesor", name="admin_import_profesor")
      * @Security("has_role('ROLE_ADMIN')")
+     * @param Request $request la petición a realizar
+     * @return Response la vista a renderizar
      */
     public function importProfesorAction(Request $request)
     {
@@ -278,15 +331,17 @@ class ConvivenciaController extends Controller
             if ($form->isSubmitted() && $form->isValid()) {
                 /** @var File $file */
                 $file = $form['importar']->getData();
+
                 /** @var ImportHelper $importHelper */
                 $importHelper = $this->get('app.importHelper');
+
                 $importHelper->importarProfesor($file);
                 $this->addFlash(
                     'profesor',
                     '¡El fichero ha sido importado!'
                 );
             }
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $this->addFlash(
                 'profesorError',
                 'El fichero no se ha podido importar'
@@ -299,47 +354,58 @@ class ConvivenciaController extends Controller
     }
 
     /**
+     * Permite administrar la gestión de tutores.
      * @Route("/admin/tutores", name="admin_tutores")
      * @Security("has_role('ROLE_ADMIN')")
      * @Method({"GET", "POST"})
+     * @return Response la vista a renderizar
      */
-    public function tutoresAction(Request $request)
+    public function tutoresAction()
     {
-        if (
-            !in_array("ROLE_ADMIN", $this->getUser()->getRoles()) &&
-            !in_array("ROLE_CONVIVENCIA", $this->getUser()->getRoles()) &&
-            !in_array("ROLE_PROFESOR", $this->getUser()->getRoles())
-        )
-            return $this->redirectToRoute("index");
-
+        if (!in_array('ROLE_ADMIN', $this->getUser()->getRoles()) &&
+            !in_array('ROLE_CONVIVENCIA', $this->getUser()->getRoles()) &&
+            !in_array('ROLE_PROFESOR', $this->getUser()->getRoles())
+        ) {
+            return $this->redirectToRoute('index');
+        }
+        /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
-        $repositoryCursos = $em->getRepository('AppBundle:Cursos');
-        $tutores=$repositoryCursos->verTutores();
 
-        return $this->render('convivencia/admin/tutores.html.twig', array(
-            'tutores'=>$tutores
-        ));
+        /** @var $repositoryCursos CursosRepository */
+        $repositoryCursos = $em->getRepository('AppBundle:Cursos');
+
+        $tutores = $repositoryCursos->verTutores();
+
+        return $this->render('convivencia/admin/tutores.html.twig', array('tutores' => $tutores));
     }
 
     /**
+     * Permite borrar un tutor asignado a un grupo.
      * @Route("/admin/tutores/borrarTutor,{grupo}", name="borrarTutor")
      * @Security("has_role('ROLE_ADMIN')")
      * @Method({"GET", "POST"})
+     * @param Cursos $grupo el grupo del tutor
+     * @return Response la vista a renderizar
      */
-    public function borrarTutorAction(Request $request,$grupo=null)
+    public function borrarTutorAction($grupo = null)
     {
-        if (
-            !in_array("ROLE_ADMIN", $this->getUser()->getRoles()) &&
-            !in_array("ROLE_CONVIVENCIA", $this->getUser()->getRoles()) &&
-            !in_array("ROLE_PROFESOR", $this->getUser()->getRoles())
-        )
-            return $this->redirectToRoute("index");
+        if (!in_array('ROLE_ADMIN', $this->getUser()->getRoles()) &&
+            !in_array('ROLE_CONVIVENCIA', $this->getUser()->getRoles()) &&
+            !in_array('ROLE_PROFESOR', $this->getUser()->getRoles())
+        ) {
+            return $this->redirectToRoute('index');
+        }
 
         try {
+            /** @var EntityManager $em */
             $em = $this->getDoctrine()->getManager();
+
+            /** @var $repositoryCursos CursosRepository */
             $repositoryCursos = $em->getRepository('AppBundle:Cursos');
+
             $repositoryCursos->borrarTutores($grupo);
             $tutores = $repositoryCursos->verTutores();
+
             $this->addFlash(
                 'tutor',
                 '¡Tutor borrado con éxito!'
@@ -351,101 +417,99 @@ class ConvivenciaController extends Controller
             );
         }
 
-        return $this->render('convivencia/admin/tutores.html.twig', array(
-            'tutores'=>$tutores
-        ));
+        return $this->render('convivencia/admin/tutores.html.twig', array('tutores' => $tutores));
     }
-
-
     /**
+     * Permite asignar un grupo a un profesor.
      * @Route("/admin/importProfesorGrupo", name="admin_import_profesorGrupo")
      * @Security("has_role('ROLE_ADMIN')")
      * @Method({"GET", "POST"})
+     * @param Request $request la petición a procesar
+     * @return Response la vista a renderizar
      */
     public function importProfesorGrupoAction(Request $request)
     {
-        if (
-            !in_array("ROLE_ADMIN", $this->getUser()->getRoles()) &&
-            !in_array("ROLE_CONVIVENCIA", $this->getUser()->getRoles()) &&
-            !in_array("ROLE_PROFESOR", $this->getUser()->getRoles())
-        )
-            return $this->redirectToRoute("index");
-
+        if (!in_array('ROLE_ADMIN', $this->getUser()->getRoles()) &&
+            !in_array('ROLE_CONVIVENCIA', $this->getUser()->getRoles()) &&
+            !in_array('ROLE_PROFESOR', $this->getUser()->getRoles())
+        ) {
+            return $this->redirectToRoute('index');
+        }
+        /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
-        /** @var ProfesoresRepository $repositoryProfesores*/
+
+        /** @var ProfesoresRepository $repositoryProfesores */
         $repositoryProfesores = $em->getRepository('AppBundle:Profesores');
-        /** @var CursosRepository$repositoryCursos*/
+
+        /** @var CursosRepository $repositoryCursos */
         $repositoryCursos = $em->getRepository('AppBundle:Cursos');
 
-        $cursos=$repositoryCursos->cursosSinTutor();
-        $profesores=$repositoryProfesores->verProfesoresSinCurso();
+        //Permite filtrar aquellos cursos que no tienen tutor asignado.
+        $cursos = $repositoryCursos->cursosSinTutor();
 
-       if(!empty($_POST['curso'])){
-           $curso=$_POST['curso'];
-           $profesor=$_POST['profesor'];
+        //Permite filtrar aquellos profesores que no tienen curso asignado.
+        $profesores = $repositoryProfesores->verProfesoresSinCurso();
 
-           $repositoryCursos->updateProfesorCurso($profesor, $curso);
-           return $this->redirectToRoute('admin_tutores');
-       }
+        if (!empty($request->request->get('curso'))) {
+            $curso = $request->request->get('curso');
+            $profesor = $request->request->get('profesor');
+
+            $repositoryCursos->updateProfesorCurso($profesor, $curso);
+
+            return $this->redirectToRoute('admin_tutores');
+        }
 
         return $this->render('convivencia/admin/gestionProfesoresGrupo.html.twig', array(
-            'profesores' =>$profesores,
-            'cursos' =>$cursos,
-            /* 'form' => $form->createView()*/
+            'profesores' => $profesores,
+            'cursos' => $cursos,
         ));
-
-      /*  $form = $this->createForm(ProfesoresFormType::class);
-        $form->handleRequest($request);*/
-
-      /*  if ($form->isSubmitted() && $form->isValid()) {
-            $data = $form->getData();
-            $profesor = $data['idProfesor']->getId();
-            $grupo = $data['grupo']->getGrupo();
-
-            $repositoryCursos = $em->getRepository('AppBundle:Cursos');
-
-            $tutor=$repositoryCursos->consultarGrupoTutor($profesor, $grupo);
-
-            if ($tutor==null) {
-                $repositoryCursos->updateProfesorCurso($profesor, $grupo);
-            }
-
-            $em->flush();
-            return $this->redirectToRoute('admin_tutores');
-        }*/
-
     }
 
     /**
+     * Permite recuperar una contraseña.
      * @Route("recuperarPassword", name="recuperarPassword")
+     * @param Request $request la petición a procesar
+     * @return Response la vista a renderizar
      */
     public function recuperarPassword(Request $request)
     {
         try {
-            if ($request->get('recuperar') == null && $request->get('username') == null)
+            if (null == $request->get('username') && null == $request->get('recuperar')) {
                 return $this->render('convivencia/recuperarPassword.html.twig');
+            }
+
+            /** @var EntityManager $em */
             $em = $this->getDoctrine()->getManager();
+
             /** @var UsuariosRepository $repositoryUsers */
             $repositoryUsers = $em->getRepository('AppBundle:Usuarios');
+
+            /** @var AlumnoRepository $repositoryAlumnos */
             $repositoryAlumnos = $em->getRepository('AppBundle:Alumno');
+
+            /** @var ProfesoresRepository $repositoryProfesores */
             $repositoryProfesores = $em->getRepository('AppBundle:Profesores');
+
+            /** @var TutoresRepository $repositoryTutores */
             $repositoryTutores = $em->getRepository('AppBundle:tutores');
+
             /** @var Usuarios $user */
             $user = $repositoryUsers->findOneByUsuario($request->get('username'));
-            if ($user == null) {
+
+            if (null == $user) {
                 $this->addFlash('passwordError', 'El usuario no existe');
                 return $this->redirectToRoute('recuperarPassword');
             }
 
             $hash = $user->getHash();
 
-            if ($repositoryAlumnos->findOneByIdUsuario($user->getId()) != null) {
+            if (null != $repositoryAlumnos->findOneByIdUsuario($user->getId())) {
                 $user = $repositoryAlumnos->findOneByIdUsuario($user->getId());
                 $email = $user->getEmail();
-            } elseif ($repositoryProfesores->findOneByIdUsuario($user->getId()) != null) {
+            } elseif (null != $repositoryProfesores->findOneByIdUsuario($user->getId())) {
                 $user = $repositoryProfesores->findOneByIdUsuario($user->getId());
                 $email = $user->getEmail();
-            } elseif ($repositoryTutores->findOneByIdUsuario($user->getId()) != null) {
+            } elseif (null != $repositoryTutores->findOneByIdUsuario($user->getId())) {
                 $user = $repositoryTutores->findOneByIdUsuario($user->getId());
                 $email = $user->getEmail();
             } else {
@@ -453,61 +517,72 @@ class ConvivenciaController extends Controller
                 return $this->redirectToRoute('recuperarPassword');
             }
 
-            if ($user->getEmail() == null) {
+            if (null == $user->getEmail()) {
                 $this->addFlash('passwordError', 'El usuario no tiene email');
                 return $this->redirectToRoute('recuperarPassword');
             }
 
-            $message = \Swift_Message::newInstance()
+            $message = Swift_Message::newInstance()
                 ->setSubject('Proyecto Convivencia. Recuperación de contraseña')
                 //->setFrom('proyectoiesgrancapitan@gmail.com')
                 ->setFrom('shikobatres@gmail.com')
                 ->setTo($email)
-                ->setBody("Enlace para recuperar su contraseña:\n" . $this->generateUrl("reset_password", array(), UrlGeneratorInterface::ABSOLUTE_URL) . "?hash=" . $hash);
+                ->setBody("Enlace para recuperar su contraseña:\n"
+                    .$this->generateUrl('reset_password', array(), UrlGeneratorInterface::ABSOLUTE_URL).'?hash='.$hash);
             $this->get('mailer')->send($message);
             $this->addFlash('login', 'Mensaje enviado a su correo');
             return $this->redirectToRoute('login');
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $this->addFlash('loginError', 'No se ha podido enviar el correo');
             return $this->redirectToRoute('login');
         }
     }
 
     /**
+     * Permite resetear la contraseña.
      * @Route("/resetPassword", name="reset_password")
      * @Method({"GET", "POST"})
+     * @param Request $request la petición a procesar
+     * @return Response la vista a renderizar
      */
     public function resetPassword(Request $request)
     {
-        if ($request->get('hash') == null)
+        if (null == $request->get('hash')) {
             return $this->redirectToRoute('recuperarPassword');
+        }
 
         try {
             $hash = $request->get('hash');
+
+            /** @var EntityManager $emConvivencia */
             $emConvivencia = $this->getDoctrine()->getManager();
+
             /** @var UsuariosRepository $repositoryUsuarios */
             $repositoryUsuarios = $emConvivencia->getRepository('AppBundle:Usuarios');
             /** @var Usuarios $usuario */
             $usuario = $repositoryUsuarios->findOneByHash($hash);
-            if ($usuario == null)
+            if (null == $usuario) {
                 return $this->redirectToRoute('recuperarPassword');
+            }
 
             $usuarioReset = new Usuarios();
             $form = $this->createForm(UsuarioFormType::class, $usuarioReset);
             $form->handleRequest($request);
+
             if ($form->isSubmitted() && $form->isValid()) {
                 $password = $this->get('security.password_encoder')
                     ->encodePassword($usuario, $usuarioReset->getPlainPassword());
                 $usuario->setPassword($password);
                 $emConvivencia->persist($usuario);
                 $emConvivencia->flush();
-                $this->addFlash('login', 'La contraseña ha sido restablecida');
+
+                $this->addFlash('login', 'Contraseña reestablecida');
                 return $this->redirectToRoute('login');
             }
             return $this->render('convivencia/changePassword.html.twig', array(
                 'form' => $form->createView(),
             ));
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $this->addFlash('loginError', 'No se ha podido restablecer la contraseña');
             return $this->redirectToRoute('login');
         }

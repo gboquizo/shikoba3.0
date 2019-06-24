@@ -1,8 +1,15 @@
 <?php
+/**
+ * @User: Guillermo Boquizo Sánchez (GUBS), Rafael García Zurita (RAGZ).
+ * @File: PerfilAlumnoFormType.php
+ * @Updated: 2019
+ * @Description: Formulario para el perfil de alumno.
+ *
+ * @license http://opensource.org/licenses/gpl-license.php  GNU Public License
+ */
 
 namespace AppBundle\Form;
 
-use AppBundle\Entity\Alumno;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
@@ -10,10 +17,18 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
+//use AppBundle\Entity\Alumno;
 
+/**
+ * Class PerfilAlumnoFormType.
+ */
 class PerfilAlumnoFormType extends AbstractType
 {
-
+    /**
+     * Permite generar el formulario.
+     * @param FormBuilderInterface $builder
+     * @param $options
+     */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('Nombre')
@@ -30,12 +45,13 @@ class PerfilAlumnoFormType extends AbstractType
     }
 
     /**
-     * {@inheritdoc}
+     * Configura las opciones del resolver.
+     * @param OptionsResolver $resolver
      */
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'AppBundle\Entity\Alumno'
+            'data_class' => 'AppBundle\Entity\Alumno',
         ));
     }
 }

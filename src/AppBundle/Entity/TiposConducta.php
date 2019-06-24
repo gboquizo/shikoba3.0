@@ -1,11 +1,19 @@
 <?php
+/**
+ * @User: Guillermo Boquizo Sánchez (GUBS), Rafael García Zurita (RAGZ).
+ * @File: TiposConducta.php
+ * @Updated: 2019
+ * @Description: Entidad para los tipos de conducta.
+ *
+ * @license http://opensource.org/licenses/gpl-license.php  GNU Public License
+ */
 
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * TiposConducta
+ * Class TiposConducta.
  *
  * @ORM\Table(name="tipos_conducta")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\TiposConductaRepository")
@@ -13,6 +21,7 @@ use Doctrine\ORM\Mapping as ORM;
 class TiposConducta
 {
     /**
+     * Id principal de la clase.
      * @var int
      *
      * @ORM\Column(name="id", type="integer")
@@ -22,15 +31,15 @@ class TiposConducta
     private $id;
 
     /**
+     * Tipo.
      * @var string
      *
      * @ORM\Column(name="tipo", type="string", length=255)
      */
     private $tipo;
 
-
     /**
-     * Get id
+     * Permite obtener el id.
      *
      * @return int
      */
@@ -40,7 +49,7 @@ class TiposConducta
     }
 
     /**
-     * Set tipo
+     * Establece el tipo.
      *
      * @param string $tipo
      *
@@ -54,7 +63,7 @@ class TiposConducta
     }
 
     /**
-     * Get tipo
+     * Obtiene el tipo.
      *
      * @return string
      */
